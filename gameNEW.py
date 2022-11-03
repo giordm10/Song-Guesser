@@ -59,13 +59,14 @@ def button(msg,x,y,w,h,ic,ac,action=None):
         pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
 
     text = smallfont.render(msg , True , white)
-    gameDisplay.blit(text, ( (x+(w/4)), (y+(h/3)) ))
+    gameDisplay.blit(text, ( (x+(w/5.5)), (y+(h/3)) ))
 
 def start():
     render()
     title()
     loop()
     end()
+ 
     
 def loop():
     global running
@@ -74,8 +75,10 @@ def loop():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        button("Quit", 670, 360, 130, 50, color_dark, color_light, end)
-        button("Begin", 500, 360, 130, 50, color_dark, color_light, begin)
+        button("Start 2 Player", 670, 360, 230, 50, color_dark, color_light, begin2Play)
+        button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, begin1Play)
+        button("Settings", 0, 0, 130, 50, color_dark, color_light, setting)
+        button("Quit", 1150, 560, 130, 50, color_dark, color_light, end)
               
         # updates the frames of the game
         pygame.display.update()
@@ -87,13 +90,22 @@ def render():
 def end():
     pygame.quit()
 
-def begin():
-    text2 = smallfont.render("game started" , True , white)
-    gameDisplay.blit(text2, ((200+(50/2)), (100+(50/2))))
+def begin1Play():
+    textOnePlay = smallfont.render("game started with 1 player" , True , white)
+    gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
+
+def begin2Play():
+    textTwoPlay = smallfont.render("game started with 2 players" , True , white)
+    gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
+
 
 def title():
     titleText = largefont.render("Guess That Song!" , True , white)
     gameDisplay.blit(titleText, ((370+(50/2)), (100+(50/2))))
+
+def setting():
+    settingText = smallfont.render("Setting menu", True, white)
+    gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
 
 
 start()
