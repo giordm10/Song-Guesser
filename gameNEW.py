@@ -8,6 +8,7 @@ pygame.init()
 pygame.display.set_caption('Guess That Song')
 
 intro = True
+settingMenu = False
   
 # screen resolution
 res = (1280,720)
@@ -62,23 +63,25 @@ def button(msg,x,y,w,h,ic,ac,action=None):
     gameDisplay.blit(text, ( (x+(w/5.5)), (y+(h/3)) ))
 
 def start():
-    render()
-    title()
-    loop()
+    mainMenu()
     end()
  
     
-def loop():
+def mainMenu():
     global intro
+    intro = True
+    settingMenu = False
+    render()
+    title()
     while intro:
-	      
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 intro = False
+                end()
         button("Start 2 Player", 670, 360, 230, 50, color_dark, color_light, begin2Play)
         button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, begin1Play)
         button("Settings", 400, 470, 130, 50, color_dark, color_light, setting)
-        button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+        button("Quit", 0, 470, 130, 50, color_dark, color_light, end)
               
         # updates the frames of the game
         pygame.display.update()
@@ -123,8 +126,19 @@ def title():
     gameDisplay.blit(titleText, ((370+(50/2)), (100+(50/2))))
 
 def setting():
-    settingText = smallfont.render("Setting menu", True, white)
-    gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
-
+    global intro
+    global settingMenu
+    intro = False
+    settingMenu = True
+    render()
+    while settingMenu:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                settingMenu = False
+        settingText = smallfont.render("Setting menu", True, white)
+        gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
+        button("Main Menu", 670, 470, 130, 50, color_dark, color_light, mainMenu)
+        button("Quit", 0, 470, 130, 50, color_dark, color_light, end)
+        pygame.display.update()
 
 start()
