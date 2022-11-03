@@ -41,7 +41,6 @@ smallfont = pygame.font.SysFont('Corbel',35)
 def button(msg,x,y,w,h,ic,ac,action=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
-    print(click)
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
         
@@ -51,11 +50,15 @@ def button(msg,x,y,w,h,ic,ac,action=None):
         pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
 
     text = smallfont.render(msg , True , white)
-    gameDisplay.blit(text, ( (x+(w/2)), (y+(h/2)) ))
+    gameDisplay.blit(text, ( (x+(w/4)), (y+(h/3)) ))
 
 def start():
     loop()
     cleanUp()
+    begin()
+    end()
+    onePlay()
+    twoPlay()
 
 def loop():
     global running
@@ -64,7 +67,8 @@ def loop():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        button("Quit", 360, 360, 100, 100, color_dark, color_light, cleanUp);
+        button("End", 500, 360, 80, 50, color_dark, color_light, end);
+        button("Begin", 360, 360, 80, 50, color_dark, color_light, begin);
               
         # updates the frames of the game
         pygame.display.update()
@@ -73,8 +77,14 @@ def render():
     # fills the screen with a color
     gameDisplay.fill((0,0,0))
 
-def cleanUp():
-    print("cleaning up")
+def end():
     pygame.quit()
 
+def begin():
+    text2 = smallfont.render("game started" , True , white)
+    gameDisplay.blit(text2, ( (200+(50/2)), (100+(50/2)) ))
+
+
 start()
+
+
