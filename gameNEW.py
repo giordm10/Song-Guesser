@@ -1,11 +1,11 @@
 import pygame
 import sys
 import spotipy
-import spotipytest
+#import spotipytest
   
 # initializing the constructor
 pygame.init()
-
+pygame.display.set_caption('Guess That Song')
 
 running = True
   
@@ -40,6 +40,13 @@ largefont = pygame.font.SysFont('Corbel',80)
 # this font
 
 
+#x - x coordinate of button
+#y - y coordinate of button
+#w - width of button
+#h - height of button
+#ic - unhighlighted color
+#ac - highlighted color
+#action - action (function) on button click
 def button(msg,x,y,w,h,ic,ac,action=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
@@ -58,12 +65,8 @@ def start():
     render()
     title()
     loop()
-    cleanUp()
-    begin()
     end()
-    onePlay()
-    twoPlay()
-
+    
 def loop():
     global running
     while running:
@@ -94,5 +97,3 @@ def title():
 
 
 start()
-
-
