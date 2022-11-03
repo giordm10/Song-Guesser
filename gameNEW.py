@@ -77,8 +77,8 @@ def loop():
                 running = False
         button("Start 2 Player", 670, 360, 230, 50, color_dark, color_light, begin2Play)
         button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, begin1Play)
-        button("Settings", 0, 0, 130, 50, color_dark, color_light, setting)
-        button("Quit", 1150, 560, 130, 50, color_dark, color_light, end)
+        button("Settings", 400, 470, 130, 50, color_dark, color_light, setting)
+        button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
               
         # updates the frames of the game
         pygame.display.update()
