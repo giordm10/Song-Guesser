@@ -7,7 +7,7 @@ import spotipy
 pygame.init()
 pygame.display.set_caption('Guess That Song')
 
-running = True
+intro = True
   
 # screen resolution
 res = (1280,720)
@@ -69,12 +69,12 @@ def start():
  
     
 def loop():
-    global running
-    while running:
+    global intro
+    while intro:
 	      
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                intro = False
         button("Start 2 Player", 670, 360, 230, 50, color_dark, color_light, begin2Play)
         button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, begin1Play)
         button("Settings", 400, 470, 130, 50, color_dark, color_light, setting)
@@ -91,13 +91,32 @@ def end():
     pygame.quit()
 
 def begin1Play():
-    textOnePlay = smallfont.render("game started with 1 player" , True , white)
-    gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
+    global intro
+    intro = False
+    oneplayer = True
+    render()
+    while oneplayer:
+         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                oneplayer = False
+         textOnePlay = smallfont.render("game started with 1 player" , True , white)
+         gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
+         button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+         pygame.display.update()
 
 def begin2Play():
-    textTwoPlay = smallfont.render("game started with 2 players" , True , white)
-    gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
-
+    global intro
+    intro = False
+    twoplayer = True
+    render()
+    while twoplayer:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                twoplayer = False
+        textTwoPlay = smallfont.render("game started with 2 players" , True , white)
+        gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
+        button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+        pygame.display.update()
 
 def title():
     titleText = largefont.render("Guess That Song!" , True , white)
