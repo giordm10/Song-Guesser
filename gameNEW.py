@@ -1,6 +1,7 @@
 import pygame
 import sys
 import spotipy
+import spotipytest
   
 # initializing the constructor
 pygame.init()
@@ -33,6 +34,7 @@ height = gameDisplay.get_height()
   
 # defining a font
 smallfont = pygame.font.SysFont('Corbel',35)
+largefont = pygame.font.SysFont('Corbel',80)
   
 # rendering a text written in
 # this font
@@ -53,6 +55,8 @@ def button(msg,x,y,w,h,ic,ac,action=None):
     gameDisplay.blit(text, ( (x+(w/4)), (y+(h/3)) ))
 
 def start():
+    render()
+    title()
     loop()
     cleanUp()
     begin()
@@ -67,22 +71,26 @@ def loop():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        button("End", 500, 360, 80, 50, color_dark, color_light, end);
-        button("Begin", 360, 360, 80, 50, color_dark, color_light, begin);
+        button("Quit", 670, 360, 130, 50, color_dark, color_light, end)
+        button("Begin", 500, 360, 130, 50, color_dark, color_light, begin)
               
         # updates the frames of the game
         pygame.display.update()
     
 def render():
     # fills the screen with a color
-    gameDisplay.fill((0,0,0))
+    gameDisplay.fill((4,215,250))
 
 def end():
     pygame.quit()
 
 def begin():
     text2 = smallfont.render("game started" , True , white)
-    gameDisplay.blit(text2, ( (200+(50/2)), (100+(50/2)) ))
+    gameDisplay.blit(text2, ((200+(50/2)), (100+(50/2))))
+
+def title():
+    titleText = largefont.render("Guess That Song!" , True , white)
+    gameDisplay.blit(titleText, ((370+(50/2)), (100+(50/2))))
 
 
 start()
