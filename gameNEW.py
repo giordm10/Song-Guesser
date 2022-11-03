@@ -1,7 +1,7 @@
 import pygame
 import sys
-import spotipy
-import spotipytest
+# import spotipy
+# import spotipytest
   
 # initializing the constructor
 pygame.init()
