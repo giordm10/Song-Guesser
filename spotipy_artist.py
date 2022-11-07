@@ -50,7 +50,7 @@ def show_artist_top_tracks(artist):
     # print(results)
     results2 = results['tracks']
     for songIterable in range(0,len(results2)):
-        print(results2[songIterable]["name"])
+        print(results2[songIterable]["name"] + " - " + results2[songIterable]["preview_url"])
         # print(len(results2))
         # results3 = results2[songIterable]["album"]
         # print(results3)
