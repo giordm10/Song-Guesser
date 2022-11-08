@@ -1,7 +1,7 @@
 import pygame
 import sys
 import spotipy
-#import spotipytest
+import spotipy_artist
   
 # initializing the constructor
 pygame.init()
@@ -113,7 +113,9 @@ def end():
     pygame.quit()
 
 def onePlayer():
-    textOnePlay = smallfont.render("game started with 1 player" , True , white)
+    result = spotipy_artist.get_artist("Michael Jackson")
+    songDict = spotipy_artist.show_artist_top_tracks(result)
+    textOnePlay = smallfont.render(songDict["Billie Jean"], True , white)
     gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
     
