@@ -7,8 +7,9 @@ import spotipy
 pygame.init()
 pygame.display.set_caption('Guess That Song')
 
-intro = True
+running = True
 settingMenu = False
+state = "mainMenu"
   
 # screen resolution
 res = (1280,720)
@@ -49,13 +50,17 @@ largefont = pygame.font.SysFont('Corbel',80)
 #ac - highlighted color
 #action - action (function) on button click
 def button(msg,x,y,w,h,ic,ac,action=None):
+    global state
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
         
         if click[0] == 1 and action != None:
-            action()
+            if isinstance(action, str) == True:
+                state = action
+            else:
+                action()
     else:
         pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
 
@@ -63,28 +68,42 @@ def button(msg,x,y,w,h,ic,ac,action=None):
     gameDisplay.blit(text, ( (x+(w/5.5)), (y+(h/3)) ))
 
 def start():
-    mainMenu()
+    loop()
     end()
- 
     
+def loop():
+    global state 
+    global running
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                loop = False
+                end()
+        render()
+        print(state)
+        if state == "mainMenu":
+            mainMenu()
+        elif state == "settingsMenu":
+            setting()
+        elif state == "onePlayer":
+            onePlayer()
+        elif state == "twoPlayer":
+            twoPlayer()
+        pygame.display.update()
+        
+        
+        
 def mainMenu():
-    global intro
-    intro = True
     settingMenu = False
     render()
     title()
-    while intro:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                intro = False
-                end()
-        button("Start 2 Player", 670, 360, 230, 50, color_dark, color_light, begin2Play)
-        button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, begin1Play)
-        button("Settings", 400, 470, 130, 50, color_dark, color_light, setting)
-        button("Quit", 0, 470, 130, 50, color_dark, color_light, end)
+    button("Start 2 Player", 670, 360, 230, 50, color_dark, color_light, "twoPlayer")
+    button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, "onePlayer")
+    button("Settings", 400, 470, 130, 50, color_dark, color_light, "settingsMenu")
+    button("Quit", 0, 470, 130, 50, color_dark, color_light, end)
               
-        # updates the frames of the game
-        pygame.display.update()
+    #make switch case that checks current state, then calls each state's respective function. should be alot cleaner code
     
 def render():
     # fills the screen with a color
@@ -93,52 +112,26 @@ def render():
 def end():
     pygame.quit()
 
-def begin1Play():
-    global intro
-    intro = False
-    oneplayer = True
-    render()
-    while oneplayer:
-         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                oneplayer = False
-         textOnePlay = smallfont.render("game started with 1 player" , True , white)
-         gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
-         button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
-         pygame.display.update()
+def onePlayer():
+    textOnePlay = smallfont.render("game started with 1 player" , True , white)
+    gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+    
 
-def begin2Play():
-    global intro
-    intro = False
-    twoplayer = True
-    render()
-    while twoplayer:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                twoplayer = False
-        textTwoPlay = smallfont.render("game started with 2 players" , True , white)
-        gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
-        button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
-        pygame.display.update()
+def twoPlayer():
+    textTwoPlay = smallfont.render("game started with 2 players" , True , white)
+    gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
 def title():
     titleText = largefont.render("Guess That Song!" , True , white)
     gameDisplay.blit(titleText, ((370+(50/2)), (100+(50/2))))
 
 def setting():
-    global intro
-    global settingMenu
-    intro = False
-    settingMenu = True
     render()
-    while settingMenu:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                settingMenu = False
-        settingText = smallfont.render("Setting menu", True, white)
-        gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
-        button("Main Menu", 670, 470, 130, 50, color_dark, color_light, mainMenu)
-        button("Quit", 0, 470, 130, 50, color_dark, color_light, end)
-        pygame.display.update()
+    settingText = smallfont.render("Setting menu", True, white)
+    gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
+    button("Main Menu", 670, 470, 130, 50, color_dark, color_light, "mainMenu")
+    button("Quit", 0, 470, 130, 50, color_dark, color_light, end)
 
 start()
