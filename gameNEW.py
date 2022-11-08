@@ -1,12 +1,8 @@
 import pygame
 import sys
-<<<<<<< HEAD
-# import spotipy
-# import spotipytest
-=======
 import spotipy
+import spotipy_artist
 #import spotipytest
->>>>>>> e6129926e84792137d28c11da6c250eca7b15df4
   
 # initializing the constructor
 pygame.init()
@@ -102,6 +98,8 @@ def begin1Play():
     global intro
     intro = False
     oneplayer = True
+    results = spotipy_artist.get_artist("Billy Joel")
+    spotipy_artist.show_artist_top_tracks(results)
     render()
     while oneplayer:
          for event in pygame.event.get():
