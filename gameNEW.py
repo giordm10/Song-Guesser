@@ -90,6 +90,8 @@ def loop():
             onePlayer()
         elif state == "twoPlayer":
             twoPlayer()
+        elif state == "michaelJackson":
+            MichaelJackson()
         pygame.display.update()
         
         
@@ -112,12 +114,17 @@ def render():
 def end():
     pygame.quit()
 
-def onePlayer():
+def MichaelJackson():
     result = spotipy_artist.get_artist("Michael Jackson")
     songDict = spotipy_artist.show_artist_top_tracks(result)
-    textOnePlay = smallfont.render(songDict["Billie Jean"], True , white)
+    text = smallfont.render(songDict["Billie Jean"], True , white)
+    gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+
+def onePlayer():
+    textOnePlay = smallfont.render("game started with 1 player", True , white)
     gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
-    button("Michael Jackson", 270, 470, 290, 50, color_dark, color_light, end)
+    button("Michael Jackson", 270, 470, 290, 50, color_dark, color_light, "michaelJackson")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
     
 
