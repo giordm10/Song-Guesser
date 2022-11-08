@@ -101,7 +101,6 @@ def loop():
         
 def mainMenu():
     settingMenu = False
-    render()
     title()
     button("Start 2 Player", 670, 360, 230, 50, color_dark, color_light, "twoPlayer")
     button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, "onePlayer")
@@ -145,7 +144,6 @@ def title():
     gameDisplay.blit(titleText, ((370+(50/2)), (100+(50/2))))
 
 def setting():
-    render()
     settingText = smallfont.render("Setting menu", True, white)
     gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
     button("Main Menu", 670, 470, 130, 50, color_dark, color_light, "mainMenu")
