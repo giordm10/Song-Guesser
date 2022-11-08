@@ -81,7 +81,7 @@ def loop():
                 loop = False
                 end()
         render()
-        print(state)
+        #print(state)
         if state == "mainMenu":
             mainMenu()
         elif state == "settingsMenu":
@@ -117,6 +117,7 @@ def onePlayer():
     songDict = spotipy_artist.show_artist_top_tracks(result)
     textOnePlay = smallfont.render(songDict["Billie Jean"], True , white)
     gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
+    button("Michael Jackson", 270, 470, 290, 50, color_dark, color_light, end)
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
     
 
