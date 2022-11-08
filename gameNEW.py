@@ -2,6 +2,7 @@ import pygame
 import sys
 import spotipy
 import spotipy_artist
+import webbrowser
   
 # initializing the constructor
 pygame.init()
@@ -41,6 +42,8 @@ largefont = pygame.font.SysFont('Corbel',80)
 # rendering a text written in
 # this font
 
+#flag for only opening tab once
+song_open = False
 
 #x - x coordinate of button
 #y - y coordinate of button
@@ -115,9 +118,13 @@ def end():
     pygame.quit()
 
 def MichaelJackson():
+    global song_open
     result = spotipy_artist.get_artist("Michael Jackson")
     songDict = spotipy_artist.show_artist_top_tracks(result)
     text = smallfont.render(songDict["Billie Jean"], True , white)
+    if(song_open == False):
+        webbrowser.open(str(songDict["Billie Jean"]))
+        song_open = True
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
