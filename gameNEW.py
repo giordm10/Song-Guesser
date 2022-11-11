@@ -1,4 +1,5 @@
 import pygame
+import pygame_textinput
 import sys
 import spotipy
 import spotipy_artist
@@ -7,6 +8,8 @@ import webbrowser
 # initializing the constructor
 pygame.init()
 pygame.display.set_caption('Guess That Song')
+
+textinput = pygame_textinput.TextInputVisualizer()
 
 running = True
 settingMenu = False
@@ -79,7 +82,8 @@ def loop():
     global running
     running = True
     while running:
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:
                 loop = False
                 end()
@@ -90,7 +94,7 @@ def loop():
         elif state == "settingsMenu":
             setting()
         elif state == "onePlayer":
-            onePlayer()
+            onePlayer(events)
         elif state == "twoPlayer":
             twoPlayer()
         elif state == "michaelJackson":
@@ -127,11 +131,14 @@ def MichaelJackson():
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
-def onePlayer():
+def onePlayer(events):
     textOnePlay = smallfont.render("game started with 1 player", True , white)
     gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
     button("Michael Jackson", 270, 470, 290, 50, color_dark, color_light, "michaelJackson")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+    textinput.update(events)
+    # Blit its surface onto the screen
+    gameDisplay.blit(textinput.surface, (300, 300))
     
 
 def twoPlayer():
