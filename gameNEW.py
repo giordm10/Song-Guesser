@@ -139,7 +139,12 @@ def onePlayer(events):
     textinput.update(events)
     # Blit its surface onto the screen
     gameDisplay.blit(textinput.surface, (300, 300))
-    
+    for event in events:
+        if textinput.value == "Michael Jackson" and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+            print("You guessed correctly!")
+        elif textinput.value != "Michael Jackson" and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+            print("Incorrect guess")
+        
 
 def twoPlayer():
     textTwoPlay = smallfont.render("game started with 2 players" , True , white)
