@@ -10,6 +10,7 @@ pygame.init()
 pygame.display.set_caption('Guess That Song')
 pygame.key.set_repeat(500, 50) # allow user to hold down key and detect it
 
+#make textbok
 textinput = pygame_textinput.TextInputVisualizer()
 
 running = True
@@ -95,11 +96,11 @@ def loop():
         elif state == "settingsMenu":
             setting()
         elif state == "onePlayer":
-            onePlayer(events)
+            onePlayer()
         elif state == "twoPlayer":
             twoPlayer()
-        elif state == "michaelJackson":
-            MichaelJackson()
+        elif state == "randomSong":
+            randomSong(events)
         pygame.display.update()
         
         
@@ -121,7 +122,7 @@ def render():
 def end():
     pygame.quit()
 
-def MichaelJackson():
+def randomSong(events):
     global song_open
     result = spotipy_artist.get_artist("Michael Jackson")
     songDict = spotipy_artist.show_artist_top_tracks(result)
@@ -131,12 +132,6 @@ def MichaelJackson():
         song_open = True
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
-
-def onePlayer(events):
-    textOnePlay = smallfont.render("game started with 1 player", True , white)
-    gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
-    button("Michael Jackson", 270, 470, 290, 50, color_dark, color_light, "michaelJackson")
-    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
     textinput.update(events)
     # Blit its surface onto the screen
     gameDisplay.blit(textinput.surface, (300, 300))
@@ -145,6 +140,13 @@ def onePlayer(events):
             print("You guessed correctly!")
         elif textinput.value != "Michael Jackson" and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
             print("Incorrect guess")
+    
+
+def onePlayer():
+    textOnePlay = smallfont.render("game started with 1 player", True , white)
+    gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
+    button("Random Song", 270, 470, 290, 50, color_dark, color_light, "randomSong")
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
         
 
 def twoPlayer():
