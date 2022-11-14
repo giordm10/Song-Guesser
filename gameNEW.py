@@ -8,6 +8,7 @@ import webbrowser
 # initializing the constructor
 pygame.init()
 pygame.display.set_caption('Guess That Song')
+pygame.key.set_repeat(500, 50) # allow user to hold down key and detect it
 
 textinput = pygame_textinput.TextInputVisualizer()
 
