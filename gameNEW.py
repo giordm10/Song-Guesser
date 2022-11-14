@@ -83,6 +83,9 @@ def loop():
     global state 
     global running
     running = True
+    result = ""
+    songDict = ""
+    text = ""
     while running:
         events = pygame.event.get()
         for event in events:
@@ -100,7 +103,11 @@ def loop():
         elif state == "twoPlayer":
             twoPlayer()
         elif state == "randomSong":
-            randomSong(events)
+            if(not song_open):
+                result = spotipy_artist.get_artist("Michael Jackson")
+                songDict = spotipy_artist.show_artist_top_tracks(result)
+                text = smallfont.render(songDict["Billie Jean"], True , white)
+            randomSong(events, result, songDict, text)
         pygame.display.update()
         
         
@@ -121,12 +128,10 @@ def render():
 
 def end():
     pygame.quit()
+    
 
-def randomSong(events):
+def randomSong(events, result, songDict, text):
     global song_open
-    result = spotipy_artist.get_artist("Michael Jackson")
-    songDict = spotipy_artist.show_artist_top_tracks(result)
-    text = smallfont.render(songDict["Billie Jean"], True , white)
     if(song_open == False):
         webbrowser.open(str(songDict["Billie Jean"]))
         song_open = True
