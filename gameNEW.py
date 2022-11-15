@@ -4,9 +4,11 @@ import sys
 import spotipy
 import spotipy_artist
 import webbrowser
+import random
   
 # initializing the constructor
 pygame.init()
+clock = pygame.time.Clock()
 pygame.display.set_caption('Guess That Song')
 pygame.key.set_repeat(500, 50) # allow user to hold down key and detect it
 
@@ -50,6 +52,12 @@ largefont = pygame.font.SysFont('Corbel',80)
 #flag for only opening tab once
 song_open = False
 
+#flag to see if list is generated
+list_generated = False
+
+#list of songs in use for this playthrough
+songDict = {}
+
 #x - x coordinate of button
 #y - y coordinate of button
 #w - width of button
@@ -83,6 +91,7 @@ def loop():
     global state 
     global running
     global song_open
+    global list_generated
     running = True
     result = ""
     songDict = ""
@@ -104,19 +113,31 @@ def loop():
         elif state == "twoPlayer":
             twoPlayer()
         elif state == "randomSong":
-            if(not song_open):
+            if(not list_generated):
                 result = spotipy_artist.get_artist("Michael Jackson")
                 songDict = spotipy_artist.show_artist_top_tracks(result)
-                text = smallfont.render(songDict["Billie Jean"], True , white)
+                list_generated = True
+            if(not song_open):
+                num_options = len(songDict) - 1
+                randomNum = random.randint(0,num_options)
+                songTitle = list(songDict)[randomNum]
+                songLink = list(songDict.values())[randomNum]
+                text = smallfont.render(songTitle, True , white)
+                webbrowser.open(str(songLink))
+                print("before: ", songDict.keys())
+                del songDict[songTitle]
+                print("after: ", songDict.keys())
+                song_open = True
             for event in events:
                 if textinput.value == "Michael Jackson" and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     text = smallfont.render("Correct Guess!" , True , white)
                 elif textinput.value != "Michael Jackson" and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     text = smallfont.render("Incorrect Guess!" , True , white)
-            randomSong(events, result, songDict, text)
+            randomSong(events, text)
         elif state == "nextSong":
             song_open = False
             state = "randomSong"
+        clock.tick(30)
         pygame.display.update()
         
         
@@ -139,22 +160,13 @@ def end():
     pygame.quit()
     
 
-def randomSong(events, result, songDict, text):
-    global song_open
-    if(song_open == False):
-        webbrowser.open(str(songDict["Billie Jean"]))
-        song_open = True
+def randomSong(events, text):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     button("Next song", 40, 470, 130, 50, color_dark, color_light, "nextSong")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
     textinput.update(events)
     # Blit its surface onto the screen
     gameDisplay.blit(textinput.surface, (300, 300))
-    for event in events:
-        if textinput.value == "Michael Jackson" and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            print("You guessed correctly!")
-        elif textinput.value != "Michael Jackson" and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            print("Incorrect guess")
     
 
 def onePlayer():
