@@ -82,6 +82,7 @@ def start():
 def loop():
     global state 
     global running
+    global song_open
     running = True
     result = ""
     songDict = ""
@@ -113,6 +114,9 @@ def loop():
                 elif textinput.value != "Michael Jackson" and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     text = smallfont.render("Incorrect Guess!" , True , white)
             randomSong(events, result, songDict, text)
+        elif state == "nextSong":
+            song_open = False
+            state = "randomSong"
         pygame.display.update()
         
         
@@ -141,6 +145,7 @@ def randomSong(events, result, songDict, text):
         webbrowser.open(str(songDict["Billie Jean"]))
         song_open = True
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
+    button("Next song", 40, 470, 130, 50, color_dark, color_light, "nextSong")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
     textinput.update(events)
     # Blit its surface onto the screen
@@ -157,6 +162,7 @@ def onePlayer():
     gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
     button("Random Song", 270, 470, 290, 50, color_dark, color_light, "randomSong")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+    
         
 
 def twoPlayer():
