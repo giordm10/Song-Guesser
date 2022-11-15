@@ -108,6 +108,11 @@ def loop():
                 result = spotipy_artist.get_artist("Michael Jackson")
                 songDict = spotipy_artist.show_artist_top_tracks(result)
                 text = smallfont.render(songDict["Billie Jean"], True , white)
+            for event in events:
+                if textinput.value == "Michael Jackson" and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                    text = smallfont.render("Correct Guess!" , True , white)
+                elif textinput.value != "Michael Jackson" and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                    text = smallfont.render("Incorrect Guess!" , True , white)
             randomSong(events, result, songDict, text)
         elif state == "nextSong":
             song_open = False
