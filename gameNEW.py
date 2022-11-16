@@ -127,6 +127,8 @@ def loop():
                 songTitle = list(songDict)[randomNum]
                 songLink = list(songDict.values())[randomNum]
                 text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Score: " + str(score), True , white)
+                print(songTitle)
+                print(songLink)
                 webbrowser.open(str(songLink))
                 del songDict[songTitle]
                 song_open = True
@@ -181,8 +183,6 @@ def onePlayer(events):
     curr_artist = textinput.value
     button("Random Song", 270, 470, 290, 50, color_dark, color_light, "randomSong")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
-    
-        
 
 def twoPlayer():
     textTwoPlay = smallfont.render("game started with 2 players" , True , white)
