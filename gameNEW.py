@@ -6,6 +6,29 @@ import spotipy_artist
 import webbrowser
 import random
   
+"""
+Artists that work with 10 songs:
+1. Nothing But Thieves
+2. Men I trust
+3. Artic Monkeys
+4. Phish
+5. Michael Jackson
+6. Cigarettes After Sex
+7. The Neighbourhood
+8. Five Finger Death Punch
+9. Coldplay
+10. Red Hot Chilli Peppers
+11. Jimmy Hendrix
+12. Glue Trip
+13. City and Colour
+14. Halestorm
+15. Diiv
+16. Green Day
+17. Crumb
+18. Peach Pit
+"""
+
+
 # initializing the constructor
 pygame.init()
 clock = pygame.time.Clock()
