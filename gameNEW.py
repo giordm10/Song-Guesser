@@ -212,8 +212,9 @@ def setting():
 def gameOver():
     gameOverText = smallfont.render("GAME OVER", True, white)
     gameDisplay.blit(gameOverText, ((970+(50/2)), (100+(50/2))))
-    scorerText = smallfont.render("Score:", True, white)
-    gameDisplay.blit(scorerText + " " + str(score), ((500+(50/2)), (300+(50/2))))
+    scorerText = smallfont.render("Score: " + str(score), True, white)
+    gameDisplay.blit(scorerText, ((500+(50/2)), (300+(50/2))))
+    button("Main Menu", 270, 470, 130, 50, color_dark, color_light, "mainMenu")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
 start()
