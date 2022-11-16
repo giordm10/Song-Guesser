@@ -121,7 +121,7 @@ def loop():
                 result = spotipy_artist.get_artist(curr_artist)
                 songDict = spotipy_artist.show_artist_top_tracks(result)
                 list_generated = True
-            if(not song_open):
+            if(not song_open and len(songDict) != 0):
                 num_options = len(songDict) - 1
                 randomNum = random.randint(0,num_options)
                 songTitle = list(songDict)[randomNum]
@@ -130,6 +130,10 @@ def loop():
                 webbrowser.open(str(songLink))
                 del songDict[songTitle]
                 song_open = True
+            if(len(songDict) == 0):
+                song_open = False
+                list_generated = False
+                state = "mainMenu"
             for event in events:
                 if textinput.value.lower() == songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     text = smallfont.render("Correct Guess!\nScore: " + str(score) , True , white)
