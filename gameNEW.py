@@ -126,18 +126,16 @@ def loop():
                 randomNum = random.randint(0,num_options)
                 songTitle = list(songDict)[randomNum]
                 songLink = list(songDict.values())[randomNum]
-                text = smallfont.render("Type the name of the song and click enter.    Score: " + str(score), True , white)
+                text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Score: " + str(score), True , white)
                 webbrowser.open(str(songLink))
-                print("before: ", songDict.keys())
                 del songDict[songTitle]
-                print("after: ", songDict.keys())
                 song_open = True
             for event in events:
                 if textinput.value.lower() == songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    text = smallfont.render("Correct Guess!    Score: " + str(score) , True , white)
+                    text = smallfont.render("Correct Guess!\nScore: " + str(score) , True , white)
                     score += 1
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    text = smallfont.render("Incorrect Guess!    Score: " + str(score) , True , white)
+                    text = smallfont.render("Incorrect Guess!\nScore: " + str(score) , True , white)
             randomSong(events, text)
         elif state == "nextSong":
             song_open = False
@@ -176,7 +174,7 @@ def randomSong(events, text):
 
 def onePlayer(events):
     global curr_artist
-    textOnePlay = smallfont.render("Enter an artist for 1 player", True , white)
+    textOnePlay = smallfont.render("Enter an artist for 1 player. Punctuation is needed but capitalization is not.", True , white)
     gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
     textinput.update(events)
     gameDisplay.blit(textinput.surface, (300, 300))
