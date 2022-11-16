@@ -116,6 +116,8 @@ def loop():
             onePlayer(events)
         elif state == "twoPlayer":
             twoPlayer()
+        elif state == "gameOver":
+            gameOver()
         elif state == "randomSong":
             if(not list_generated):
                 result = spotipy_artist.get_artist(curr_artist)
@@ -133,7 +135,7 @@ def loop():
             if(len(songDict) == 0):
                 song_open = False
                 list_generated = False
-                state = "mainMenu"
+                state = "gameOver"
             for event in events:
                 if textinput.value.lower() == songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     text = smallfont.render("Correct Guess!\nScore: " + str(score) , True , white)
@@ -202,5 +204,12 @@ def setting():
     gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
     button("Main Menu", 670, 470, 130, 50, color_dark, color_light, "mainMenu")
     button("Quit", 0, 470, 130, 50, color_dark, color_light, end)
+
+def gameOver():
+    gameOverText = smallfont.render("GAME OVER", True, white)
+    gameDisplay.blit(gameOverText, ((970+(50/2)), (100+(50/2))))
+    scorerText = smallfont.render("Score:", True, white)
+    gameDisplay.blit(scorerText + " " + str(score), ((500+(50/2)), (300+(50/2))))
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
 start()
