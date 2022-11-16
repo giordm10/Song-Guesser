@@ -96,6 +96,7 @@ def loop():
     global list_generated
     global curr_artist
     global score
+    scoreFlag = False
     running = True
     result = ""
     songDict = ""
@@ -131,6 +132,7 @@ def loop():
                 text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Score: " + str(score), True , white)
                 webbrowser.open(str(songLink))
                 del songDict[songTitle]
+                scoreFlag = False
                 song_open = True
             if(len(songDict) == 0):
                 song_open = False
@@ -138,8 +140,10 @@ def loop():
                 state = "gameOver"
             for event in events:
                 if textinput.value.lower() == songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                    if(not scoreFlag):
+                        score += 1
+                        scoreFlag = True
                     text = smallfont.render("Correct Guess!\nScore: " + str(score) , True , white)
-                    score += 1
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     text = smallfont.render("Incorrect Guess!\nScore: " + str(score) , True , white)
             randomSong(events, text)
