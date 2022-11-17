@@ -26,6 +26,8 @@ Artists that work with 10 songs:
 16. Green Day
 17. Crumb
 18. Peach Pit
+19. The Fray
+20. Lil Nas X
 """
 
 
@@ -188,6 +190,7 @@ def loop():
                 text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Player 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
                 webbrowser.open(str(songLink))
                 del songDict[songTitle]
+                scoreFlag = False
                 song_open = True
             if(len(songDict) == 0):
                 song_open = False
@@ -195,13 +198,17 @@ def loop():
                 state = "mainMenu"
             for event in events:
                 if textinput.value.lower() == songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    text = smallfont.render("Correct Guess!\nPlayer 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
                     if turn == 1:
-                        score += 1
-                        turn = 2
+                        if(not scoreFlag):
+                            scoreFlag = True
+                            score += 1
+                            turn = 2
                     elif turn == 2:
-                        scorePlayer2 +=1
-                        turn = 1
+                        if(not scoreFlag):
+                            scoreFlag = True
+                            scorePlayer2 +=1
+                            turn = 1
+                    text = smallfont.render("Correct Guess!\nPlayer 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     text = smallfont.render("Incorrect Guess!\nPlayer 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
                     if turn == 1:
