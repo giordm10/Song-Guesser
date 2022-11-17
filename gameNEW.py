@@ -6,6 +6,29 @@ import spotipy_artist
 import webbrowser
 import random
   
+"""
+Artists that work with 10 songs:
+1. Nothing But Thieves
+2. Men I trust
+3. Artic Monkeys
+4. Phish
+5. Michael Jackson
+6. Cigarettes After Sex
+7. The Neighbourhood
+8. Five Finger Death Punch
+9. Coldplay
+10. Red Hot Chilli Peppers
+11. Jimmy Hendrix
+12. Glue Trip
+13. City and Colour
+14. Halestorm
+15. Diiv
+16. Green Day
+17. Crumb
+18. Peach Pit
+"""
+
+
 # initializing the constructor
 pygame.init()
 clock = pygame.time.Clock()
@@ -59,8 +82,6 @@ list_generated = False
 curr_artist = ""
 songDict = {}
 score = 0
-scorePlayer2 = 0
-turn = 1
 
 #x - x coordinate of button
 #y - y coordinate of button
@@ -98,8 +119,7 @@ def loop():
     global list_generated
     global curr_artist
     global score
-    global scorePlayer2
-    global turn
+    scoreFlag = False
     running = True
     result = ""
     songDict = ""
@@ -119,29 +139,10 @@ def loop():
         elif state == "onePlayer":
             onePlayer(events)
         elif state == "twoPlayer":
-            twoPlayer(events)
+            twoPlayer()
+        elif state == "gameOver":
+            gameOver()
         elif state == "randomSong":
-            if(not list_generated):
-                result = spotipy_artist.get_artist(curr_artist)
-                songDict = spotipy_artist.show_artist_top_tracks(result)
-                list_generated = True
-            if(not song_open):
-                num_options = len(songDict) - 1
-                randomNum = random.randint(0,num_options)
-                songTitle = list(songDict)[randomNum]
-                songLink = list(songDict.values())[randomNum]
-                text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Score: " + str(score), True , white)
-                webbrowser.open(str(songLink))
-                del songDict[songTitle]
-                song_open = True
-            for event in events:
-                if textinput.value.lower() == songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    text = smallfont.render("Correct Guess!\nScore: " + str(score) , True , white)
-                    score += 1
-                elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    text = smallfont.render("Incorrect Guess!\nScore: " + str(score) , True , white)
-            randomSong(events, text)
-        elif state == "randomSong2":
             if(not list_generated):
                 result = spotipy_artist.get_artist(curr_artist)
                 songDict = spotipy_artist.show_artist_top_tracks(result)
@@ -151,36 +152,27 @@ def loop():
                 randomNum = random.randint(0,num_options)
                 songTitle = list(songDict)[randomNum]
                 songLink = list(songDict.values())[randomNum]
-                text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Player 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
+                text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Score: " + str(score), True , white)
                 webbrowser.open(str(songLink))
                 del songDict[songTitle]
+                scoreFlag = False
                 song_open = True
             if(len(songDict) == 0):
                 song_open = False
                 list_generated = False
-                state = "mainMenu"
+                state = "gameOver"
             for event in events:
                 if textinput.value.lower() == songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    text = smallfont.render("Correct Guess!\nPlayer 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
-                    if turn == 1:
+                    if(not scoreFlag):
                         score += 1
-                        turn = 2
-                    elif turn == 2:
-                        scorePlayer2 +=1
-                        turn = 1
+                        scoreFlag = True
+                    text = smallfont.render("Correct Guess!\nScore: " + str(score) , True , white)
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    text = smallfont.render("Incorrect Guess!\nPlayer 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
-                    if turn == 1:
-                        turn = 2
-                    elif turn == 2:
-                        turn = 1
-            randomSong2(events, text)
+                    text = smallfont.render("Incorrect Guess!\nScore: " + str(score) , True , white)
+            randomSong(events, text)
         elif state == "nextSong":
             song_open = False
             state = "randomSong"
-        elif state == "nextSong2":
-            song_open = False
-            state = "randomSong2"
         clock.tick(30)
         pygame.display.update()
         
@@ -211,15 +203,7 @@ def randomSong(events, text):
     textinput.update(events)
     # Blit its surface onto the screen
     gameDisplay.blit(textinput.surface, (300, 300))
-
-
-def randomSong2(events, text):
-    gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
-    button("Next song", 40, 470, 130, 50, color_dark, color_light, "nextSong2")
-    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
-    textinput.update(events)
-    # Blit its surface onto the screen
-    gameDisplay.blit(textinput.surface, (300, 300))
+    
 
 def onePlayer(events):
     global curr_artist
@@ -232,15 +216,11 @@ def onePlayer(events):
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
     
         
-def twoPlayer(events):
-   global curr_artist
-   textTwoPlay = smallfont.render("Enter an artist for 2 players. Punctuation is needed but capitalization is not.", True , white)
-   gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
-   textinput.update(events)
-   gameDisplay.blit(textinput.surface, (300, 300))
-   curr_artist = textinput.value
-   button("Random Song2", 270, 470, 290, 50, color_dark, color_light, "randomSong2")
-   button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+
+def twoPlayer():
+    textTwoPlay = smallfont.render("game started with 2 players" , True , white)
+    gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
 def title():
     titleText = largefont.render("Guess That Song!" , True , white)
@@ -251,5 +231,13 @@ def setting():
     gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
     button("Main Menu", 670, 470, 130, 50, color_dark, color_light, "mainMenu")
     button("Quit", 0, 470, 130, 50, color_dark, color_light, end)
+
+def gameOver():
+    gameOverText = smallfont.render("GAME OVER", True, white)
+    gameDisplay.blit(gameOverText, ((970+(50/2)), (100+(50/2))))
+    scorerText = smallfont.render("Score: " + str(score), True, white)
+    gameDisplay.blit(scorerText, ((500+(50/2)), (300+(50/2))))
+    button("Main Menu", 270, 470, 130, 50, color_dark, color_light, "mainMenu")
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
 start()
