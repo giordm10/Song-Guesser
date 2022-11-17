@@ -188,6 +188,12 @@ def loop():
                 songTitle = list(songDict)[randomNum]
                 songLink = list(songDict.values())[randomNum]
                 text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Player 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
+                player1Turn = smallfont.render("Player 1's turn", True, white)
+                player2Turn = smallfont.render("Player 2's turn", True, white)
+                if turn == 1:
+                    turnText = player1Turn
+                elif turn == 2:
+                    turnText = player2Turn
                 webbrowser.open(str(songLink))
                 del songDict[songTitle]
                 scoreFlag = False
@@ -202,12 +208,10 @@ def loop():
                         if(not scoreFlag):
                             scoreFlag = True
                             score += 1
-                            turn = 2
                     elif turn == 2:
                         if(not scoreFlag):
                             scoreFlag = True
                             scorePlayer2 +=1
-                            turn = 1
                     text = smallfont.render("Correct Guess!\nPlayer 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     text = smallfont.render("Incorrect Guess!\nPlayer 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
@@ -215,12 +219,16 @@ def loop():
                         turn = 2
                     elif turn == 2:
                         turn = 1
-            randomSong2(events, text)
+            randomSong2(events, text, turnText)
         elif state == "nextSong":
             song_open = False
             state = "randomSong"
         elif state == "nextSong2":
             song_open = False
+            if turn == 1:
+                turn = 2
+            elif turn == 2:
+                turn = 1
             state = "randomSong2"
         clock.tick(30)
         pygame.display.update()
@@ -254,8 +262,9 @@ def randomSong(events, text):
     gameDisplay.blit(textinput.surface, (300, 300))
     
 
-def randomSong2(events, text):
+def randomSong2(events, text, turnText):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
+    gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
     button("Next song", 40, 470, 130, 50, color_dark, color_light, "nextSong2")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
     textinput.update(events)
@@ -277,7 +286,9 @@ def onePlayer(events):
 def twoPlayer(events):
    global curr_artist
    textTwoPlay = smallfont.render("Enter an artist for 2 players. Punctuation is needed but capitalization is not.", True , white)
+   startTurn = smallfont.render("Player 1's turn", True, white)
    gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
+   gameDisplay.blit(startTurn, ((0+(50/2)), (200+(50/2))))
    textinput.update(events)
    gameDisplay.blit(textinput.surface, (300, 300))
    curr_artist = textinput.value
