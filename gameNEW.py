@@ -26,6 +26,8 @@ Artists that work with 10 songs:
 16. Green Day
 17. Crumb
 18. Peach Pit
+19. The Fray
+20. Lil Nas X
 """
 
 
