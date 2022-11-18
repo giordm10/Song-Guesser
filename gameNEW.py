@@ -18,7 +18,7 @@ Artists that work with 10 songs:
 8. Five Finger Death Punch
 9. Coldplay
 10. Red Hot Chilli Peppers
-11. Jimmy Hendrix
+11. Jimi Hendrix
 12. Glue Trip
 13. City and Colour
 14. Halestorm
@@ -37,8 +37,10 @@ clock = pygame.time.Clock()
 pygame.display.set_caption('Guess That Song')
 pygame.key.set_repeat(500, 50) # allow user to hold down key and detect it
 
-#make textbok
+#make textbox
 textinput = pygame_textinput.TextInputVisualizer()
+textinput.font_color = (255, 255, 255)
+textinput.cursor_color = (255, 255, 255)
 
 running = True
 settingMenu = False
@@ -143,9 +145,13 @@ def loop():
         elif state == "settingsMenu":
             setting()
         elif state == "onePlayer":
+            score = 0
             onePlayer(events)
         elif state == "twoPlayer":
-             twoPlayer(events)
+            score = 0
+            scorePlayer2 = 0
+            turn = 1
+            twoPlayer(events)
         elif state == "gameOver":
             gameOver()
         elif state == "randomSong":
@@ -163,10 +169,7 @@ def loop():
                 del songDict[songTitle]
                 scoreFlag = False
                 song_open = True
-            if(len(songDict) == 0):
-                song_open = False
-                list_generated = False
-                state = "gameOver"
+            
             for event in events:
                 if textinput.value.lower() == songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     if(not scoreFlag):
@@ -222,14 +225,22 @@ def loop():
             randomSong2(events, text, turnText)
         elif state == "nextSong":
             song_open = False
-            state = "randomSong"
+            if(len(songDict) == 0):
+                list_generated = False
+                state = "gameOver"
+            else:
+                state = "randomSong"
         elif state == "nextSong2":
             song_open = False
             if turn == 1:
                 turn = 2
             elif turn == 2:
                 turn = 1
-            state = "randomSong2"
+            if(len(songDict) == 0):
+                list_generated = False
+                state = "gameOver"
+            else:
+                state = "randomSong2"
         clock.tick(30)
         pygame.display.update()
         
