@@ -120,6 +120,7 @@ def loop():
             if(not list_generated):
                 result = spotipy_artist.get_artist(curr_artist)
                 songDict = spotipy_artist.show_artist_top_tracks(result)
+                print(songDict)
                 list_generated = True
             if(not song_open and len(songDict) != 0):
                 num_options = len(songDict) - 1
