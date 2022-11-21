@@ -2,6 +2,7 @@ import pygame
 import pygame_textinput
 import sys
 import spotipy
+import lb
 import spotipy_artist
 import webbrowser
 import random
@@ -144,6 +145,8 @@ def loop():
             mainMenu()
         elif state == "settingsMenu":
             setting()
+        elif state == "leaderboard":
+            leaderboard()
         elif state == "onePlayer":
             score = 0
             onePlayer(events)
@@ -256,7 +259,8 @@ def mainMenu():
     title()
     button("Start 2 Player", 670, 360, 230, 50, color_dark, color_light, "twoPlayer")
     button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, "onePlayer")
-    button("Settings", 400, 470, 130, 50, color_dark, color_light, "settingsMenu")
+    button("Leaderboard", 400, 470, 230, 50, color_dark, color_light, "leaderboard")
+    button("Settings", 670, 470, 230, 50, color_dark, color_light, "settingsMenu")
     button("Quit", 0, 470, 130, 50, color_dark, color_light, end)
               
     #make switch case that checks current state, then calls each state's respective function. should be alot cleaner code
@@ -326,5 +330,11 @@ def gameOver():
     gameDisplay.blit(scorerText, ((520+(50/2)), (150+(50/2))))
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, "mainMenu")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+
+def leaderboard():
+    lb.read_text()
+    gameOverText = smallfont.render("Leaderboard", True, white)
+    gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
+    button("Main Menu", 270, 470, 200, 50, color_dark, color_light, "mainMenu")
 
 start()
