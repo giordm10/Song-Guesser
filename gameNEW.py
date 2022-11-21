@@ -294,7 +294,7 @@ def onePlayer(events):
     textinput.update(events)
     gameDisplay.blit(textinput.surface, (300, 300))
     curr_artist = textinput.value
-    button("Random Song", 270, 470, 290, 50, color_dark, color_light, "randomSong")
+    button("Start", 270, 470, 290, 50, color_dark, color_light, "randomSong")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
 def twoPlayer(events):
@@ -306,7 +306,7 @@ def twoPlayer(events):
    textinput.update(events)
    gameDisplay.blit(textinput.surface, (300, 300))
    curr_artist = textinput.value
-   button("Random Song", 270, 470, 290, 50, color_dark, color_light, "randomSong2")
+   button("Start", 270, 470, 290, 50, color_dark, color_light, "randomSong2")
    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
 def title():
