@@ -175,9 +175,9 @@ def loop():
                     if(not scoreFlag):
                         score += 1
                         scoreFlag = True
-                    text = smallfont.render("Correct Guess!\nScore: " + str(score) , True , white)
+                    text = smallfont.render("Correct Guess!    Score: " + str(score) , True , white)
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    text = smallfont.render("Incorrect Guess!\nScore: " + str(score) , True , white)
+                    text = smallfont.render("Incorrect Guess!    Score: " + str(score) , True , white)
             randomSong(events, text)
 
         elif state == "randomSong2":
@@ -215,15 +215,16 @@ def loop():
                         if(not scoreFlag):
                             scoreFlag = True
                             scorePlayer2 +=1
-                    text = smallfont.render("Correct Guess!\nPlayer 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
+                    text = smallfont.render("Correct Guess!    Player 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    text = smallfont.render("Incorrect Guess!\nPlayer 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
+                    text = smallfont.render("Incorrect Guess!    Player 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
                     if turn == 1:
                         turn = 2
                     elif turn == 2:
                         turn = 1
             randomSong2(events, text, turnText)
         elif state == "nextSong":
+            clock.tick(30)
             song_open = False
             if(len(songDict) == 0):
                 list_generated = False
@@ -231,6 +232,7 @@ def loop():
             else:
                 state = "randomSong"
         elif state == "nextSong2":
+            clock.tick(30)
             song_open = False
             if turn == 1:
                 turn = 2
@@ -258,7 +260,7 @@ def mainMenu():
     
 def render():
     # fills the screen with a color
-    gameDisplay.fill((4,215,250))
+    gameDisplay.fill((4,107,153))
 
 def end():
     pygame.quit()
@@ -318,9 +320,9 @@ def setting():
 
 def gameOver():
     gameOverText = smallfont.render("GAME OVER", True, white)
-    gameDisplay.blit(gameOverText, ((970+(50/2)), (100+(50/2))))
+    gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
     scorerText = smallfont.render("Score: " + str(score), True, white)
-    gameDisplay.blit(scorerText, ((500+(50/2)), (300+(50/2))))
+    gameDisplay.blit(scorerText, ((520+(50/2)), (150+(50/2))))
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, "mainMenu")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
