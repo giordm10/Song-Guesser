@@ -158,6 +158,7 @@ def loop():
             if(not list_generated):
                 result = spotipy_artist.get_artist(curr_artist)
                 songDict = spotipy_artist.show_artist_top_tracks(result)
+                print(songDict)
                 list_generated = True
             if(not song_open and len(songDict) != 0):
                 num_options = len(songDict) - 1
@@ -165,6 +166,8 @@ def loop():
                 songTitle = list(songDict)[randomNum]
                 songLink = list(songDict.values())[randomNum]
                 text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Score: " + str(score), True , white)
+                print(songTitle)
+                print(songLink)
                 webbrowser.open(str(songLink))
                 del songDict[songTitle]
                 scoreFlag = False
@@ -293,8 +296,6 @@ def onePlayer(events):
     curr_artist = textinput.value
     button("Random Song", 270, 470, 290, 50, color_dark, color_light, "randomSong")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
-    
-        
 
 def twoPlayer(events):
    global curr_artist

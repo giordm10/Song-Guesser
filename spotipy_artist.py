@@ -47,7 +47,6 @@ def get_artist(name):
 
 def show_artist_top_tracks(artist):
     results = sp.artist_top_tracks(artist['id'], country="US")
-    # print(results)
     results2 = results['tracks']
     songDict = {}
     for songIterable in range(0,len(results2)):
