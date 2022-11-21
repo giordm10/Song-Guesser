@@ -119,6 +119,31 @@ def button(msg,x,y,w,h,ic,ac,events, action=None):
     text = smallfont.render(msg , True , white)
     gameDisplay.blit(text, ( (x+(w/5.5)), (y+(h/3)) ))
 
+
+def selectArtist(msg,x,y,w,h,ic,ac,events, artist, action=None):
+    clicked = False
+    global curr_artist
+    for event in events:
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            clicked = True
+    global state
+    mouse = pygame.mouse.get_pos()
+    if x+w > mouse[0] > x and y+h > mouse[1] > y:
+        pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
+        
+        if clicked and action != None:
+            if isinstance(action, str) == True:
+                state = action
+            else:
+                action()
+    else:
+        pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
+
+    text = smallfont.render(msg , True , white)
+    gameDisplay.blit(text, ( (x+(w/5.5)), (y+(h/3)) ))
+    curr_artist = artist
+
+
 def start():
     loop()
     end()
@@ -309,9 +334,10 @@ def onePlayer(events):
     global curr_artist
     textOnePlay = smallfont.render("Enter an artist for 1 player. Punctuation is needed but capitalization is not.", True , white)
     gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
-    textinput.update(events)
+    #textinput.update(events)
     gameDisplay.blit(textinput.surface, (300, 300))
-    curr_artist = textinput.value
+    selectArtist("Halestorm", 150, 260, 150, 50, color_dark, color_light, events, "halestorm", "randomSong")
+    #curr_artist = textinput.value
     button("Start", 270, 470, 150, 50, color_dark, color_light, events, "randomSong")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
 
