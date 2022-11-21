@@ -6,6 +6,8 @@ import lb
 import spotipy_artist
 import webbrowser
 import random
+
+# https://stackoverflow.com/questions/21629727/how-to-delay-pygame-key-get-pressed
   
 """
 Artists that work with 10 songs:
@@ -335,6 +337,6 @@ def leaderboard():
     lb.read_text()
     gameOverText = smallfont.render("Leaderboard", True, white)
     gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
-    button("Main Menu", 270, 470, 200, 50, color_dark, color_light, "mainMenu")
+    button("Main Menu", 270, 470, 200, 50, color_dark, color_light, "mainMenu", )
 
 start()
