@@ -266,7 +266,7 @@ def end():
 
 def randomSong(events, text):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
-    button("Next song", 40, 470, 130, 50, color_dark, color_light, "nextSong")
+    button("Next song", 40, 470, 200, 50, color_dark, color_light, "nextSong")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
     textinput.update(events)
     # Blit its surface onto the screen
@@ -276,7 +276,7 @@ def randomSong(events, text):
 def randomSong2(events, text, turnText):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
-    button("Next song", 40, 470, 130, 50, color_dark, color_light, "nextSong2")
+    button("Next song", 40, 470, 200, 50, color_dark, color_light, "nextSong2")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
     textinput.update(events)
     # Blit its surface onto the screen
@@ -313,7 +313,7 @@ def title():
 def setting():
     settingText = smallfont.render("Setting menu", True, white)
     gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
-    button("Main Menu", 670, 470, 130, 50, color_dark, color_light, "mainMenu")
+    button("Main Menu", 670, 470, 200, 50, color_dark, color_light, "mainMenu")
     button("Quit", 0, 470, 130, 50, color_dark, color_light, end)
 
 def gameOver():
@@ -321,7 +321,7 @@ def gameOver():
     gameDisplay.blit(gameOverText, ((970+(50/2)), (100+(50/2))))
     scorerText = smallfont.render("Score: " + str(score), True, white)
     gameDisplay.blit(scorerText, ((500+(50/2)), (300+(50/2))))
-    button("Main Menu", 270, 470, 130, 50, color_dark, color_light, "mainMenu")
+    button("Main Menu", 270, 470, 200, 50, color_dark, color_light, "mainMenu")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
 start()
