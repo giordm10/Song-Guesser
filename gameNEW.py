@@ -6,6 +6,8 @@ import lb
 import spotipy_artist
 import webbrowser
 import random
+
+# https://stackoverflow.com/questions/21629727/how-to-delay-pygame-key-get-pressed
   
 """
 Artists that work with 10 songs:
