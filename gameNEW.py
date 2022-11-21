@@ -45,6 +45,7 @@ textinput.cursor_color = (255, 255, 255)
 running = True
 settingMenu = False
 state = "mainMenu"
+firstGuess = True
   
 # screen resolution
 res = (1280,720)
@@ -127,6 +128,7 @@ def loop():
     global score
     global scorePlayer2
     global turn
+    global firstGuess
     scoreFlag = False
     running = True
     result = ""
@@ -153,8 +155,12 @@ def loop():
             turn = 1
             twoPlayer(events)
         elif state == "gameOver":
+            firstGuess = True
             gameOver()
         elif state == "randomSong":
+            if(firstGuess):
+                firstGuess = False
+                textinput.value = ""
             if(not list_generated):
                 result = spotipy_artist.get_artist(curr_artist)
                 songDict = spotipy_artist.show_artist_top_tracks(result)
@@ -184,6 +190,9 @@ def loop():
             randomSong(events, text)
 
         elif state == "randomSong2":
+            if(firstGuess):
+                firstGuess = False
+                textinput.value = ""
             if(not list_generated):
                 result = spotipy_artist.get_artist(curr_artist)
                 songDict = spotipy_artist.show_artist_top_tracks(result)
@@ -227,6 +236,7 @@ def loop():
                         turn = 1
             randomSong2(events, text, turnText)
         elif state == "nextSong":
+            textinput.value = ""
             clock.tick(30)
             song_open = False
             if(len(songDict) == 0):
@@ -235,6 +245,7 @@ def loop():
             else:
                 state = "randomSong"
         elif state == "nextSong2":
+            textinput.value = ""
             clock.tick(30)
             song_open = False
             if turn == 1:
@@ -294,7 +305,7 @@ def onePlayer(events):
     textinput.update(events)
     gameDisplay.blit(textinput.surface, (300, 300))
     curr_artist = textinput.value
-    button("Random Song", 270, 470, 290, 50, color_dark, color_light, "randomSong")
+    button("Start", 270, 470, 150, 50, color_dark, color_light, "randomSong")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
 def twoPlayer(events):
@@ -306,7 +317,7 @@ def twoPlayer(events):
    textinput.update(events)
    gameDisplay.blit(textinput.surface, (300, 300))
    curr_artist = textinput.value
-   button("Random Song", 270, 470, 290, 50, color_dark, color_light, "randomSong2")
+   button("Start", 270, 470, 150, 50, color_dark, color_light, "randomSong2")
    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
 def title():
