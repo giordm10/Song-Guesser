@@ -178,9 +178,9 @@ def loop():
                     if(not scoreFlag):
                         score += 1
                         scoreFlag = True
-                    text = smallfont.render("Correct Guess!\nScore: " + str(score) , True , white)
+                    text = smallfont.render("Correct Guess!    Score: " + str(score) , True , white)
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    text = smallfont.render("Incorrect Guess!\nScore: " + str(score) , True , white)
+                    text = smallfont.render("Incorrect Guess!    Score: " + str(score) , True , white)
             randomSong(events, text)
 
         elif state == "randomSong2":
