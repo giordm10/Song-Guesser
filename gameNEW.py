@@ -271,7 +271,7 @@ def end():
 
 def randomSong(events, text):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
-    button("Next song", 40, 470, 200, 50, color_dark, color_light, "nextSong")
+    button("Next song", 40, 470, 100, 50, color_dark, color_light, "nextSong")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
     textinput.update(events)
     # Blit its surface onto the screen
@@ -281,7 +281,7 @@ def randomSong(events, text):
 def randomSong2(events, text, turnText):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
-    button("Next song", 40, 470, 200, 50, color_dark, color_light, "nextSong2")
+    button("Next song", 40, 470, 100, 50, color_dark, color_light, "nextSong2")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
     textinput.update(events)
     # Blit its surface onto the screen
