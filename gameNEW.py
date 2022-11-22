@@ -420,8 +420,6 @@ def gameOver(events):
     gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
     scorerText = smallfont.render("Score: " + str(score), True, white)
     gameDisplay.blit(scorerText, ((520+(50/2)), (150+(50/2))))
-    textinput.update(events)
-    gameDisplay.blit(textinput.surface, (300, 300))
     leaderboardInformation = False
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, "mainMenu")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
