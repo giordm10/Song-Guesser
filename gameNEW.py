@@ -235,7 +235,7 @@ def loop():
                 randomNum = random.randint(0,num_options)
                 songTitle = list(songDict)[randomNum]
                 songLink = list(songDict.values())[randomNum]
-                text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Player 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
+                text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Player 1 Score: " + str(score) + ", Player 2 Score: " + str(scorePlayer2), True , white)
                 player1Turn = smallfont.render("Player 1's turn", True, white)
                 player2Turn = smallfont.render("Player 2's turn", True, white)
                 if turn == 1:
@@ -260,9 +260,9 @@ def loop():
                         if(not scoreFlag):
                             scoreFlag = True
                             scorePlayer2 +=1
-                    text = smallfont.render("Correct Guess!    Player 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
+                    text = smallfont.render("Correct Guess!    Player 1 Score: " + str(score) + ", Player 2 Score: " + str(scorePlayer2), True , white)
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    text = smallfont.render("Incorrect Guess!    Player 1 Score: " + str(score) + ", Player 2 score: " + str(scorePlayer2), True , white)
+                    text = smallfont.render("Incorrect Guess!    Player 1 Score: " + str(score) + ", Player 2 Score: " + str(scorePlayer2), True , white)
                     if turn == 1:
                         turn = 2
                     elif turn == 2:
@@ -368,7 +368,6 @@ def twoPlayer(events):
    textTwoPlay = smallfont.render("Enter an artist for 2 players. Punctuation is needed but capitalization is not.", True , white)
    startTurn = smallfont.render("Player 1's turn", True, white)
    gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
-   gameDisplay.blit(startTurn, ((0+(50/2)), (200+(50/2))))
    gameDisplay.blit(startTurn, ((0+(50/2)), (150+(50/2))))
 #    textinput.update(events)
    gameDisplay.blit(textinput.surface, (300, 300))
@@ -402,20 +401,20 @@ def title():
     gameDisplay.blit(titleText, ((370+(50/2)), (100+(50/2))))
 
 def setting(events):
-    settingText = smallfont.render("Setting menu", True, white)
+    settingText = smallfont.render("Setting Menu", True, white)
     gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
     button("Main Menu", 670, 470, 200, 50, color_dark, color_light, events, "mainMenu")
     button("Quit", 0, 470, 130, 50, color_dark, color_light, events, end)
 
-def gameOver():
+def gameOver(events):
     global leaderboardInformation
     gameOverText = smallfont.render("GAME OVER", True, white)
     gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
     scorerText = smallfont.render("Score: " + str(score), True, white)
     gameDisplay.blit(scorerText, ((520+(50/2)), (150+(50/2))))
     leaderboardInformation = False
-    button("Main Menu", 270, 470, 200, 50, color_dark, color_light, "mainMenu")
-    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+    button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, "mainMenu")
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
 
 def leaderboard(events):
     global leaderboardInformation

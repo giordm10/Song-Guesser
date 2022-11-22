@@ -21,11 +21,6 @@ def get_args():
 
 
 def get_artist(name):
-    print(name)
-    print(name)
-    print(name)
-    print(name)
-    
     results = sp.search(q='artist:' + name, type='artist')
     items = results['artists']['items']
     if len(items) > 0:
