@@ -6,6 +6,8 @@ import lb
 import spotipy_artist
 import webbrowser
 import random
+
+# https://stackoverflow.com/questions/21629727/how-to-delay-pygame-key-get-pressed
   
 """
 Artists that work with 10 songs:
@@ -91,6 +93,8 @@ songDict = {}
 score = 0
 scorePlayer2 = 0
 turn = 1
+leaderboardInformation = False
+infoDict = dict()
 
 #x - x coordinate of button
 #y - y coordinate of button
@@ -407,10 +411,39 @@ def setting(events):
     button("Quit", 0, 470, 130, 50, color_dark, color_light, events, end)
 
 def gameOver():
+    global leaderboardInformation
     gameOverText = smallfont.render("GAME OVER", True, white)
     gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
     scorerText = smallfont.render("Score: " + str(score), True, white)
     gameDisplay.blit(scorerText, ((520+(50/2)), (150+(50/2))))
+<<<<<<< HEAD
+    leaderboardInformation = False
+    button("Main Menu", 270, 470, 200, 50, color_dark, color_light, "mainMenu")
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+
+def leaderboard():
+    global leaderboardInformation
+    global infoDict
+    if(leaderboardInformation==False):
+        infoDict = lb.read_text()
+        leaderboardInformation = True
+    gameLeaderboardText = smallfont.render("Leaderboard - Top 20", True, white)
+    gameDisplay.blit(gameLeaderboardText, ((450+(50/2)), (100+(50/2))))
+    xAxis = 125
+    yAxis = 175
+    placement = 1
+    for person in infoDict:
+        personText = "#" + str(placement) + ": " + str(person) + " - Score: " + str(infoDict[person])
+        gameLeadboardInfo = smallfont.render(personText, True, white)
+        gameDisplay.blit(gameLeadboardInfo, (xAxis, yAxis))
+        if(placement == 10):
+            yAxis = 175
+            xAxis = 725
+        else:
+            yAxis += 40
+        placement += 1
+    button("Main Menu", 270, 590, 200, 50, color_dark, color_light, "mainMenu")
+=======
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, "mainMenu")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
 
@@ -419,5 +452,6 @@ def leaderboard(events):
     gameOverText = smallfont.render("Leaderboard", True, white)
     gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, "mainMenu")
+>>>>>>> tempBranch
 
 start()
