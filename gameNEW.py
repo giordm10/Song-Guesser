@@ -48,6 +48,7 @@ textinput.cursor_color = (255, 255, 255)
 running = True
 settingMenu = False
 state = "mainMenu"
+firstGuess = True
   
 # screen resolution
 res = (1280,720)
@@ -101,14 +102,17 @@ infoDict = dict()
 #ic - unhighlighted color
 #ac - highlighted color
 #action - action (function) on button click
-def button(msg,x,y,w,h,ic,ac,action=None):
+def button(msg,x,y,w,h,ic,ac,events, action=None):
+    clicked = False
+    for event in events:
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            clicked = True
     global state
     mouse = pygame.mouse.get_pos()
-    click = pygame.mouse.get_pressed()
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
         
-        if click[0] == 1 and action != None:
+        if clicked and action != None:
             if isinstance(action, str) == True:
                 state = action
             else:
@@ -132,6 +136,7 @@ def loop():
     global score
     global scorePlayer2
     global turn
+    global firstGuess
     scoreFlag = False
     running = True
     result = ""
@@ -146,11 +151,11 @@ def loop():
         render()
         
         if state == "mainMenu":
-            mainMenu()
+            mainMenu(events)
         elif state == "settingsMenu":
-            setting()
+            setting(events)
         elif state == "leaderboard":
-            leaderboard()
+            leaderboard(events)
         elif state == "onePlayer":
             score = 0
             onePlayer(events)
@@ -160,8 +165,12 @@ def loop():
             turn = 1
             twoPlayer(events)
         elif state == "gameOver":
-            gameOver()
+            gameOver(events)
+            firstGuess = True
         elif state == "randomSong":
+            if(firstGuess):
+                firstGuess = False
+                textinput.value = ""
             if(not list_generated):
                 result = spotipy_artist.get_artist(curr_artist)
                 songDict = spotipy_artist.show_artist_top_tracks(result)
@@ -191,6 +200,9 @@ def loop():
             randomSong(events, text)
 
         elif state == "randomSong2":
+            if(firstGuess):
+                firstGuess = False
+                textinput.value = ""
             if(not list_generated):
                 result = spotipy_artist.get_artist(curr_artist)
                 songDict = spotipy_artist.show_artist_top_tracks(result)
@@ -234,6 +246,7 @@ def loop():
                         turn = 1
             randomSong2(events, text, turnText)
         elif state == "nextSong":
+            textinput.value = ""
             clock.tick(30)
             song_open = False
             if(len(songDict) == 0):
@@ -242,6 +255,7 @@ def loop():
             else:
                 state = "randomSong"
         elif state == "nextSong2":
+            textinput.value = ""
             clock.tick(30)
             song_open = False
             if turn == 1:
@@ -258,14 +272,14 @@ def loop():
         
         
         
-def mainMenu():
+def mainMenu(events):
     settingMenu = False
     title()
-    button("Start 2 Player", 670, 360, 230, 50, color_dark, color_light, "twoPlayer")
-    button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, "onePlayer")
-    button("Leaderboard", 400, 470, 230, 50, color_dark, color_light, "leaderboard")
-    button("Settings", 670, 470, 230, 50, color_dark, color_light, "settingsMenu")
-    button("Quit", 0, 470, 130, 50, color_dark, color_light, end)
+    button("Start 2 Player", 670, 360, 230, 50, color_dark, color_light, events, "twoPlayer")
+    button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, events, "onePlayer")
+    button("Leaderboard", 400, 470, 230, 50, color_dark, color_light, events, "leaderboard")
+    button("Settings", 670, 470, 230, 50, color_dark, color_light, events, "settingsMenu")
+    button("Quit", 0, 470, 130, 50, color_dark, color_light, events, end)
               
     #make switch case that checks current state, then calls each state's respective function. should be alot cleaner code
     
@@ -279,8 +293,8 @@ def end():
 
 def randomSong(events, text):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
-    button("Next song", 40, 470, 200, 50, color_dark, color_light, "nextSong")
-    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+    button("Next song", 40, 470, 200, 50, color_dark, color_light, events, "nextSong")
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
     textinput.update(events)
     # Blit its surface onto the screen
     gameDisplay.blit(textinput.surface, (300, 300))
@@ -289,8 +303,8 @@ def randomSong(events, text):
 def randomSong2(events, text, turnText):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
-    button("Next song", 40, 470, 200, 50, color_dark, color_light, "nextSong2")
-    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+    button("Next song", 40, 470, 200, 50, color_dark, color_light, events, "nextSong2")
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
     textinput.update(events)
     # Blit its surface onto the screen
     gameDisplay.blit(textinput.surface, (300, 300))
@@ -302,8 +316,8 @@ def onePlayer(events):
     textinput.update(events)
     gameDisplay.blit(textinput.surface, (300, 300))
     curr_artist = textinput.value
-    button("Random Song", 270, 470, 290, 50, color_dark, color_light, "randomSong")
-    button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+    button("Start", 270, 470, 150, 50, color_dark, color_light, events, "randomSong")
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
 
 def twoPlayer(events):
    global curr_artist
@@ -314,18 +328,18 @@ def twoPlayer(events):
    textinput.update(events)
    gameDisplay.blit(textinput.surface, (300, 300))
    curr_artist = textinput.value
-   button("Random Song", 270, 470, 290, 50, color_dark, color_light, "randomSong2")
-   button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
+   button("Start", 270, 470, 150, 50, color_dark, color_light, events, "randomSong2")
+   button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
 
 def title():
     titleText = largefont.render("Guess That Song!" , True , white)
     gameDisplay.blit(titleText, ((370+(50/2)), (100+(50/2))))
 
-def setting():
+def setting(events):
     settingText = smallfont.render("Setting menu", True, white)
     gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
-    button("Main Menu", 670, 470, 200, 50, color_dark, color_light, "mainMenu")
-    button("Quit", 0, 470, 130, 50, color_dark, color_light, end)
+    button("Main Menu", 670, 470, 200, 50, color_dark, color_light, events, "mainMenu")
+    button("Quit", 0, 470, 130, 50, color_dark, color_light, events, end)
 
 def gameOver():
     global leaderboardInformation
@@ -333,6 +347,7 @@ def gameOver():
     gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
     scorerText = smallfont.render("Score: " + str(score), True, white)
     gameDisplay.blit(scorerText, ((520+(50/2)), (150+(50/2))))
+<<<<<<< HEAD
     leaderboardInformation = False
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, "mainMenu")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
@@ -359,5 +374,15 @@ def leaderboard():
             yAxis += 40
         placement += 1
     button("Main Menu", 270, 590, 200, 50, color_dark, color_light, "mainMenu")
+=======
+    button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, "mainMenu")
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
+
+def leaderboard(events):
+    lb.read_text()
+    gameOverText = smallfont.render("Leaderboard", True, white)
+    gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
+    button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, "mainMenu")
+>>>>>>> tempBranch
 
 start()
