@@ -120,10 +120,8 @@ def button(msg,x,y,w,h,ic,ac,events, action=None):
                 action()
     else:
         pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
-
     text = smallfont.render(msg , True , white)
     gameDisplay.blit(text, ( (x+(w/5.5)), (y+(h/3)) ))
-
 
 def selectArtist(msg,x,y,w,h,ic,ac,events, artist, action=None):
     clicked = False
@@ -135,7 +133,7 @@ def selectArtist(msg,x,y,w,h,ic,ac,events, artist, action=None):
     mouse = pygame.mouse.get_pos()
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
-        
+
         if clicked and action != None:
             curr_artist = artist
             if isinstance(action, str) == True:
@@ -147,8 +145,6 @@ def selectArtist(msg,x,y,w,h,ic,ac,events, artist, action=None):
 
     text = smallerfont.render(msg , True , white)
     gameDisplay.blit(text, ( (x+(w/5.5)), (y+(h/3)) ))
-    
-
 
 def start():
     loop()
@@ -201,7 +197,7 @@ def loop():
             if(not list_generated):
                 result = spotipy_artist.get_artist(curr_artist)
                 songDict = spotipy_artist.show_artist_top_tracks(result)
-                #print(songDict)
+                # print(songDict)
                 list_generated = True
             if(not song_open and len(songDict) != 0):
                 num_options = len(songDict) - 1
@@ -209,8 +205,8 @@ def loop():
                 songTitle = list(songDict)[randomNum]
                 songLink = list(songDict.values())[randomNum]
                 text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Score: " + str(score), True , white)
-                #print(songTitle)
-                #print(songLink)
+                # print(songTitle)
+                # print(songLink)
                 webbrowser.open(str(songLink))
                 del songDict[songTitle]
                 scoreFlag = False
@@ -338,9 +334,9 @@ def randomSong2(events, text, turnText):
 
 def onePlayer(events):
     global curr_artist
-    textOnePlay = smallfont.render("                  Enter an artist for 1 player. Punctuation is needed but capitalization is not.", True , white)
+    textOnePlay = smallfont.render("Enter an artist for 1 player. Punctuation is needed but capitalization is not.", True , white)
     gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
-    #textinput.update(events)
+    textinput.update(events)
     gameDisplay.blit(textinput.surface, (300, 300))
     selectArtist("Nothing But Thieves", 150, 220, 230, 50, color_dark, color_light, events, "Nothing But Thieves", "randomSong")
     selectArtist("Men I trust", 150, 280, 230, 50, color_dark, color_light, events, "Men I trust", "randomSong")
@@ -362,7 +358,7 @@ def onePlayer(events):
     selectArtist("Peach Pit", 900, 340, 230, 50, color_dark, color_light, events, "Peach Pit", "randomSong")
     selectArtist("The Fray", 900, 400, 230, 50, color_dark, color_light, events, "Coldplay", "randomSong")
     selectArtist("Lil Nas X", 900, 460, 230, 50, color_dark, color_light, events, "Lil Nas X", "randomSong")
-    #curr_artist = textinput.value
+    # curr_artist = textinput.value
     button("Start", 450, 570, 130, 50, color_dark, color_light, events, "randomSong")
     button("Back", 585, 570, 130, 50, color_dark, color_light, events, "mainMenu")
     button("Quit", 720, 570, 130, 50, color_dark, color_light, events, end)
@@ -372,10 +368,11 @@ def twoPlayer(events):
    textTwoPlay = smallfont.render("Enter an artist for 2 players. Punctuation is needed but capitalization is not.", True , white)
    startTurn = smallfont.render("Player 1's turn", True, white)
    gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
+   gameDisplay.blit(startTurn, ((0+(50/2)), (200+(50/2))))
    gameDisplay.blit(startTurn, ((0+(50/2)), (150+(50/2))))
-   #textinput.update(events)
+#    textinput.update(events)
    gameDisplay.blit(textinput.surface, (300, 300))
-   #curr_artist = textinput.value
+#    curr_artist = textinput.value
    selectArtist("Nothing But Thieves", 150, 220, 230, 50, color_dark, color_light, events, "Nothing But Thieves", "randomSong2")
    selectArtist("Men I trust", 150, 280, 230, 50, color_dark, color_light, events, "Men I trust", "randomSong2")
    selectArtist("Arctic Monkeys", 150, 340, 230, 50, color_dark, color_light, events, "Arctic Monkeys", "randomSong2")
@@ -416,12 +413,11 @@ def gameOver():
     gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
     scorerText = smallfont.render("Score: " + str(score), True, white)
     gameDisplay.blit(scorerText, ((520+(50/2)), (150+(50/2))))
-<<<<<<< HEAD
     leaderboardInformation = False
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, "mainMenu")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, end)
 
-def leaderboard():
+def leaderboard(events):
     global leaderboardInformation
     global infoDict
     if(leaderboardInformation==False):
@@ -442,16 +438,7 @@ def leaderboard():
         else:
             yAxis += 40
         placement += 1
-    button("Main Menu", 270, 590, 200, 50, color_dark, color_light, "mainMenu")
-=======
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, "mainMenu")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
-
-def leaderboard(events):
-    lb.read_text()
-    gameOverText = smallfont.render("Leaderboard", True, white)
-    gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
-    button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, "mainMenu")
->>>>>>> tempBranch
 
 start()
