@@ -2,6 +2,7 @@ import pygame
 import pygame_textinput
 import sys
 import spotipy
+import re
 import lb
 import spotipy_artist
 import webbrowser
@@ -221,7 +222,7 @@ def loop():
                 song_open = True
             
             for event in events:
-                if textinput.value.lower() == songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                if re.sub('[^A-Za-z0-9]+', '', textinput.value.lower()) == re.sub('[^A-Za-z0-9]+', '', songTitle.lower()) and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     if(not scoreFlag):
                         score += 1
                         scoreFlag = True
@@ -259,7 +260,7 @@ def loop():
                 list_generated = False
                 state = "mainMenu"
             for event in events:
-                if textinput.value.lower() == songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                if re.sub('[^A-Za-z0-9]+', '', textinput.value.lower()) == re.sub('[^A-Za-z0-9]+', '', songTitle.lower()) and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     if turn == 1:
                         if(not scoreFlag):
                             scoreFlag = True
@@ -342,7 +343,7 @@ def randomSong2(events, text, turnText):
 
 def onePlayer(events):
     global curr_artist
-    textOnePlay = smallfont.render("Select an artist for 1 player.", True , white)
+    textOnePlay = smallfont.render("Select an artist for 1 player. Capitalization and punctuation are NOT needed.", True , white)
     gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
     #textinput.update(events)
     #gameDisplay.blit(textinput.surface, (300, 300))
@@ -373,7 +374,7 @@ def onePlayer(events):
 
 def twoPlayer(events):
    global curr_artist
-   textTwoPlay = smallfont.render("Select an artist for 2 players.", True , white)
+   textTwoPlay = smallfont.render("Select an artist for 2 players. Capitalization and punctuation are NOT needed.", True , white)
    startTurn = smallfont.render("Player 1's turn", True, white)
    gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
    gameDisplay.blit(startTurn, ((0+(50/2)), (150+(50/2))))
