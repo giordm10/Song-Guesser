@@ -57,6 +57,8 @@ def show_artist_top_tracks(artist):
         # print(results3)
         # results4 = results3["name"]
         # print(results4)
+    # print(songDict)
+    # print(songDict.keys())
     return songDict
     # songs.extend(results['tracks'])
     # while results['next']:

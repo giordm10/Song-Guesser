@@ -15,7 +15,7 @@ Artists that work with 10 songs:
 2. Men I trust
 3. Arctic Monkeys
 4. Phish
-5. Michael Jackson
+5. Billy Joel
 6. Cigarettes After Sex
 7. The Neighbourhood
 8. Five Finger Death Punch
@@ -342,7 +342,7 @@ def onePlayer(events):
     selectArtist("Men I trust", 150, 280, 230, 50, color_dark, color_light, events, "Men I trust", "randomSong")
     selectArtist("Arctic Monkeys", 150, 340, 230, 50, color_dark, color_light, events, "Arctic Monkeys", "randomSong")
     selectArtist("Phish", 150, 400, 230, 50, color_dark, color_light, events, "Phish", "randomSong")
-    selectArtist("Michael Jackson", 150, 460, 230, 50, color_dark, color_light, events, "Michael Jackson", "randomSong")
+    selectArtist("Billy Joel", 150, 460, 230, 50, color_dark, color_light, events, "Billy Joel", "randomSong")
     selectArtist("Cigarettes After Sex", 400, 220, 230, 50, color_dark, color_light, events, "Cigarettes After Sex", "randomSong")
     selectArtist("The Neighbourhood", 400, 280, 230, 50, color_dark, color_light, events, "The Neighbourhood", "randomSong")
     selectArtist("Five Finger Death Punch", 400, 340, 230, 50, color_dark, color_light, events, "Five Finger Death Punch", "randomSong")
@@ -356,7 +356,7 @@ def onePlayer(events):
     selectArtist("Green Day", 900, 220, 230, 50, color_dark, color_light, events, "Green Day", "randomSong")
     selectArtist("Crumb", 900, 280, 230, 50, color_dark, color_light, events, "Crumb", "randomSong")
     selectArtist("Peach Pit", 900, 340, 230, 50, color_dark, color_light, events, "Peach Pit", "randomSong")
-    selectArtist("The Fray", 900, 400, 230, 50, color_dark, color_light, events, "Coldplay", "randomSong")
+    selectArtist("The Fray", 900, 400, 230, 50, color_dark, color_light, events, "The Fray", "randomSong")
     selectArtist("Lil Nas X", 900, 460, 230, 50, color_dark, color_light, events, "Lil Nas X", "randomSong")
     # curr_artist = textinput.value
     button("Start", 450, 570, 130, 50, color_dark, color_light, events, "randomSong")
@@ -376,7 +376,7 @@ def twoPlayer(events):
    selectArtist("Men I trust", 150, 280, 230, 50, color_dark, color_light, events, "Men I trust", "randomSong2")
    selectArtist("Arctic Monkeys", 150, 340, 230, 50, color_dark, color_light, events, "Arctic Monkeys", "randomSong2")
    selectArtist("Phish", 150, 400, 230, 50, color_dark, color_light, events, "Phish", "randomSong2")
-   selectArtist("Michael Jackson", 150, 460, 230, 50, color_dark, color_light, events, "Michael Jackson", "randomSong2")
+   selectArtist("Billy Joel", 150, 460, 230, 50, color_dark, color_light, events, "Billy Joel", "randomSong2")
    selectArtist("Cigarettes After Sex", 400, 220, 230, 50, color_dark, color_light, events, "Cigarettes After Sex", "randomSong2")
    selectArtist("The Neighbourhood", 400, 280, 230, 50, color_dark, color_light, events, "The Neighbourhood", "randomSong2")
    selectArtist("Five Finger Death Punch", 400, 340, 230, 50, color_dark, color_light, events, "Five Finger Death Punch", "randomSong2")
@@ -390,7 +390,7 @@ def twoPlayer(events):
    selectArtist("Green Day", 900, 220, 230, 50, color_dark, color_light, events, "Green Day", "randomSong2")
    selectArtist("Crumb", 900, 280, 230, 50, color_dark, color_light, events, "Crumb", "randomSong2")
    selectArtist("Peach Pit", 900, 340, 230, 50, color_dark, color_light, events, "Peach Pit", "randomSong2")
-   selectArtist("The Fray", 900, 400, 230, 50, color_dark, color_light, events, "Coldplay", "randomSong2")
+   selectArtist("The Fray", 900, 400, 230, 50, color_dark, color_light, events, "The Fray", "randomSong2")
    selectArtist("Lil Nas X", 900, 460, 230, 50, color_dark, color_light, events, "Lil Nas X", "randomSong2")
    button("Start", 450, 570, 130, 50, color_dark, color_light, events, "randomSong")
    button("Back", 585, 570, 130, 50, color_dark, color_light, events, "mainMenu")
@@ -437,7 +437,7 @@ def leaderboard(events):
         else:
             yAxis += 40
         placement += 1
-    button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, "mainMenu")
-    button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
+    button("Main Menu", 270, 590, 200, 50, color_dark, color_light, events, "mainMenu")
+    button("Quit", 670, 590, 130, 50, color_dark, color_light, events, end)
 
 start()
