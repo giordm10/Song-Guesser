@@ -452,24 +452,16 @@ def leaderboard(events):
 
 def updateLeaderboard():
     global infoDict
-
-    for person in infoDict:
-        print(person)
     
     infoDict = lb.read_text()
-    print("before: ", infoDict)
 
-    # for person in infoDict:
-    #     print(person)
-
-    print(textinput.value)
     infoDict[textinput.value] = score
-    print("unsorted: ", infoDict)
+
     infoDict = dict(sorted(infoDict.items(), key=lambda item: item[1], reverse=True))
-    print("sorted: ", infoDict)
+
     if len(infoDict) > 20:
         infoDict.popitem()
-    print("after: ", infoDict)
+
     lb.write_text(infoDict)
 
 
