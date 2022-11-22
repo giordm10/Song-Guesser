@@ -342,10 +342,10 @@ def randomSong2(events, text, turnText):
 
 def onePlayer(events):
     global curr_artist
-    textOnePlay = smallfont.render("Enter an artist for 1 player. Punctuation is needed but capitalization is not.", True , white)
+    textOnePlay = smallfont.render("Select an artist for 1 player.", True , white)
     gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
-    textinput.update(events)
-    gameDisplay.blit(textinput.surface, (300, 300))
+    #textinput.update(events)
+    #gameDisplay.blit(textinput.surface, (300, 300))
     selectArtist("Nothing But Thieves", 150, 220, 230, 50, color_dark, color_light, events, "Nothing But Thieves", "randomSong")
     selectArtist("Men I trust", 150, 280, 230, 50, color_dark, color_light, events, "Men I trust", "randomSong")
     selectArtist("Arctic Monkeys", 150, 340, 230, 50, color_dark, color_light, events, "Arctic Monkeys", "randomSong")
@@ -373,7 +373,7 @@ def onePlayer(events):
 
 def twoPlayer(events):
    global curr_artist
-   textTwoPlay = smallfont.render("Enter an artist for 2 players. Punctuation is needed but capitalization is not.", True , white)
+   textTwoPlay = smallfont.render("Select an artist for 2 players.", True , white)
    startTurn = smallfont.render("Player 1's turn", True, white)
    gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
    gameDisplay.blit(startTurn, ((0+(50/2)), (150+(50/2))))
