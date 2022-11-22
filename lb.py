@@ -8,8 +8,11 @@ def read_text():
             row = str(row[0]).split(",")
             # print(row[0])
             # print(row[1])
-            infoDict[row[0]] = row[1]
+            infoDict[row[0]] = int(row[1])
         return infoDict
 
-# TODO: DELETE THIS AFTER TESTING
-read_text()
+def write_text(itemInfo):
+    with open('leaderboard.csv', 'w', newline='') as f:
+        writer = csv.writer(f)
+        for key, value in itemInfo.items():
+            writer.writerow([key, value])

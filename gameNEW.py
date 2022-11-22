@@ -95,6 +95,7 @@ scorePlayer2 = 0
 turn = 1
 leaderboardInformation = False
 infoDict = dict()
+leaderboardNameEntered = False
 
 #x - x coordinate of button
 #y - y coordinate of button
@@ -160,6 +161,7 @@ def loop():
     global scorePlayer2
     global turn
     global firstGuess
+    global leaderboardNameEntered
     scoreFlag = False
     running = True
     result = ""
@@ -181,15 +183,21 @@ def loop():
             leaderboard(events)
         elif state == "onePlayer":
             score = 0
+            leaderboardNameEntered = False
             onePlayer(events)
         elif state == "twoPlayer":
             score = 0
             scorePlayer2 = 0
             turn = 1
+            leaderboardNameEntered = False
             twoPlayer(events)
         elif state == "gameOver":
             gameOver(events)
             firstGuess = True
+            for event in events:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and leaderboardNameEntered == False:
+                    updateLeaderboard()
+                    leaderboardNameEntered = True
         elif state == "randomSong":
             if(firstGuess):
                 firstGuess = False
@@ -412,6 +420,8 @@ def gameOver(events):
     gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
     scorerText = smallfont.render("Score: " + str(score), True, white)
     gameDisplay.blit(scorerText, ((520+(50/2)), (150+(50/2))))
+    textinput.update(events)
+    gameDisplay.blit(textinput.surface, (300, 300))
     leaderboardInformation = False
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, "mainMenu")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
@@ -439,5 +449,28 @@ def leaderboard(events):
         placement += 1
     button("Main Menu", 270, 590, 200, 50, color_dark, color_light, events, "mainMenu")
     button("Quit", 670, 590, 130, 50, color_dark, color_light, events, end)
+
+def updateLeaderboard():
+    global infoDict
+
+    for person in infoDict:
+        print(person)
+    
+    infoDict = lb.read_text()
+    print("before: ", infoDict)
+
+    # for person in infoDict:
+    #     print(person)
+
+    print(textinput.value)
+    infoDict[textinput.value] = score
+    print("unsorted: ", infoDict)
+    infoDict = dict(sorted(infoDict.items(), key=lambda item: item[1], reverse=True))
+    print("sorted: ", infoDict)
+    if len(infoDict) > 20:
+        infoDict.popitem()
+    print("after: ", infoDict)
+    lb.write_text(infoDict)
+
 
 start()
