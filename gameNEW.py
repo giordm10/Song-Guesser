@@ -343,8 +343,8 @@ def leaderboard():
     if(leaderboardInformation==False):
         infoDict = lb.read_text()
         leaderboardInformation = True
-    gameLeaderboardText = smallfont.render("Leaderboard", True, white)
-    gameDisplay.blit(gameLeaderboardText, ((500+(50/2)), (100+(50/2))))
+    gameLeaderboardText = smallfont.render("Leaderboard - Top 20", True, white)
+    gameDisplay.blit(gameLeaderboardText, ((450+(50/2)), (100+(50/2))))
     xAxis = 125
     yAxis = 175
     placement = 1
@@ -352,7 +352,11 @@ def leaderboard():
         personText = "#" + str(placement) + ": " + str(person) + " - Score: " + str(infoDict[person])
         gameLeadboardInfo = smallfont.render(personText, True, white)
         gameDisplay.blit(gameLeadboardInfo, (xAxis, yAxis))
-        yAxis += 40
+        if(placement == 10):
+            yAxis = 175
+            xAxis = 725
+        else:
+            yAxis += 40
         placement += 1
     button("Main Menu", 270, 590, 200, 50, color_dark, color_light, "mainMenu")
 
