@@ -13,7 +13,7 @@ import random
 Artists that work with 10 songs:
 1. Nothing But Thieves
 2. Men I trust
-3. Artic Monkeys
+3. Arctic Monkeys
 4. Phish
 5. Michael Jackson
 6. Cigarettes After Sex
@@ -74,6 +74,7 @@ width = gameDisplay.get_width()
 height = gameDisplay.get_height()
   
 # defining a font
+smallerfont = pygame.font.SysFont('Corbel',18)
 smallfont = pygame.font.SysFont('Corbel',35)
 largefont = pygame.font.SysFont('Corbel',80)
   
@@ -122,6 +123,32 @@ def button(msg,x,y,w,h,ic,ac,events, action=None):
 
     text = smallfont.render(msg , True , white)
     gameDisplay.blit(text, ( (x+(w/5.5)), (y+(h/3)) ))
+
+
+def selectArtist(msg,x,y,w,h,ic,ac,events, artist, action=None):
+    clicked = False
+    global curr_artist
+    for event in events:
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            clicked = True
+    global state
+    mouse = pygame.mouse.get_pos()
+    if x+w > mouse[0] > x and y+h > mouse[1] > y:
+        pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
+        
+        if clicked and action != None:
+            curr_artist = artist
+            if isinstance(action, str) == True:
+                state = action
+            else:
+                action()
+    else:
+        pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
+
+    text = smallerfont.render(msg , True , white)
+    gameDisplay.blit(text, ( (x+(w/5.5)), (y+(h/3)) ))
+    
+
 
 def start():
     loop()
@@ -174,7 +201,7 @@ def loop():
             if(not list_generated):
                 result = spotipy_artist.get_artist(curr_artist)
                 songDict = spotipy_artist.show_artist_top_tracks(result)
-                print(songDict)
+                #print(songDict)
                 list_generated = True
             if(not song_open and len(songDict) != 0):
                 num_options = len(songDict) - 1
@@ -182,8 +209,8 @@ def loop():
                 songTitle = list(songDict)[randomNum]
                 songLink = list(songDict.values())[randomNum]
                 text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Score: " + str(score), True , white)
-                print(songTitle)
-                print(songLink)
+                #print(songTitle)
+                #print(songLink)
                 webbrowser.open(str(songLink))
                 del songDict[songTitle]
                 scoreFlag = False
@@ -311,25 +338,67 @@ def randomSong2(events, text, turnText):
 
 def onePlayer(events):
     global curr_artist
-    textOnePlay = smallfont.render("Enter an artist for 1 player. Punctuation is needed but capitalization is not.", True , white)
+    textOnePlay = smallfont.render("                  Enter an artist for 1 player. Punctuation is needed but capitalization is not.", True , white)
     gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
-    textinput.update(events)
+    #textinput.update(events)
     gameDisplay.blit(textinput.surface, (300, 300))
-    curr_artist = textinput.value
-    button("Start", 270, 470, 150, 50, color_dark, color_light, events, "randomSong")
-    button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
+    selectArtist("Nothing But Thieves", 150, 220, 230, 50, color_dark, color_light, events, "Nothing But Thieves", "randomSong")
+    selectArtist("Men I trust", 150, 280, 230, 50, color_dark, color_light, events, "Men I trust", "randomSong")
+    selectArtist("Arctic Monkeys", 150, 340, 230, 50, color_dark, color_light, events, "Arctic Monkeys", "randomSong")
+    selectArtist("Phish", 150, 400, 230, 50, color_dark, color_light, events, "Phish", "randomSong")
+    selectArtist("Michael Jackson", 150, 460, 230, 50, color_dark, color_light, events, "Michael Jackson", "randomSong")
+    selectArtist("Cigarettes After Sex", 400, 220, 230, 50, color_dark, color_light, events, "Cigarettes After Sex", "randomSong")
+    selectArtist("The Neighbourhood", 400, 280, 230, 50, color_dark, color_light, events, "The Neighbourhood", "randomSong")
+    selectArtist("Five Finger Death Punch", 400, 340, 230, 50, color_dark, color_light, events, "Five Finger Death Punch", "randomSong")
+    selectArtist("Coldplay", 400, 400, 230, 50, color_dark, color_light, events, "Coldplay", "randomSong")
+    selectArtist("Red Hot Chilli Peppers", 400, 460, 230, 50, color_dark, color_light, events, "Red Hot Chilli Peppers", "randomSong")
+    selectArtist("Jimi Hendrix", 650, 220, 230, 50, color_dark, color_light, events, "Jimi Hendrix", "randomSong")
+    selectArtist("Glue Trip", 650, 280, 230, 50, color_dark, color_light, events, "Glue Trip", "randomSong")
+    selectArtist("City and Colour", 650, 340, 230, 50, color_dark, color_light, events, "City and Colour", "randomSong")
+    selectArtist("Halestorm", 650, 400, 230, 50, color_dark, color_light, events, "Halestorm", "randomSong")
+    selectArtist("Diiv", 650, 460, 230, 50, color_dark, color_light, events, "Diiv", "randomSong")
+    selectArtist("Green Day", 900, 220, 230, 50, color_dark, color_light, events, "Green Day", "randomSong")
+    selectArtist("Crumb", 900, 280, 230, 50, color_dark, color_light, events, "Crumb", "randomSong")
+    selectArtist("Peach Pit", 900, 340, 230, 50, color_dark, color_light, events, "Peach Pit", "randomSong")
+    selectArtist("The Fray", 900, 400, 230, 50, color_dark, color_light, events, "Coldplay", "randomSong")
+    selectArtist("Lil Nas X", 900, 460, 230, 50, color_dark, color_light, events, "Lil Nas X", "randomSong")
+    #curr_artist = textinput.value
+    button("Start", 450, 570, 130, 50, color_dark, color_light, events, "randomSong")
+    button("Back", 585, 570, 130, 50, color_dark, color_light, events, "mainMenu")
+    button("Quit", 720, 570, 130, 50, color_dark, color_light, events, end)
 
 def twoPlayer(events):
    global curr_artist
    textTwoPlay = smallfont.render("Enter an artist for 2 players. Punctuation is needed but capitalization is not.", True , white)
    startTurn = smallfont.render("Player 1's turn", True, white)
    gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
-   gameDisplay.blit(startTurn, ((0+(50/2)), (200+(50/2))))
-   textinput.update(events)
+   gameDisplay.blit(startTurn, ((0+(50/2)), (150+(50/2))))
+   #textinput.update(events)
    gameDisplay.blit(textinput.surface, (300, 300))
-   curr_artist = textinput.value
-   button("Start", 270, 470, 150, 50, color_dark, color_light, events, "randomSong2")
-   button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
+   #curr_artist = textinput.value
+   selectArtist("Nothing But Thieves", 150, 220, 230, 50, color_dark, color_light, events, "Nothing But Thieves", "randomSong2")
+   selectArtist("Men I trust", 150, 280, 230, 50, color_dark, color_light, events, "Men I trust", "randomSong2")
+   selectArtist("Arctic Monkeys", 150, 340, 230, 50, color_dark, color_light, events, "Arctic Monkeys", "randomSong2")
+   selectArtist("Phish", 150, 400, 230, 50, color_dark, color_light, events, "Phish", "randomSong2")
+   selectArtist("Michael Jackson", 150, 460, 230, 50, color_dark, color_light, events, "Michael Jackson", "randomSong2")
+   selectArtist("Cigarettes After Sex", 400, 220, 230, 50, color_dark, color_light, events, "Cigarettes After Sex", "randomSong2")
+   selectArtist("The Neighbourhood", 400, 280, 230, 50, color_dark, color_light, events, "The Neighbourhood", "randomSong2")
+   selectArtist("Five Finger Death Punch", 400, 340, 230, 50, color_dark, color_light, events, "Five Finger Death Punch", "randomSong2")
+   selectArtist("Coldplay", 400, 400, 230, 50, color_dark, color_light, events, "Coldplay", "randomSong2")
+   selectArtist("Red Hot Chilli Peppers", 400, 460, 230, 50, color_dark, color_light, events, "Red Hot Chilli Peppers", "randomSong2")
+   selectArtist("Jimi Hendrix", 650, 220, 230, 50, color_dark, color_light, events, "Jimi Hendrix", "randomSong2")
+   selectArtist("Glue Trip", 650, 280, 230, 50, color_dark, color_light, events, "Glue Trip", "randomSong2")
+   selectArtist("City and Colour", 650, 340, 230, 50, color_dark, color_light, events, "City and Colour", "randomSong2")
+   selectArtist("Halestorm", 650, 400, 230, 50, color_dark, color_light, events, "Halestorm", "randomSong2")
+   selectArtist("Diiv", 650, 460, 230, 50, color_dark, color_light, events, "Diiv", "randomSong2")
+   selectArtist("Green Day", 900, 220, 230, 50, color_dark, color_light, events, "Green Day", "randomSong2")
+   selectArtist("Crumb", 900, 280, 230, 50, color_dark, color_light, events, "Crumb", "randomSong2")
+   selectArtist("Peach Pit", 900, 340, 230, 50, color_dark, color_light, events, "Peach Pit", "randomSong2")
+   selectArtist("The Fray", 900, 400, 230, 50, color_dark, color_light, events, "Coldplay", "randomSong2")
+   selectArtist("Lil Nas X", 900, 460, 230, 50, color_dark, color_light, events, "Lil Nas X", "randomSong2")
+   button("Start", 450, 570, 130, 50, color_dark, color_light, events, "randomSong")
+   button("Back", 585, 570, 130, 50, color_dark, color_light, events, "mainMenu")
+   button("Quit", 720, 570, 130, 50, color_dark, color_light, events, end)
 
 def title():
     titleText = largefont.render("Guess That Song!" , True , white)
