@@ -417,13 +417,23 @@ def setting(events):
 
 def gameOver(events):
     global leaderboardInformation
+    global leaderboardNameEntered
     gameOverText = smallfont.render("GAME OVER", True, white)
     gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
     scorerText = smallfont.render("Score: " + str(score), True, white)
     gameDisplay.blit(scorerText, ((520+(50/2)), (150+(50/2))))
-    textinput.update(events)
-    gameDisplay.blit(textinput.surface, (300, 300))
-    leaderboardInformation = False
+    leaderboardText = smallfont.render("Type your name and hit \"Enter\" to put your score in", True, white)
+    gameDisplay.blit(leaderboardText, ((120+(50/2)), (200+(50/2))))
+    leaderboardText2 = smallfont.render("the leaderboard (Maximum 8 characters)", True, white)
+    gameDisplay.blit(leaderboardText2, ((120+(50/2)), (250+(50/2))))
+    if(leaderboardNameEntered == False):
+        textinput.update(events)
+        gameDisplay.blit(textinput.surface, (300, 350))
+        leaderboardInformation = False
+    else:
+        nameEntered = smallfont.render("Your name is now in the leaderboard", True, white)
+        gameDisplay.blit(nameEntered, (300, 350))
+
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, "mainMenu")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, end)
 
@@ -456,7 +466,9 @@ def updateLeaderboard():
     
     infoDict = lb.read_text()
 
-    infoDict[textinput.value] = score
+    newName = textinput.value[:8]
+
+    infoDict[newName] = score
 
     infoDict = dict(sorted(infoDict.items(), key=lambda item: item[1], reverse=True))
 
