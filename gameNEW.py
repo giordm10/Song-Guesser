@@ -246,10 +246,6 @@ def loop():
                 del songDict[songTitle]
                 scoreFlag = False
                 song_open = True
-            if(len(songDict) == 0):
-                song_open = False
-                list_generated = False
-                state = "mainMenu"
             for event in events:
                 if textinput.value.lower() == songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     if turn == 1:
@@ -406,7 +402,7 @@ def setting(events):
     button("Main Menu", 670, 470, 200, 50, color_dark, color_light, events, "mainMenu")
     button("Quit", 0, 470, 130, 50, color_dark, color_light, events, end)
 
-def gameOver():
+def gameOver(events):
     gameOverText = smallfont.render("GAME OVER", True, white)
     gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
     scorerText = smallfont.render("Score: " + str(score), True, white)
