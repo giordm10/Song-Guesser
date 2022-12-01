@@ -101,6 +101,7 @@ infoDict = dict()
 leaderboardNameEntered = False
 onePlayerMode = True
 textToSpeechEnabled = False
+frameCounter = 0
 
 onlyGuess = False
 
@@ -115,14 +116,16 @@ def button(msg,x,y,w,h,ic,ac,events, artist=None, action=None, mp3=None):
     clicked = False
     global curr_artist
     global textToSpeech
+    global frameCounter
     for event in events:
         if event.type == pygame.MOUSEBUTTONDOWN:
             clicked = True
     global state
+    played = False
     mouse = pygame.mouse.get_pos()
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
-        if(textToSpeechEnabled == True and action != "textToSpeech"):
+        if(textToSpeechEnabled == True and action != "textToSpeech" and (frameCounter % 30) == 0):
             os.system("mpg123 " + mp3)
         if clicked and action != None:
             if artist != None:
@@ -158,12 +161,14 @@ def loop():
     global textToSpeechEnabled
     global onlyGuess
     global songLink
+    global frameCounter
     scoreFlag = False
     running = True
     result = ""
     songDict = ""
     text = ""
     while running:
+        frameCounter = frameCounter + 1
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
@@ -339,7 +344,7 @@ def randomSong(events, text):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong", mp3="nextsong.mp3")
-    button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end)
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
     if(onlyGuess == False):
         textinput.update(events)
     # Blit its surface onto the screen
@@ -487,8 +492,8 @@ def leaderboard(events):
         else:
             yAxis += 40
         placement += 1
-    button("Main Menu", 270, 590, 200, 50, color_dark, color_light, events, action="mainMenu")
-    button("Quit", 670, 590, 130, 50, color_dark, color_light, events, action=end)
+    button("Main Menu", 270, 590, 200, 50, color_dark, color_light, events, action="mainMenu", mp3="mainMenu.mp3")
+    button("Quit", 670, 590, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
 
 def updateLeaderboard():
     global infoDict
