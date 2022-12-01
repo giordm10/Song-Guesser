@@ -415,6 +415,7 @@ def loop():
                 turn = 2
             elif turn == 2:
                 turn = 1
+            pygame.mouse.set_pos(150, 419)
             if(len(songDict) == 0):
                 list_generated = False
                 state = "gameOver"
