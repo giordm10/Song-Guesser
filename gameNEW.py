@@ -91,6 +91,7 @@ list_generated = False
 
 #information used during the gameplay
 curr_artist = ""
+songLink = ""
 songDict = {}
 score = 0
 scorePlayer2 = 0
@@ -149,6 +150,9 @@ def loop():
     global firstGuess
     global leaderboardNameEntered
     global onePlayerMode
+    global textToSpeechEnabled
+    global onlyGuess
+    global songLink
     scoreFlag = False
     running = True
     result = ""
@@ -283,6 +287,19 @@ def loop():
                 state = "gameOver"
             else:
                 state = "randomSong2"
+        elif state == "openSong":
+            webbrowser.open(str(songLink))
+            state = "randomSong"
+        elif state == "openSong2":
+            webbrowser.open(str(songLink))
+            state = "randomSong2"
+        elif state == "textToSpeech":
+            if(textToSpeechEnabled == False):
+                textToSpeechEnabled = True
+                state = "settingsMenu"
+            else:
+                textToSpeechEnabled = False
+                state = "settingsMenu"
         clock.tick(30)
         pygame.display.update()
         
@@ -309,6 +326,7 @@ def end():
 
 def randomSong(events, text):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
+    button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end)
     textinput.update(events)
@@ -319,6 +337,7 @@ def randomSong(events, text):
 def randomSong2(events, text, turnText):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
+    button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong2")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end)
     textinput.update(events)
