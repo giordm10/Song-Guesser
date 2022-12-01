@@ -323,7 +323,7 @@ def mainMenu(events):
     button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, events, action="onePlayer", mp3="startplayer1.mp3")
     button("Leaderboard", 400, 470, 230, 50, color_dark, color_light, events, action="leaderboard",mp3="leaderboard.mp3")
     button("Settings", 670, 470, 230, 50, color_dark, color_light, events, action="settingsMenu",mp3="settings.mp3")
-    button("Quit", 0, 470, 130, 50, color_dark, color_light, events, action=end)
+    button("Quit", 0, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
               
     #make switch case that checks current state, then calls each state's respective function. should be alot cleaner code
     
@@ -351,7 +351,7 @@ def randomSong2(events, text, turnText):
     gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
     button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong2", mp3="nextsong.mp3")
-    button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end)
+    button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
     if(onlyGuess == False):
         textinput.update(events)
     # Blit its surface onto the screen
@@ -435,7 +435,7 @@ def setting(events):
         button("Enable text to speech", 600, 370, 400, 50, color_dark, color_light, events, action="textToSpeech")
     else:
         button("Disable text to speech", 600, 370, 400, 50, color_dark, color_light, events, action="textToSpeech")
-    button("Quit", 0, 470, 130, 50, color_dark, color_light, events, action=end)
+    button("Quit", 0, 470, 130, 50, color_dark, color_light, events, action=end,mp3="quit.mp3")
 
 def gameOver(events):
     global leaderboardInformation
