@@ -110,9 +110,10 @@ onlyGuess = False
 #ic - unhighlighted color
 #ac - highlighted color
 #action - action (function) on button click
-def button(msg,x,y,w,h,ic,ac,events, artist=None, action=None):
+def button(msg,x,y,w,h,ic,ac,events, artist=None, action=None, mp3=None):
     clicked = False
     global curr_artist
+    global textToSpeech
     for event in events:
         if event.type == pygame.MOUSEBUTTONDOWN:
             clicked = True
@@ -120,7 +121,8 @@ def button(msg,x,y,w,h,ic,ac,events, artist=None, action=None):
     mouse = pygame.mouse.get_pos()
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
-        
+        if(textToSpeechEnabled == True):
+            os.system("mpg123 " + mp3)
         if clicked and action != None:
             if artist != None:
                 curr_artist = artist
@@ -309,10 +311,10 @@ def loop():
 def mainMenu(events):
     settingMenu = False
     title()
-    button("Start 2 Player", 670, 360, 230, 50, color_dark, color_light, events, action="twoPlayer")
-    button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, events, action="onePlayer")
-    button("Leaderboard", 400, 470, 230, 50, color_dark, color_light, events, action="leaderboard")
-    button("Settings", 670, 470, 230, 50, color_dark, color_light, events, action="settingsMenu")
+    button("Start 2 Player", 670, 360, 230, 50, color_dark, color_light, events, action="twoPlayer", mp3="startplayer2.mp3")
+    button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, events, action="onePlayer", mp3="startplayer1.mp3")
+    button("Leaderboard", 400, 470, 230, 50, color_dark, color_light, events, action="leaderboard",mp3="leaderboard.mp3")
+    button("Settings", 670, 470, 230, 50, color_dark, color_light, events, action="settingsMenu",mp3="settings.mp3")
     button("Quit", 0, 470, 130, 50, color_dark, color_light, events, action=end)
               
     #make switch case that checks current state, then calls each state's respective function. should be alot cleaner code
@@ -327,7 +329,7 @@ def end():
 
 def randomSong(events, text):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
-    button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong")
+    button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong", mp3="nextsong.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end)
     if(onlyGuess == False):
         textinput.update(events)
