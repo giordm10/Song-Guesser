@@ -342,7 +342,7 @@ def end():
 
 def randomSong(events, text):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
-    button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong")
+    button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong", mp3="opencurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong", mp3="nextsong.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
     if(onlyGuess == False):
