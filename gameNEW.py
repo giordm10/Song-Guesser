@@ -7,6 +7,7 @@ import lb
 import spotipy_artist
 import webbrowser
 import random
+import os
 
 # https://stackoverflow.com/questions/21629727/how-to-delay-pygame-key-get-pressed
   
@@ -100,6 +101,7 @@ leaderboardNameEntered = False
 onePlayerMode = True
 textToSpeechEnabled = False
 
+onlyGuess = False
 
 #x - x coordinate of button
 #y - y coordinate of button
@@ -151,6 +153,7 @@ def loop():
     global leaderboardNameEntered
     global onePlayerMode
     global textToSpeechEnabled
+    global onlyGuess
     scoreFlag = False
     running = True
     result = ""
@@ -213,11 +216,13 @@ def loop():
             
             for event in events:
                 if re.sub('[^A-Za-z0-9]+', '', textinput.value.lower()) == re.sub('[^A-Za-z0-9]+', '', songTitle.lower()) and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                    onlyGuess = True
                     if(not scoreFlag):
                         score += 1
                         scoreFlag = True
                     text = smallfont.render("Correct Guess!    Score: " + str(score) , True , white)
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                    onlyGuess = True
                     text = smallfont.render("Incorrect Guess!    Score: " + str(score) , True , white)
             randomSong(events, text)
 
@@ -247,6 +252,7 @@ def loop():
                 song_open = True
             for event in events:
                 if re.sub('[^A-Za-z0-9]+', '', textinput.value.lower()) == re.sub('[^A-Za-z0-9]+', '', songTitle.lower()) and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                    onlyGuess = True
                     if turn == 1:
                         if(not scoreFlag):
                             scoreFlag = True
@@ -257,6 +263,7 @@ def loop():
                             scorePlayer2 +=1
                     text = smallfont.render("Correct Guess!    Player 1 Score: " + str(score) + ", Player 2 Score: " + str(scorePlayer2), True , white)
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                    onlyGuess = True
                     text = smallfont.render("Incorrect Guess!    Player 1 Score: " + str(score) + ", Player 2 Score: " + str(scorePlayer2), True , white)
                     if turn == 1:
                         turn = 2
@@ -271,6 +278,7 @@ def loop():
                 list_generated = False
                 state = "gameOver"
             else:
+                onlyGuess = False
                 state = "randomSong"
         elif state == "nextSong2":
             textinput.value = ""
@@ -284,6 +292,7 @@ def loop():
                 list_generated = False
                 state = "gameOver"
             else:
+                onlyGuess = False
                 state = "randomSong2"
         elif state == "textToSpeech":
             if(textToSpeechEnabled == False):
@@ -320,9 +329,10 @@ def randomSong(events, text):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end)
-    textinput.update(events)
+    if(onlyGuess == False):
+        textinput.update(events)
     # Blit its surface onto the screen
-    gameDisplay.blit(textinput.surface, (300, 300))
+        gameDisplay.blit(textinput.surface, (300, 300))
     
 
 def randomSong2(events, text, turnText):
@@ -330,9 +340,10 @@ def randomSong2(events, text, turnText):
     gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong2")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end)
-    textinput.update(events)
+    if(onlyGuess == False):
+        textinput.update(events)
     # Blit its surface onto the screen
-    gameDisplay.blit(textinput.surface, (300, 300))
+        gameDisplay.blit(textinput.surface, (300, 300))
 
 def onePlayer(events):
     global curr_artist
