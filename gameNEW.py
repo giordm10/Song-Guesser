@@ -78,7 +78,7 @@ height = gameDisplay.get_height()
 # defining a font
 smallerfont = pygame.font.SysFont('Corbel',18)
 smallfont = pygame.font.SysFont('Corbel',35)
-largefont = pygame.font.SysFont('Corbel',80)
+largefont = pygame.font.SysFont('Corbel',80) 
   
 # rendering a text written in
 # this font
@@ -91,7 +91,6 @@ list_generated = False
 
 #information used during the gameplay
 curr_artist = ""
-songLink = ""
 songDict = {}
 score = 0
 scorePlayer2 = 0
@@ -100,9 +99,6 @@ leaderboardInformation = False
 infoDict = dict()
 leaderboardNameEntered = False
 onePlayerMode = True
-textToSpeechEnabled = False
-
-onlyGuess = False
 
 #x - x coordinate of button
 #y - y coordinate of button
@@ -153,9 +149,6 @@ def loop():
     global firstGuess
     global leaderboardNameEntered
     global onePlayerMode
-    global textToSpeechEnabled
-    global onlyGuess
-    global songLink
     scoreFlag = False
     running = True
     result = ""
@@ -218,13 +211,11 @@ def loop():
             
             for event in events:
                 if re.sub('[^A-Za-z0-9]+', '', textinput.value.lower()) == re.sub('[^A-Za-z0-9]+', '', songTitle.lower()) and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    onlyGuess = True
                     if(not scoreFlag):
                         score += 1
                         scoreFlag = True
                     text = smallfont.render("Correct Guess!    Score: " + str(score) , True , white)
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    onlyGuess = True
                     text = smallfont.render("Incorrect Guess!    Score: " + str(score) , True , white)
             randomSong(events, text)
 
@@ -254,7 +245,6 @@ def loop():
                 song_open = True
             for event in events:
                 if re.sub('[^A-Za-z0-9]+', '', textinput.value.lower()) == re.sub('[^A-Za-z0-9]+', '', songTitle.lower()) and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    onlyGuess = True
                     if turn == 1:
                         if(not scoreFlag):
                             scoreFlag = True
@@ -265,7 +255,6 @@ def loop():
                             scorePlayer2 +=1
                     text = smallfont.render("Correct Guess!    Player 1 Score: " + str(score) + ", Player 2 Score: " + str(scorePlayer2), True , white)
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    onlyGuess = True
                     text = smallfont.render("Incorrect Guess!    Player 1 Score: " + str(score) + ", Player 2 Score: " + str(scorePlayer2), True , white)
                     if turn == 1:
                         turn = 2
@@ -280,7 +269,6 @@ def loop():
                 list_generated = False
                 state = "gameOver"
             else:
-                onlyGuess = False
                 state = "randomSong"
         elif state == "nextSong2":
             textinput.value = ""
@@ -294,21 +282,7 @@ def loop():
                 list_generated = False
                 state = "gameOver"
             else:
-                onlyGuess = False
                 state = "randomSong2"
-        elif state == "openSong":
-            webbrowser.open(str(songLink))
-            state = "randomSong"
-        elif state == "openSong2":
-            webbrowser.open(str(songLink))
-            state = "randomSong2"
-        elif state == "textToSpeech":
-            if(textToSpeechEnabled == False):
-                textToSpeechEnabled = True
-                state = "settingsMenu"
-            else:
-                textToSpeechEnabled = False
-                state = "settingsMenu"
         clock.tick(30)
         pygame.display.update()
         
@@ -335,25 +309,21 @@ def end():
 
 def randomSong(events, text):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
-    button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end)
-    if(onlyGuess == False):
-        textinput.update(events)
+    textinput.update(events)
     # Blit its surface onto the screen
-        gameDisplay.blit(textinput.surface, (300, 300))
+    gameDisplay.blit(textinput.surface, (300, 300))
     
 
 def randomSong2(events, text, turnText):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
-    button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong2")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end)
-    if(onlyGuess == False):
-        textinput.update(events)
+    textinput.update(events)
     # Blit its surface onto the screen
-        gameDisplay.blit(textinput.surface, (300, 300))
+    gameDisplay.blit(textinput.surface, (300, 300))
 
 def onePlayer(events):
     global curr_artist
@@ -424,14 +394,9 @@ def title():
     gameDisplay.blit(titleText, ((370+(50/2)), (100+(50/2))))
 
 def setting(events):
-    global textToSpeechEnabled
     settingText = smallfont.render("Setting Menu", True, white)
     gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
     button("Main Menu", 670, 470, 200, 50, color_dark, color_light, events, action="mainMenu")
-    if(textToSpeechEnabled == False):
-        button("Enable text to speech", 600, 370, 400, 50, color_dark, color_light, events, action="textToSpeech")
-    else:
-        button("Disable text to speech", 600, 370, 400, 50, color_dark, color_light, events, action="textToSpeech")
     button("Quit", 0, 470, 130, 50, color_dark, color_light, events, action=end)
 
 def gameOver(events):
