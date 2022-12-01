@@ -97,6 +97,9 @@ turn = 1
 leaderboardInformation = False
 infoDict = dict()
 leaderboardNameEntered = False
+onePlayerMode = True
+
+textToSpeechEnabled = False
 
 #x - x coordinate of button
 #y - y coordinate of button
@@ -146,6 +149,8 @@ def loop():
     global turn
     global firstGuess
     global leaderboardNameEntered
+    global onePlayerMode
+    global textToSpeechEnabled
     scoreFlag = False
     running = True
     result = ""
@@ -168,12 +173,14 @@ def loop():
         elif state == "onePlayer":
             score = 0
             leaderboardNameEntered = False
+            onePlayerMode = True
             onePlayer(events)
         elif state == "twoPlayer":
             score = 0
             scorePlayer2 = 0
             turn = 1
             leaderboardNameEntered = False
+            onePlayerMode = False
             twoPlayer(events)
         elif state == "gameOver":
             gameOver(events)
@@ -278,6 +285,13 @@ def loop():
                 state = "gameOver"
             else:
                 state = "randomSong2"
+        elif state == "textToSpeech":
+            if(textToSpeechEnabled == False):
+                textToSpeechEnabled = True
+                state = "settingsMenu"
+            else:
+                textToSpeechEnabled = False
+                state = "settingsMenu"
         clock.tick(30)
         pygame.display.update()
         
@@ -389,29 +403,36 @@ def title():
     gameDisplay.blit(titleText, ((370+(50/2)), (100+(50/2))))
 
 def setting(events):
+    global textToSpeechEnabled
     settingText = smallfont.render("Setting Menu", True, white)
     gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
     button("Main Menu", 670, 470, 200, 50, color_dark, color_light, events, action="mainMenu")
+    if(textToSpeechEnabled == False):
+        button("Enable text to speech", 600, 370, 400, 50, color_dark, color_light, events, action="textToSpeech")
+    else:
+        button("Disable text to speech", 600, 370, 400, 50, color_dark, color_light, events, action="textToSpeech")
     button("Quit", 0, 470, 130, 50, color_dark, color_light, events, action=end)
 
 def gameOver(events):
     global leaderboardInformation
     global leaderboardNameEntered
+    global onePlayerMode
     gameOverText = smallfont.render("GAME OVER", True, white)
     gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
     scorerText = smallfont.render("Score: " + str(score), True, white)
     gameDisplay.blit(scorerText, ((520+(50/2)), (150+(50/2))))
-    leaderboardText = smallfont.render("Type your name and hit \"Enter\" to put your score in", True, white)
-    gameDisplay.blit(leaderboardText, ((120+(50/2)), (200+(50/2))))
-    leaderboardText2 = smallfont.render("the leaderboard (Maximum 8 characters)", True, white)
-    gameDisplay.blit(leaderboardText2, ((120+(50/2)), (250+(50/2))))
-    if(leaderboardNameEntered == False):
-        textinput.update(events)
-        gameDisplay.blit(textinput.surface, (300, 350))
-        leaderboardInformation = False
-    else:
-        nameEntered = smallfont.render("Your name is now in the leaderboard", True, white)
-        gameDisplay.blit(nameEntered, (300, 350))
+    if(onePlayerMode):
+        leaderboardText = smallfont.render("Type your name and hit \"Enter\" to put your score in", True, white)
+        gameDisplay.blit(leaderboardText, ((120+(50/2)), (200+(50/2))))
+        leaderboardText2 = smallfont.render("the leaderboard (Maximum 8 characters)", True, white)
+        gameDisplay.blit(leaderboardText2, ((120+(50/2)), (250+(50/2))))
+        if(leaderboardNameEntered == False):
+            textinput.update(events)
+            gameDisplay.blit(textinput.surface, (300, 350))
+            leaderboardInformation = False
+        else:
+            nameEntered = smallfont.render("Your name is now in the leaderboard", True, white)
+            gameDisplay.blit(nameEntered, (300, 350))
 
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, action="mainMenu")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end)
