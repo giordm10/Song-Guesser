@@ -443,9 +443,10 @@ def gameOver(events):
     global onePlayerMode
     gameOverText = smallfont.render("GAME OVER", True, white)
     gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
-    scorerText = smallfont.render("Score: " + str(score), True, white)
-    gameDisplay.blit(scorerText, ((520+(50/2)), (150+(50/2))))
+    
     if(onePlayerMode):
+        scorerText = smallfont.render("Score: " + str(score), True, white)
+        gameDisplay.blit(scorerText, ((520+(50/2)), (150+(50/2))))
         leaderboardText = smallfont.render("Type your name and hit \"Enter\" to put your score in", True, white)
         gameDisplay.blit(leaderboardText, ((120+(50/2)), (200+(50/2))))
         leaderboardText2 = smallfont.render("the leaderboard (Maximum 8 characters)", True, white)
@@ -457,6 +458,10 @@ def gameOver(events):
         else:
             nameEntered = smallfont.render("Your name is now in the leaderboard", True, white)
             gameDisplay.blit(nameEntered, (300, 350))
+    else:
+        scorerText = smallfont.render("Player 1    -    Score: " + str(score) + "              Player 2    -    Score: " + str(scorePlayer2), True, white)
+        gameDisplay.blit(scorerText, ((255+(50/2)), (150+(50/2))))
+        
 
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, action="mainMenu", mp3="mainmenu.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
