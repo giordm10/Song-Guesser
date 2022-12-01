@@ -390,7 +390,7 @@ def onePlayer(events):
     button("Lil Nas X", 900, 460, 230, 50, color_dark, color_light, events, "Lil Nas X", "randomSong",mp3="lilnasxx.mp3")
     # curr_artist = textinput.value
     button("Start", 450, 570, 130, 50, color_dark, color_light, events, action="randomSong",mp3="start.mp3")
-    button("Back", 585, 570, 130, 50, color_dark, color_light, events, action="mainMenu",mp3="mainmenu.mp3")
+    button("Back", 585, 570, 130, 50, color_dark, color_light, events, action="mainMenu",mp3="back.mp3")
     button("Quit", 720, 570, 130, 50, color_dark, color_light, events, action=end,mp3="quit.mp3")
 
 def twoPlayer(events):
