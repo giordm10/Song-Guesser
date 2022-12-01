@@ -337,12 +337,8 @@ def end():
 
 def randomSong(events, text):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
-<<<<<<< HEAD
-    button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong", mp3="nextsong.mp3")
-=======
     button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong")
-    button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong")
->>>>>>> f7b2e56ff909e92bba4e8bea6367e1d1e8f5c580
+    button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong", mp3="nextsong.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end)
     if(onlyGuess == False):
         textinput.update(events)
@@ -354,7 +350,7 @@ def randomSong2(events, text, turnText):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
     button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2")
-    button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong2")
+    button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong2", mp3="nextsong.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end)
     if(onlyGuess == False):
         textinput.update(events)
