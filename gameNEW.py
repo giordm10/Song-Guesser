@@ -98,8 +98,8 @@ leaderboardInformation = False
 infoDict = dict()
 leaderboardNameEntered = False
 onePlayerMode = True
-
 textToSpeechEnabled = False
+
 
 #x - x coordinate of button
 #y - y coordinate of button
