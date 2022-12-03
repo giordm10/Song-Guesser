@@ -97,29 +97,29 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "am1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "Phish"):
+        if(songTitle == "Farmhouse"):
+            album_cover = "phish1.jfif"
+        elif(songTitle == "Bouncing Around the Room"):
+            album_cover = "phish2.jfif"
+        elif(songTitle == "Sample in a Jar"):
+            album_cover = "phish3.jfif"
+        elif(songTitle == "Waste"):
+            album_cover = "phish4.jfif"
+        elif(songTitle == "Heavy Things"):
+            album_cover = "phish1.jfif"
+        elif(songTitle == "Free"):
+            album_cover = "phish4.jfif"
+        elif(songTitle == "Back on the Train"):
+            album_cover = "phish1.jfif"
+        elif(songTitle == "Backwards Down the Number Line"):
+            album_cover = "phish5.jfif"
+        elif(songTitle == "Character Zero"):
+            album_cover = "phish4.jfif"
+        elif(songTitle == "Roses Are Free"):
+            album_cover = "phish6.jfif"
         else:
-            album_cover = ""
+            album_cover = "phish1.jfif"
 
     elif(artist_name == ""):
         if(songTitle == ""):
