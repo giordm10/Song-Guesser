@@ -242,29 +242,29 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "rhcp1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "Jimi Hendrix"):
+        if(songTitle == "All Along the Watchtower"):
+            album_cover = "jh1.jfif"
+        elif(songTitle == "Little Wing"):
+            album_cover = "jh2.jfif"
+        elif(songTitle == "Purple Haze"):
+            album_cover = "jh3.jfif"
+        elif(songTitle == "Hey Joe"):
+            album_cover = "jh3.jfif"
+        elif(songTitle == "Voodoo Child (Slight Return)"):
+            album_cover = "jh1.jfif"
+        elif(songTitle == "Angel"):
+            album_cover = "jh4.jfif"
+        elif(songTitle == "The Wind Cries Mary"):
+            album_cover = "jh3.jfif"
+        elif(songTitle == "Crosstown Traffic"):
+            album_cover = "jh1.jfif"
+        elif(songTitle == "Castles Made of Sand"):
+            album_cover = "jh2.jfif"
+        elif(songTitle == "Foxey Lady"):
+            album_cover = "jh3.jfif"
         else:
-            album_cover = ""
+            album_cover = "jh1.jfif"
 
     elif(artist_name == ""):
         if(songTitle == ""):
