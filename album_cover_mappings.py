@@ -121,29 +121,29 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "phish1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "Cigarettes After Sex"):
+        if(songTitle == "Apocalypse"):
+            album_cover = "cas1.jfif"
+        elif(songTitle == "Sunsetz"):
+            album_cover = "cas1.jfif"
+        elif(songTitle == "K."):
+            album_cover = "cas1.jfif"
+        elif(songTitle == "Cry"):
+            album_cover = "cas2.jfif"
+        elif(songTitle == "Sweet"):
+            album_cover = "cas1.jfif"
+        elif(songTitle == "Pistol"):
+            album_cover = "cas3.jfif"
+        elif(songTitle == "Nothing's Gonna Hurt You Baby"):
+            album_cover = "cas4.jfif"
+        elif(songTitle == "Heavenly"):
+            album_cover = "cas2.jfif"
+        elif(songTitle == "You're All I Want"):
+            album_cover = "cas5.jfif"
+        elif(songTitle == "Falling In Love"):
+            album_cover = "cas2.jfif"
         else:
-            album_cover = ""
+            album_cover = "cas1.jfif"
 
     elif(artist_name == ""):
         if(songTitle == ""):
