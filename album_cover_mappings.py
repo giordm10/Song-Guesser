@@ -1,4 +1,5 @@
 def CoversByArtist(artist_name, songTitle):
+    print(artist_name)
     album_cover = "spotifyImage.png"
     if(artist_name == "Billy Joel"):
         if(songTitle == "Uptown Girl"):
@@ -24,28 +25,28 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "billyjoel1.jfif"
 
-        if(artist_name == ""):
-            if(songTitle == ""):
-                album_cover = ""
-            elif(songTitle == ""):
-                album_cover = ""
-            elif(songTitle == ""):
-                album_cover = ""
-            elif(songTitle == ""):
-                album_cover = ""
-            elif(songTitle == ""):
-                album_cover = ""
-            elif(songTitle == ""):
-                album_cover = ""
-            elif(songTitle == ""):
-                album_cover = ""
-            elif(songTitle == ""):
-                album_cover = ""
-            elif(songTitle == ""):
-                album_cover = ""
-            elif(songTitle == ""):
-                album_cover = ""
+        if(artist_name == "Nothing But Thieves"):
+            if(songTitle == "Amsterdam"):
+                album_cover = "nbt1.jfif"
+            elif(songTitle == "Soda"):
+                album_cover = "nbt1.jfif"
+            elif(songTitle == "Sorry"):
+                album_cover = "nbt1.jfif"
+            elif(songTitle == "Life's Coming in Slow - from GRAN TURISMO 7"):
+                album_cover = "nbt2.jfif"
+            elif(songTitle == "You Know Me Too Well"):
+                album_cover = "nbt3.jfif"
+            elif(songTitle == "Is Everybody Going Cazy?"):
+                album_cover = "nbt4.jfif"
+            elif(songTitle == "Impossible"):
+                album_cover = "nbt4.jfif"
+            elif(songTitle == "Particles"):
+                album_cover = "nbt1.jfif"
+            elif(songTitle == "Trip Switch"):
+                album_cover = "nbt5.jfif"
+            elif(songTitle == "I Was Just a Kid"):
+                album_cover = "nbt1.jfif"
             else:
-                album_cover = ""
+                album_cover = "nbt1.jfif"
 
     return album_cover
