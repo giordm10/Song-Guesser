@@ -303,14 +303,14 @@ def CoversByArtist(artist_name, songTitle):
             album_cover = "cac4.jfif"
         elif(songTitle == "Northern Wind"):
             album_cover = "cac5.jfif"
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+        elif(songTitle == "Hello, I'm In Delaware"):
+            album_cover = "cac4.jfif"
+        elif(songTitle == "The Grand Optimist"):
+            album_cover = "cac5.jfif"
+        elif(songTitle == "The Girl"):
+            album_cover = "cac6.jfif"
+        elif(songTitle == "Wasted Love"):
+            album_cover = "cac3.jfif"
         else:
             album_cover = "cac1.jfif"
 
