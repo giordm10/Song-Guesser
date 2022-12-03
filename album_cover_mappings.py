@@ -1,6 +1,7 @@
 def CoversByArtist(artist_name, songTitle):
-    print(artist_name)
+    #default image if for some reason a song does not have an albumn cover
     album_cover = "spotifyImage.png"
+
     if(artist_name == "Billy Joel"):
         if(songTitle == "Uptown Girl"):
             album_cover = "billyjoel3.jfif"
@@ -458,76 +459,28 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "tf1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "Lil Nas X"):
+        if(songTitle == "STAR WALKIN' (League of Legends Worlds Anthem)"):
+            album_cover = "lnx1.jfif"
+        elif(songTitle == "THATS WHAT I WANT"):
+            album_cover = "lnx2.jfif"
+        elif(songTitle == "INDUSTRY BABY (feat. Jack Harlow)"):
+            album_cover = "lnx2.jfif"
+        elif(songTitle == "MONTERO (Call Me By Your Name)"):
+            album_cover = "lnx2.jfif"
+        elif(songTitle == "Old Town Road - Remix"):
+            album_cover = "lnx3.jfif"
+        elif(songTitle == "Old Town Road"):
+            album_cover = "lnx3.jfif"
+        elif(songTitle == "HOLIDAY"):
+            album_cover = "lnx4.jfif"
+        elif(songTitle == "Panini"):
+            album_cover = "lnx5.jfif"
+        elif(songTitle == "Late To Da Party (F*CK BET) (feat. YoungBoy Never Broke Again)"):
+            album_cover = "lnx6.jfif"
+        elif(songTitle == "SCOOP (feat. Doja Cat)"):
+            album_cover = "lnx2.jfif"
         else:
-            album_cover = ""
-
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        else:
-            album_cover = ""
-
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        else:
-            album_cover = ""
+            album_cover = "lnx1.jfif"
 
     return album_cover
