@@ -410,29 +410,29 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "crumb1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "Peach Pit"):
+        if(songTitle == "Alrighty Aphrodite"):
+            album_cover = "pp1.jfif"
+        elif(songTitle == "Shampoo Bottles"):
+            album_cover = "pp2.jfif"
+        elif(songTitle == "Tommy's Party"):
+            album_cover = "pp1.jfif"
+        elif(songTitle == "Give Up Baby Go"):
+            album_cover = "pp3.jfif"
+        elif(songTitle == "Peach Pit"):
+            album_cover = "pp4.jfif"
+        elif(songTitle == "Drop the Guillotine"):
+            album_cover = "pp1.jfif"
+        elif(songTitle == "Techno Show"):
+            album_cover = "pp1.jfif"
+        elif(songTitle == "Being so Normal"):
+            album_cover = "pp1.jfif"
+        elif(songTitle == "Seventeen"):
+            album_cover = "pp4.jfif"
+        elif(songTitle == "Black Licorice"):
+            album_cover = "pp2.jfif"
         else:
-            album_cover = ""
+            album_cover = "pp1.jfif"
 
     elif(artist_name == ""):
         if(songTitle == ""):
