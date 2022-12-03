@@ -314,29 +314,29 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "cac1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "Halestorm"):
+        if(songTitle == "Bad Romance"):
+            album_cover = "hale1.jfif"
+        elif(songTitle == "I Miss the Misery"):
+            album_cover = "hale2.jfif"
+        elif(songTitle == "I Get Off"):
+            album_cover = "hale3.jfif"
+        elif(songTitle == "Love Bites (So Do I)"):
+            album_cover = "hale2.jfif"
+        elif(songTitle == "Wicked Ways"):
+            album_cover = "hale4.jfif"
+        elif(songTitle == "Here's to Us"):
+            album_cover = "hale2.jfif"
+        elif(songTitle == "I Am the Fire"):
+            album_cover = "hale5.jfif"
+        elif(songTitle == "The Steeple"):
+            album_cover = "hale4.jfif"
+        elif(songTitle == "Mine"):
+            album_cover = "hale6.jfif"
+        elif(songTitle == "Mz. Hyde"):
+            album_cover = "hale2.jfif"
         else:
-            album_cover = ""
+            album_cover = "hale1.jfif"
 
     elif(artist_name == ""):
         if(songTitle == ""):
