@@ -145,29 +145,29 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "cas1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "The Neighbourhood"):
+        if(songTitle == "Sweater Weather"):
+            album_cover = "tn1.jfif"
+        elif(songTitle == "Daddy Issues"):
+            album_cover = "tn2.jfif"
+        elif(songTitle == "Softcore"):
+            album_cover = "tn3.jfif"
+        elif(songTitle == "You Get Me So High"):
+            album_cover = "tn3.jfif"
+        elif(songTitle == "Reflections"):
+            album_cover = "tn3.jfif"
+        elif(songTitle == "The Beach"):
+            album_cover = "tn2.jfif"
+        elif(songTitle == "Afraid"):
+            album_cover = "tn1.jfif"
+        elif(songTitle == "Stargazing"):
+            album_cover = "tn4.jfif"
+        elif(songTitle == "Pretty Boy"):
+            album_cover = "tn5.jfif"
+        elif(songTitle == "Daddy Issues (Remix) feat. Syd"):
+            album_cover = "tn6.jfif"
         else:
-            album_cover = ""
+            album_cover = "tn1.jfif"
 
     elif(artist_name == ""):
         if(songTitle == ""):
