@@ -169,29 +169,29 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "tn1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "Five Finger Death Punch"):
+        if(songTitle == "A Little Bit Off"):
+            album_cover = "ffdp1.jfif"
+        elif(songTitle == "Bad Company"):
+            album_cover = "ffdp2.jfif"
+        elif(songTitle == "Welcome To The Circus"):
+            album_cover = "ffdp3.jfif"
+        elif(songTitle == "Jekyll and Hyde"):
+            album_cover = "ffdp4.jfif"
+        elif(songTitle == "The End"):
+            album_cover = "ffdp3.jfif"
+        elif(songTitle == "Times Like These"):
+            album_cover = "ffdp3.jfif"
+        elif(songTitle == "Wrong Side of Heaven"):
+            album_cover = "ffdp5.jfif"
+        elif(songTitle == "Living The Dream"):
+            album_cover = "ffdp1.jfif"
+        elif(songTitle == "Wash It All Away"):
+            album_cover = "ffdp4.jfif"
+        elif(songTitle == "AfterLife"):
+            album_cover = "ffdp3.jfif"
         else:
-            album_cover = ""
+            album_cover = "ffdp1.jfif"
 
 
     elif(artist_name == ""):
