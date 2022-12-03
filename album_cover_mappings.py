@@ -338,29 +338,29 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "hale1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "Diiv"):
+        if(songTitle == "Doused"):
+            album_cover = "diiv1.jfif"
+        elif(songTitle == "Under the Sun"):
+            album_cover = "diiv2.jfif"
+        elif(songTitle == "(Druun)"):
+            album_cover = "diiv1.jfif"
+        elif(songTitle == "Out of Mind"):
+            album_cover = "diiv2.jfif"
+        elif(songTitle == "Valentine"):
+            album_cover = "diiv2.jfif"
+        elif(songTitle == "When You Sleep - Live at The Murmrr Theatre"):
+            album_cover = "diiv3.jfif"
+        elif(songTitle == "Taker"):
+            album_cover = "diiv4.jfif"
+        elif(songTitle == "Blankenship"):
+            album_cover = "diiv4.jfif"
+        elif(songTitle == "Healthy Moon"):
+            album_cover = "diiv2.jfif"
+        elif(songTitle == "Skin Game"):
+            album_cover = "diiv4.jfif"
         else:
-            album_cover = ""
+            album_cover = "diiv1.jfif"
 
     elif(artist_name == ""):
         if(songTitle == ""):
