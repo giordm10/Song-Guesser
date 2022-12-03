@@ -9,6 +9,7 @@ import webbrowser
 import random
 import os
 import musicplayer
+import album_cover_mappings
 
 # https://stackoverflow.com/questions/21629727/how-to-delay-pygame-key-get-pressed
   
@@ -220,6 +221,8 @@ def loop():
                 del songDict[songTitle]
                 scoreFlag = False
                 song_open = True
+            if onlyGuess == True:
+                getAlbumnCover(songTitle)
             
             for event in events:
                 if re.sub('[^A-Za-z0-9]+', '', textinput.value.lower()) == re.sub('[^A-Za-z0-9]+', '', songTitle.lower()) and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
@@ -257,6 +260,9 @@ def loop():
                 del songDict[songTitle]
                 scoreFlag = False
                 song_open = True
+            if onlyGuess == True:
+                getAlbumnCover(songTitle)
+
             for event in events:
                 if re.sub('[^A-Za-z0-9]+', '', textinput.value.lower()) == re.sub('[^A-Za-z0-9]+', '', songTitle.lower()) and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     onlyGuess = True
@@ -319,7 +325,11 @@ def loop():
         clock.tick(30)
         pygame.display.update()
         
-        
+def getAlbumnCover(songTitle):
+    global curr_artist
+    coverImage = album_cover_mappings.CoversByArtist(curr_artist, songTitle)
+    imp = pygame.image.load("images\\" + coverImage).convert()
+    gameDisplay.blit(imp, (500, 150))
         
 def mainMenu(events):
     settingMenu = False
