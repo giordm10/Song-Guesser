@@ -8,6 +8,7 @@ import spotipy_artist
 import webbrowser
 import random
 import os
+import musicplayer
 
 # https://stackoverflow.com/questions/21629727/how-to-delay-pygame-key-get-pressed
   
@@ -101,9 +102,9 @@ infoDict = dict()
 leaderboardNameEntered = False
 onePlayerMode = True
 textToSpeechEnabled = False
-frameCounter = 0
-
 onlyGuess = False
+
+player = musicplayer.MusicPlayer()
 
 #x - x coordinate of button
 #y - y coordinate of button
@@ -116,7 +117,6 @@ def button(msg,x,y,w,h,ic,ac,events, artist=None, action=None, mp3=None):
     clicked = False
     global curr_artist
     global textToSpeech
-    global frameCounter
     for event in events:
         if event.type == pygame.MOUSEBUTTONDOWN:
             clicked = True
@@ -125,8 +125,8 @@ def button(msg,x,y,w,h,ic,ac,events, artist=None, action=None, mp3=None):
     mouse = pygame.mouse.get_pos()
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
-        if(textToSpeechEnabled == True and action != "textToSpeech" and (frameCounter % 30) == 0):
-            os.system("mpg123 " + mp3)
+        if(textToSpeechEnabled == True and action != "textToSpeech" and not player.is_playing()):
+            player.play(mp3)
         if clicked and action != None:
             if artist != None:
                 curr_artist = artist
@@ -161,14 +161,12 @@ def loop():
     global textToSpeechEnabled
     global onlyGuess
     global songLink
-    global frameCounter
     scoreFlag = False
     running = True
     result = ""
     songDict = ""
     text = ""
     while running:
-        frameCounter = frameCounter + 1
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
@@ -285,6 +283,7 @@ def loop():
             textinput.value = ""
             clock.tick(30)
             song_open = False
+            pygame.mouse.set_pos(150, 419)
             if(len(songDict) == 0):
                 list_generated = False
                 state = "gameOver"
@@ -299,6 +298,7 @@ def loop():
                 turn = 2
             elif turn == 2:
                 turn = 1
+            pygame.mouse.set_pos(150, 419)
             if(len(songDict) == 0):
                 list_generated = False
                 state = "gameOver"
@@ -344,7 +344,7 @@ def end():
 
 def randomSong(events, text):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
-    button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong")
+    button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong", mp3="opencurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong", mp3="nextsong.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
     if(onlyGuess == False):
@@ -356,7 +356,7 @@ def randomSong(events, text):
 def randomSong2(events, text, turnText):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
-    button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2")
+    button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2", mp3="opencurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong2", mp3="nextsong.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
     if(onlyGuess == False):
@@ -370,9 +370,9 @@ def onePlayer(events):
     gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
     #textinput.update(events)
     #gameDisplay.blit(textinput.surface, (300, 300))
-    button("Nothing But Thieves", 150, 220, 230, 50, color_dark, color_light, events, "Nothing But Thieves", "randomSong", mp3="nothingbuthieves.mp3")
+    button("Nothing But Thieves", 150, 220, 230, 50, color_dark, color_light, events, "Nothing But Thieves", "randomSong", mp3="nothingbutthieves.mp3")
     button("Men I trust", 150, 280, 230, 50, color_dark, color_light, events, "Men I trust", "randomSong", mp3="menitrust.mp3")
-    button("Arctic Monkeys", 150, 340, 230, 50, color_dark, color_light, events, "Arctic Monkeys", "randomSong", mp3="articmonkeys.mp3")
+    button("Arctic Monkeys", 150, 340, 230, 50, color_dark, color_light, events, "Arctic Monkeys", "randomSong", mp3="arcticmonkeys.mp3")
     button("Phish", 150, 400, 230, 50, color_dark, color_light, events, "Phish", "randomSong", mp3="phish.mp3")
     button("Billy Joel", 150, 460, 230, 50, color_dark, color_light, events, "Billy Joel", "randomSong", mp3="billyjoel.mp3")
     button("Cigarettes After Sex", 400, 220, 230, 50, color_dark, color_light, events, "Cigarettes After Sex", "randomSong", mp3="cigarettesaftersex.mp3")
@@ -389,7 +389,7 @@ def onePlayer(events):
     button("Crumb", 900, 280, 230, 50, color_dark, color_light, events, "Crumb", "randomSong",mp3="crumb.mp3")
     button("Peach Pit", 900, 340, 230, 50, color_dark, color_light, events, "Peach Pit", "randomSong",mp3="peachpit.mp3")
     button("The Fray", 900, 400, 230, 50, color_dark, color_light, events, "The Fray", "randomSong",mp3="thefray.mp3")
-    button("Lil Nas X", 900, 460, 230, 50, color_dark, color_light, events, "Lil Nas X", "randomSong",mp3="lilnasxx.mp3")
+    button("Lil Nas X", 900, 460, 230, 50, color_dark, color_light, events, "Lil Nas X", "randomSong",mp3="lilnasx.mp3")
     # curr_artist = textinput.value
     button("Start", 450, 570, 130, 50, color_dark, color_light, events, action="randomSong",mp3="start.mp3")
     button("Back", 585, 570, 130, 50, color_dark, color_light, events, action="mainMenu",mp3="back.mp3")
@@ -404,9 +404,9 @@ def twoPlayer(events):
 #    textinput.update(events)
    gameDisplay.blit(textinput.surface, (300, 300))
 #    curr_artist = textinput.value
-   button("Nothing But Thieves", 150, 220, 230, 50, color_dark, color_light, events, "Nothing But Thieves", "randomSong2", mp3="nothingbuthieves.mp3")
+   button("Nothing But Thieves", 150, 220, 230, 50, color_dark, color_light, events, "Nothing But Thieves", "randomSong2", mp3="nothingbutthieves.mp3")
    button("Men I trust", 150, 280, 230, 50, color_dark, color_light, events, "Men I trust", "randomSong2", mp3="menitrust.mp3")
-   button("Arctic Monkeys", 150, 340, 230, 50, color_dark, color_light, events, "Arctic Monkeys", "randomSong2", mp3="articmonkeys.mp3")
+   button("Arctic Monkeys", 150, 340, 230, 50, color_dark, color_light, events, "Arctic Monkeys", "randomSong2", mp3="arcticmonkeys.mp3")
    button("Phish", 150, 400, 230, 50, color_dark, color_light, events, "Phish", "randomSong2", mp3="phish.mp3")
    button("Billy Joel", 150, 460, 230, 50, color_dark, color_light, events, "Billy Joel", "randomSong2", mp3="billyjoel.mp3")
    button("Cigarettes After Sex", 400, 220, 230, 50, color_dark, color_light, events, "Cigarettes After Sex", "randomSong2", mp3="cigarettesaftersex.mp3")
@@ -423,7 +423,7 @@ def twoPlayer(events):
    button("Crumb", 900, 280, 230, 50, color_dark, color_light, events, "Crumb", "randomSong2",mp3="crumb.mp3")
    button("Peach Pit", 900, 340, 230, 50, color_dark, color_light, events, "Peach Pit", "randomSong2",mp3="peachpit.mp3")
    button("The Fray", 900, 400, 230, 50, color_dark, color_light, events, "The Fray", "randomSong2",mp3="thefray.mp3")
-   button("Lil Nas X", 900, 460, 230, 50, color_dark, color_light, events, "Lil Nas X", "randomSong2",mp3="lilnasxx.mp3")
+   button("Lil Nas X", 900, 460, 230, 50, color_dark, color_light, events, "Lil Nas X", "randomSong2",mp3="lilnasx.mp3")
     # curr_artist = textinput.value
    button("Start", 450, 570, 130, 50, color_dark, color_light, events, action="randomSong",mp3="start.mp3")
    button("Back", 585, 570, 130, 50, color_dark, color_light, events, action="mainMenu",mp3="back.mp3")
@@ -494,7 +494,7 @@ def leaderboard(events):
         else:
             yAxis += 40
         placement += 1
-    button("Main Menu", 270, 590, 200, 50, color_dark, color_light, events, action="mainMenu", mp3="mainMenu.mp3")
+    button("Main Menu", 270, 590, 200, 50, color_dark, color_light, events, action="mainMenu", mp3="mainmenu.mp3")
     button("Quit", 670, 590, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
 
 def updateLeaderboard():
