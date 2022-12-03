@@ -266,29 +266,29 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "jh1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "Glue Trip"):
+        if(songTitle == "Elbow Pain"):
+            album_cover = "gt1.jfif"
+        elif(songTitle == "La Edad del Futuro"):
+            album_cover = "gt1.jfif"
+        elif(songTitle == "Lucid Dream"):
+            album_cover = "gt1.jfif"
+        elif(songTitle == "Fancy"):
+            album_cover = "gt2.jfif"
+        elif(songTitle == "Time Lapses"):
+            album_cover = "gt2.jfif"
+        elif(songTitle == "Lazy Dayz"):
+            album_cover = "gt3.jfif"
+        elif(songTitle == "Água de Jamaica"):
+            album_cover = "gt4.jfif"
+        elif(songTitle == "Birds Singing Lies"):
+            album_cover = "gt1.jfif"
+        elif(songTitle == "Old Blood"):
+            album_cover = "gt1.jfif"
+        elif(songTitle == "Tempo Presente"):
+            album_cover = "gt5.jfif"
         else:
-            album_cover = ""
+            album_cover = "gt1.jfif"
 
     elif(artist_name == ""):
         if(songTitle == ""):
