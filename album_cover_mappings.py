@@ -386,29 +386,29 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "gd1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "Crumb"):
+        if(songTitle == "Ghostride"):
+            album_cover = "crumb1.jfif"
+        elif(songTitle == "Locket"):
+            album_cover = "crumb2.jfif"
+        elif(songTitle == "Cracking"):
+            album_cover = "crumb1.jfif"
+        elif(songTitle == "Balloon"):
+            album_cover = "crumb3.jfif"
+        elif(songTitle == "Plants"):
+            album_cover = "crumb2.jfif"
+        elif(songTitle == "Bones"):
+            album_cover = "crumb4.jfif"
+        elif(songTitle == "Part III"):
+            album_cover = "crumb1.jfif"
+        elif(songTitle == "Ice Melt"):
+            album_cover = "crumb3.jfif"
+        elif(songTitle == "Nina"):
+            album_cover = "crumb1.jfif"
+        elif(songTitle == "Recently Played"):
+            album_cover = "crumb2.jfif"
         else:
-            album_cover = ""
+            album_cover = "crumb1.jfif"
 
     elif(artist_name == ""):
         if(songTitle == ""):
