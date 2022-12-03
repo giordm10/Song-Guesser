@@ -434,29 +434,29 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "pp1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "The Fray"):
+        if(songTitle == "How to Save a Life"):
+            album_cover = "tf1.jfif"
+        elif(songTitle == "You Found Me"):
+            album_cover = "tf2.jfif"
+        elif(songTitle == "Look After You"):
+            album_cover = "tf1.jfif"
+        elif(songTitle == "Over My Head (Cable Car)"):
+            album_cover = "tf1.jfif"
+        elif(songTitle == "Never Say Never"):
+            album_cover = "tf2.jfif"
+        elif(songTitle == "Be Still"):
+            album_cover = "tf3.jfif"
+        elif(songTitle == "Love Don't Die"):
+            album_cover = "tf4.jfif"
+        elif(songTitle == "How to Save a Life - Live in NYC - 2009"):
+            album_cover = "tf5.jfif"
+        elif(songTitle == "How to Save a Life - Live in Nashville, TN - December 2006"):
+            album_cover = "tf6.jfif"
+        elif(songTitle == "Heartbeat"):
+            album_cover = "tf3.jfif"
         else:
-            album_cover = ""
+            album_cover = "tf1.jfif"
 
     elif(artist_name == ""):
         if(songTitle == ""):
