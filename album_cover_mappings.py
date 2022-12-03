@@ -194,29 +194,29 @@ def CoversByArtist(artist_name, songTitle):
             album_cover = "ffdp1.jfif"
 
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "Coldplay"):
+        if(songTitle == "Yellow"):
+            album_cover = "coldplay1.jfif"
+        elif(songTitle == "Sparks"):
+            album_cover = "coldplay1.jfif"
+        elif(songTitle == "The Scientist"):
+            album_cover = "coldplay2.jfif"
+        elif(songTitle == "Viva La Vida"):
+            album_cover = "coldplay3.jfif"
+        elif(songTitle == "Something Just Like This"):
+            album_cover = "coldplay4.jfif"
+        elif(songTitle == "Hymn for the Weekend"):
+            album_cover = "coldplay5.jfif"
+        elif(songTitle == "Paradise"):
+            album_cover = "coldplay6.jfif"
+        elif(songTitle == "My Universe"):
+            album_cover = "coldplay7.jfif"
+        elif(songTitle == "A Sky Full of Stars"):
+            album_cover = "coldplay8.jfif"
+        elif(songTitle == "Fix You"):
+            album_cover = "coldplay9.jfif"
         else:
-            album_cover = ""
+            album_cover = "coldplay1.jfif"
 
     elif(artist_name == ""):
         if(songTitle == ""):
