@@ -218,29 +218,29 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "coldplay1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "Red Hot Chilli Peppers"):
+        if(songTitle == "Californication"):
+            album_cover = "rhcp1.jfif"
+        elif(songTitle == "Under the Bridge"):
+            album_cover = "rhcp2.jfif"
+        elif(songTitle == "Can't Stop"):
+            album_cover = "rhcp3.jfif"
+        elif(songTitle == "Otherside"):
+            album_cover = "rhcp1.jfif"
+        elif(songTitle == "Scar Tissue"):
+            album_cover = "rhcp1.jfif"
+        elif(songTitle == "Snow (Hey Oh)"):
+            album_cover = "rhcp4.jfif"
+        elif(songTitle == "Dani California"):
+            album_cover = "rhcp4.jfif"
+        elif(songTitle == "By the Way"):
+            album_cover = "rhcp3.jfif"
+        elif(songTitle == "Dark Necessities"):
+            album_cover = "rhcp5.jfif"
+        elif(songTitle == "Give It Away"):
+            album_cover = "rhcp2.jfif"
         else:
-            album_cover = ""
+            album_cover = "rhcp1.jfif"
 
     elif(artist_name == ""):
         if(songTitle == ""):
