@@ -177,6 +177,8 @@ def loop():
         render()
         
         if state == "mainMenu":
+            imp = pygame.image.load("testimage.jfif").convert()
+            gameDisplay.blit(imp, (0, 0))
             mainMenu(events)
         elif state == "settingsMenu":
             setting(events)
