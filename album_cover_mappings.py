@@ -362,29 +362,29 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "diiv1.jfif"
 
-    elif(artist_name == ""):
-        if(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
-        elif(songTitle == ""):
-            album_cover = ""
+    elif(artist_name == "Green Day"):
+        if(songTitle == "Basket Case"):
+            album_cover = "gd1.jfif"
+        elif(songTitle == "American Idiot"):
+            album_cover = "gd2.jfif"
+        elif(songTitle == "Wake Me up When September Ends"):
+            album_cover = "gd2.jfif"
+        elif(songTitle == "Good Riddance (Time of Your Life)"):
+            album_cover = "gd3.jfif"
+        elif(songTitle == "Boulevard of Broken Dreams"):
+            album_cover = "gd4.jfif"
+        elif(songTitle == "When I Come Around"):
+            album_cover = "gd1.jfif"
+        elif(songTitle == "21 Guns"):
+            album_cover = "gd5.jfif"
+        elif(songTitle == "Holiday"):
+            album_cover = "gd4.jfif"
+        elif(songTitle == "Holiday / Boulevard of Broken Dreams"):
+            album_cover = "gd2.jfif"
+        elif(songTitle == "Brain Stew"):
+            album_cover = "gd6.jfif"
         else:
-            album_cover = ""
+            album_cover = "gd1.jfif"
 
     elif(artist_name == ""):
         if(songTitle == ""):
