@@ -1,3 +1,10 @@
+"""
+main game file for Song-Guesser Game
+runs the pygame loop
+Developed by BBMJ
+"""
+
+#import packages
 import pygame
 import pygame_textinput
 import sys
@@ -10,9 +17,9 @@ import random
 import os
 import musicplayer
 import album_cover_mappings
-import time
 import requests
 
+#headers for requests when downloading the songs
 headers = {
     'Host': 'p.scdn.co',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
@@ -27,56 +34,29 @@ headers = {
 }
 
 
-# https://stackoverflow.com/questions/21629727/how-to-delay-pygame-key-get-pressed
-  
-"""
-Artists that work with 10 songs:
-1. Nothing But Thieves
-2. Men I trust
-3. Arctic Monkeys
-4. Phish
-5. Billy Joel
-6. Cigarettes After Sex
-7. The Neighbourhood
-8. Five Finger Death Punch
-9. Coldplay
-10. Red Hot Chilli Peppers
-11. Jimi Hendrix
-12. Glue Trip
-13. City and Colour
-14. Halestorm
-15. Diiv
-16. Green Day
-17. Crumb
-18. Peach Pit
-19. The Fray
-20. Lil Nas X
-"""
-
-
-# initializing the constructor
+# initializing the game, setting window title
 pygame.init()
 clock = pygame.time.Clock()
 pygame.display.set_caption('Guess That Song')
-pygame.key.set_repeat(500, 50) # allow user to hold down key and detect it
 
 #make textbox
 textinput = pygame_textinput.TextInputVisualizer()
 textinput.font_color = (255, 255, 255)
 textinput.cursor_color = (255, 255, 255)
+pygame.key.set_repeat(500, 50) # allow user to hold down key and detect it
 
+#inital variables / set game running
 running = True
-settingMenu = False
 state = "mainMenu"
 firstGuess = True
   
-# screen resolution
+# game resolution
 res = (1280,720)
   
-# opens up a window
+# set window to specified resolution
 gameDisplay = pygame.display.set_mode(res)
   
-# white color
+# define color
 white = (255,255,255)
   
 # light shade of the button
@@ -85,52 +65,49 @@ color_light = (170,170,170)
 # dark shade of the button
 color_dark = (100,100,100)
   
-# stores the width of the
-# screen into a variable
-width = gameDisplay.get_width()
-  
-# stores the height of the
-# screen into a variable
-height = gameDisplay.get_height()
-  
-# defining a font
+# defining three font sizes
 smallerfont = pygame.font.SysFont('Corbel',18)
 smallfont = pygame.font.SysFont('Corbel',35)
 largefont = pygame.font.SysFont('Corbel',80)
   
-# rendering a text written in
-# this font
-
+  
 #flag for only opening tab once
 song_open = False
 
 #flag to see if list is generated
 list_generated = False
 
-#information used during the gameplay
+#information/variables used during the gameplay of program
 curr_artist = ""
 songLink = ""
 songDict = {}
 score = 0
 scorePlayer2 = 0
-turn = 1
+turn = 1 #inital player for 2 player
 leaderboardInformation = False
 infoDict = dict()
 leaderboardNameEntered = False
 onePlayerMode = True
-textToSpeechEnabled = False
-onlyGuess = False
+textToSpeechEnabled = False #if text to speech is enabled
+onlyGuess = False #variable so user can only guess once
 
+#initalize player to play songs as well as for text to speech
 speechPlayer = musicplayer.MusicPlayer()
 musicPlayer = musicplayer.MusicPlayer()
 
+"""
+button function - displays a button in the game
+parameters:
 #x - x coordinate of button
 #y - y coordinate of button
 #w - width of button
 #h - height of button
 #ic - unhighlighted color
 #ac - highlighted color
-#action - action (function) on button click
+#artist - if the button is selecting an artist
+#action - action (function) on button click. can be a string of a state, or name of a function
+#mp3 - specified mp3 file to play when the user hovers on the button if text to speech is enabled
+"""
 def button(msg,x,y,w,h,ic,ac,events, artist=None, action=None, mp3=None):
     clicked = False
     global curr_artist
@@ -141,30 +118,36 @@ def button(msg,x,y,w,h,ic,ac,events, artist=None, action=None, mp3=None):
     global state
     played = False
     mouse = pygame.mouse.get_pos()
-    if x+w > mouse[0] > x and y+h > mouse[1] > y:
+    if x+w > mouse[0] > x and y+h > mouse[1] > y: #if mouse hovered over
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
         if(textToSpeechEnabled == True and action != "textToSpeech" and not speechPlayer.is_playing()):
             speechPlayer.play(os.path.join('speechFiles', mp3))
-        if clicked and action != None:
-            if artist != None:
-                curr_artist = artist
+        if clicked and action != None: #if clicked
+            if artist != None: 
+                curr_artist = artist #set artist if specified
             if isinstance(action, str) == True:
-                state = action
+                state = action #set state to action if a string is speciied
             else:
-                action()
-    else:
+                action() #call method if the action is a method
+    else: #else mouse not hovered over
         pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
     if artist == None:
         text = smallfont.render(msg , True , white)
     else:
         text = smallerfont.render(msg , True , white)
-    gameDisplay.blit(text, ( (x+(w/5.5)), (y+(h/3)) ))
+    gameDisplay.blit(text, ( (x+(w/5.5)), (y+(h/3)) )) #display the text on the button
 
+#starts the game
 def start():
     loop()
     end()
-    
+
+"""
+main game loop
+calls associated state depedent on current state
+"""
 def loop():
+    #use game variabls and global variables
     global state 
     global running
     global song_open
@@ -192,39 +175,40 @@ def loop():
                 end()
         render()
         
-        if state == "mainMenu":
+        #check state and call associated method
+        #each method passes in even
+        if state == "mainMenu": #mainMenu state (initial state of the game)
             mainMenu(events)
-        elif state == "settingsMenu":
+        elif state == "settingsMenu": #settings state
             setting(events)
-        elif state == "leaderboard":
+        elif state == "leaderboard": #leaderboard state
             leaderboard(events)
-        elif state == "onePlayer":
+        elif state == "onePlayer": #1 player option selected, bring to artist selection
             score = 0
             leaderboardNameEntered = False
             onePlayerMode = True
             onePlayer(events)
-        elif state == "twoPlayer":
+        elif state == "twoPlayer": #2 player option selected, bring to artist selection
             score = 0
             scorePlayer2 = 0
             turn = 1
             leaderboardNameEntered = False
             onePlayerMode = False
             twoPlayer(events)
-        elif state == "gameOver":
+        elif state == "gameOver": #game over state
             gameOver(events)
             firstGuess = True
             for event in events:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and leaderboardNameEntered == False:
                     updateLeaderboard()
                     leaderboardNameEntered = True
-        elif state == "randomSong":
+        elif state == "randomSong": #when state is in 1 player game
             if(firstGuess):
                 firstGuess = False
                 textinput.value = ""
             if(not list_generated):
                 result = spotipy_artist.get_artist(curr_artist)
                 songDict = spotipy_artist.show_artist_top_tracks(result)
-                # print(songDict)
                 list_generated = True
             if(not song_open and len(songDict) != 0):
                 num_options = len(songDict) - 1
@@ -255,7 +239,7 @@ def loop():
                     text = smallfont.render("Incorrect Guess!    Score: " + str(score) , True , white)
             randomSong(events, text)
 
-        elif state == "randomSong2":
+        elif state == "randomSong2": #when state is in 2 player gamme
             if(firstGuess):
                 firstGuess = False
                 textinput.value = ""
@@ -306,7 +290,7 @@ def loop():
                     elif turn == 2:
                         turn = 1
             randomSong2(events, text, turnText)
-        elif state == "nextSong":
+        elif state == "nextSong": #next song button in 1 player mode
             gameDisplay.blit(smallfont.render("Downloading song...", True , white), ((0+(50/2)), (100+(50/2))))
             if(musicPlayer.is_playing()):
                 musicPlayer.quit_playing()
@@ -320,7 +304,7 @@ def loop():
             else:
                 onlyGuess = False
                 state = "randomSong"
-        elif state == "nextSong2":
+        elif state == "nextSong2": #next song buttton in 2 player mode
             gameDisplay.blit(smallfont.render("Downloading song...", True , white), ((0+(50/2)), (100+(50/2))))
             if(musicPlayer.is_playing()):
                 musicPlayer.quit_playing()
@@ -339,56 +323,58 @@ def loop():
             else:
                 onlyGuess = False
                 state = "randomSong2"
-        elif state == "openSong":
+        elif state == "openSong": #play current song in 1 player mode
             if(musicPlayer.is_playing()):
                 musicPlayer.quit_playing()
             musicPlayer.play("song.mp3")
             state = "randomSong"
-        elif state == "openSong2":
+        elif state == "openSong2": #play current song in 2 player mode
             if(musicPlayer.is_playing()):
                 musicPlayer.quit_playing()
             musicPlayer.play("song.mp3")
             state = "randomSong2"
-        elif state == "textToSpeech":
+        elif state == "textToSpeech": #text to speech button
             if(textToSpeechEnabled == False):
                 textToSpeechEnabled = True
                 state = "settingsMenu"
             else:
                 textToSpeechEnabled = False
                 state = "settingsMenu"
+                
+        #soecify fps to 30 and update window
         clock.tick(30)
         pygame.display.update()
         
+#method to get ablum cover from associated song after a guess        
 def getAlbumnCover(songTitle):
     global curr_artist
     coverImage = album_cover_mappings.CoversByArtist(curr_artist, songTitle)
     imp = pygame.image.load(os.path.join('images', coverImage)).convert()
     gameDisplay.blit(imp, (500, 150))
         
+#main menu screen
 def mainMenu(events):
-    settingMenu = False
     title()
     button("Start 2 Player", 670, 360, 230, 50, color_dark, color_light, events, action="twoPlayer", mp3="startplayer2.mp3")
     button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, events, action="onePlayer", mp3="startplayer1.mp3")
     button("Leaderboard", 400, 470, 230, 50, color_dark, color_light, events, action="leaderboard",mp3="leaderboard.mp3")
     button("Settings", 670, 470, 230, 50, color_dark, color_light, events, action="settingsMenu",mp3="settings.mp3")
-    button("Quit", 0, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
-              
-    #make switch case that checks current state, then calls each state's respective function. should be alot cleaner code
+    button("Quit", 0, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")   
     
+#render method, fills the screen with a color    
 def render():
-    # fills the screen with a color
     gameDisplay.fill((4,107,153))
 
+#handle when quit button is pressed
 def end():
     if(musicPlayer.is_playing()):
         musicPlayer.quit_playing()
     pygame.quit()
     
-
+#random song screen - 1 player
 def randomSong(events, text):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
-    button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong", mp3="opencurrentsong.mp3")
+    button("Play current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong", mp3="opencurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong", mp3="nextsong.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
     if(onlyGuess == False):
@@ -396,11 +382,11 @@ def randomSong(events, text):
     # Blit its surface onto the screen
         gameDisplay.blit(textinput.surface, (300, 300))
     
-
+#random song screen - 2 player
 def randomSong2(events, text, turnText):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
-    button("Open current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2", mp3="opencurrentsong.mp3")
+    button("Play current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2", mp3="opencurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong2", mp3="nextsong.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
     if(onlyGuess == False):
@@ -408,6 +394,7 @@ def randomSong2(events, text, turnText):
     # Blit its surface onto the screen
         gameDisplay.blit(textinput.surface, (300, 300))
 
+#one player select artist screen
 def onePlayer(events):
     global curr_artist
     textOnePlay = smallfont.render("Select an artist for 1 player. Capitalization and punctuation are NOT needed.", True , white)
@@ -439,6 +426,7 @@ def onePlayer(events):
     button("Back", 585, 570, 130, 50, color_dark, color_light, events, action="mainMenu",mp3="back.mp3")
     button("Quit", 720, 570, 130, 50, color_dark, color_light, events, action=end,mp3="quit.mp3")
 
+#two player select artist screen
 def twoPlayer(events):
    global curr_artist
    textTwoPlay = smallfont.render("Select an artist for 2 players. Capitalization and punctuation are NOT needed.", True , white)
@@ -473,10 +461,12 @@ def twoPlayer(events):
    button("Back", 585, 570, 130, 50, color_dark, color_light, events, action="mainMenu",mp3="back.mp3")
    button("Quit", 720, 570, 130, 50, color_dark, color_light, events, action=end,mp3="quit.mp3")
 
+#display title of game
 def title():
     titleText = largefont.render("Guess That Song!" , True , white)
     gameDisplay.blit(titleText, ((370+(50/2)), (100+(50/2))))
 
+#settings menu screen
 def setting(events):
     global textToSpeechEnabled
     settingText = smallfont.render("Setting Menu", True, white)
@@ -488,6 +478,7 @@ def setting(events):
         button("Disable text to speech", 600, 370, 400, 50, color_dark, color_light, events, action="textToSpeech")
     button("Quit", 0, 470, 130, 50, color_dark, color_light, events, action=end,mp3="quit.mp3")
 
+#game over screen
 def gameOver(events):
     global leaderboardInformation
     global leaderboardNameEntered
@@ -517,6 +508,7 @@ def gameOver(events):
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, action="mainMenu", mp3="mainmenu.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
 
+#leaderboard screen
 def leaderboard(events):
     global leaderboardInformation
     global infoDict
@@ -541,15 +533,12 @@ def leaderboard(events):
     button("Main Menu", 270, 590, 200, 50, color_dark, color_light, events, action="mainMenu", mp3="mainmenu.mp3")
     button("Quit", 670, 590, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
 
+#method to update leaderboard with new entry
 def updateLeaderboard():
     global infoDict
-    
     infoDict = lb.read_text()
-
     newName = textinput.value[:8]
-
     infoDict[newName] = score
-
     infoDict = dict(sorted(infoDict.items(), key=lambda item: item[1], reverse=True))
 
     if len(infoDict) > 20:
