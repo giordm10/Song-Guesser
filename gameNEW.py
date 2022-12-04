@@ -127,7 +127,7 @@ def button(msg,x,y,w,h,ic,ac,events, artist=None, action=None, mp3=None):
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
         if(textToSpeechEnabled == True and action != "textToSpeech" and not player.is_playing()):
-            player.play(mp3)
+            player.play(os.path.join('speechFiles', mp3))
         if clicked and action != None:
             if artist != None:
                 curr_artist = artist
@@ -328,7 +328,7 @@ def loop():
 def getAlbumnCover(songTitle):
     global curr_artist
     coverImage = album_cover_mappings.CoversByArtist(curr_artist, songTitle)
-    imp = pygame.image.load("images\\" + coverImage).convert()
+    imp = pygame.image.load(os.path.join('images', coverImage)).convert()
     gameDisplay.blit(imp, (500, 150))
         
 def mainMenu(events):
