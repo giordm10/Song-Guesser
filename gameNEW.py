@@ -167,6 +167,7 @@ def loop():
     result = ""
     songDict = ""
     text = ""
+    correctAnswer = None
     while running:
         events = pygame.event.get()
         for event in events:
@@ -236,8 +237,13 @@ def loop():
                     text = smallfont.render("Correct Guess!    Score: " + str(score) , True , white)
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     onlyGuess = True
-                    text = smallfont.render("Incorrect Guess!    Score: " + str(score) , True , white)
-            randomSong(events, text)
+                    text = smallfont.render("Incorrect Guess!   Score: " + str(score) , True , white)
+                    correctAnswer = smallfont.render("The correct guess was: " + songTitle, True , white)
+            if correctAnswer is not None:
+                 randomSong(events, text, correctAnswer)
+            else:
+                 randomSong(events, text)
+            
 
         elif state == "randomSong2": #when state is in 2 player gamme
             if(firstGuess):
@@ -284,13 +290,18 @@ def loop():
                     text = smallfont.render("Correct Guess!    Player 1 Score: " + str(score) + ", Player 2 Score: " + str(scorePlayer2), True , white)
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     onlyGuess = True
-                    text = smallfont.render("Incorrect Guess!    Player 1 Score: " + str(score) + ", Player 2 Score: " + str(scorePlayer2), True , white)
+                    text = smallfont.render("Incorrect Guess!   Player 1 Score: " + str(score) + ", Player 2 Score: " + str(scorePlayer2), True , white)
+                    correctAnswer = smallfont.render("The correct guess was: " + songTitle, True , white)
                     if turn == 1:
                         turn = 2
                     elif turn == 2:
                         turn = 1
-            randomSong2(events, text, turnText)
+            if correctAnswer is not None:
+                 randomSong2(events, text, turnText, correctAnswer)
+            else:
+                 randomSong2(events, text, turnText)
         elif state == "nextSong": #next song button in 1 player mode
+            correctAnswer = None
             gameDisplay.blit(smallfont.render("Downloading song...", True , white), ((0+(50/2)), (100+(50/2))))
             if(musicPlayer.is_playing()):
                 musicPlayer.quit_playing()
@@ -305,6 +316,7 @@ def loop():
                 onlyGuess = False
                 state = "randomSong"
         elif state == "nextSong2": #next song buttton in 2 player mode
+            correctAnswer = None
             gameDisplay.blit(smallfont.render("Downloading song...", True , white), ((0+(50/2)), (100+(50/2))))
             if(musicPlayer.is_playing()):
                 musicPlayer.quit_playing()
@@ -372,26 +384,30 @@ def end():
     pygame.quit()
     
 #random song screen - 1 player
-def randomSong(events, text):
+def randomSong(events, text, correct = None):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
+    if(correct is not None):
+         gameDisplay.blit(correct, ((0+(50/2)), (50+(50/2))))
     button("Play current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong", mp3="opencurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong", mp3="nextsong.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
     if(onlyGuess == False):
         textinput.update(events)
-    # Blit its surface onto the screen
+        #Blit its surface onto the screen
         gameDisplay.blit(textinput.surface, (300, 300))
     
 #random song screen - 2 player
-def randomSong2(events, text, turnText):
+def randomSong2(events, text, turnText, correct = None):
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
+    if(correct is not None):
+         gameDisplay.blit(correct, ((0+(50/2)), (50+(50/2))))
     gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
     button("Play current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2", mp3="opencurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong2", mp3="nextsong.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
     if(onlyGuess == False):
         textinput.update(events)
-    # Blit its surface onto the screen
+       #Blit its surface onto the screen
         gameDisplay.blit(textinput.surface, (300, 300))
 
 #one player select artist screen
