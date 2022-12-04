@@ -10,6 +10,7 @@ import random
 import os
 import musicplayer
 import album_cover_mappings
+import time
 
 # https://stackoverflow.com/questions/21629727/how-to-delay-pygame-key-get-pressed
   
@@ -105,7 +106,8 @@ onePlayerMode = True
 textToSpeechEnabled = False
 onlyGuess = False
 
-player = musicplayer.MusicPlayer()
+speechPlayer = musicplayer.MusicPlayer()
+musicPlayer = musicplayer.MusicPlayer()
 
 #x - x coordinate of button
 #y - y coordinate of button
@@ -126,8 +128,8 @@ def button(msg,x,y,w,h,ic,ac,events, artist=None, action=None, mp3=None):
     mouse = pygame.mouse.get_pos()
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
-        if(textToSpeechEnabled == True and action != "textToSpeech" and not player.is_playing()):
-            player.play(os.path.join('speechFiles', mp3))
+        if(textToSpeechEnabled == True and action != "textToSpeech" and not speechPlayer.is_playing()):
+            speechPlayer.play(os.path.join('speechFiles', mp3))
         if clicked and action != None:
             if artist != None:
                 curr_artist = artist
@@ -217,7 +219,9 @@ def loop():
                 text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Score: " + str(score), True , white)
                 # print(songTitle)
                 # print(songLink)
-                webbrowser.open(str(songLink))
+                os.system("curl --header 'Host: p.scdn.co' --user-agent 'Mozilla/5.0 (X11; Linux x86_64; rv:107.0) Gecko/20100101 Firefox/107.0' --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' --header 'Accept-Language: en-US,en;q=0.5' --header 'DNT: 1' --header 'Upgrade-Insecure-Requests: 1' --header 'Sec-Fetch-Dest: document' --header 'Sec-Fetch-Mode: navigate' --header 'Sec-Fetch-Site: none' --header 'Sec-Fetch-User: ?1'" + " '" + str(songLink) + "' " + "--output 'song.mp3'")
+                if(not musicPlayer.is_playing()):
+                    musicPlayer.play("song.mp3")
                 del songDict[songTitle]
                 scoreFlag = False
                 song_open = True
@@ -256,7 +260,9 @@ def loop():
                     turnText = player1Turn
                 elif turn == 2:
                     turnText = player2Turn
-                webbrowser.open(str(songLink))
+                os.system("curl --header 'Host: p.scdn.co' --user-agent 'Mozilla/5.0 (X11; Linux x86_64; rv:107.0) Gecko/20100101 Firefox/107.0' --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' --header 'Accept-Language: en-US,en;q=0.5' --header 'DNT: 1' --header 'Upgrade-Insecure-Requests: 1' --header 'Sec-Fetch-Dest: document' --header 'Sec-Fetch-Mode: navigate' --header 'Sec-Fetch-Site: none' --header 'Sec-Fetch-User: ?1'" + " '" + str(songLink) + "' " + "--output 'song.mp3'")
+                if(not musicPlayer.is_playing()):
+                    musicPlayer.play("song.mp3")
                 del songDict[songTitle]
                 scoreFlag = False
                 song_open = True
@@ -284,6 +290,8 @@ def loop():
                         turn = 1
             randomSong2(events, text, turnText)
         elif state == "nextSong":
+            if(musicPlayer.is_playing()):
+                musicPlayer.quit_playing()
             textinput.value = ""
             clock.tick(30)
             song_open = False
@@ -295,6 +303,9 @@ def loop():
                 onlyGuess = False
                 state = "randomSong"
         elif state == "nextSong2":
+            if(musicPlayer.is_playing()):
+                musicPlayer.quit_playing()
+            canPlay = False
             textinput.value = ""
             clock.tick(30)
             song_open = False
@@ -310,10 +321,14 @@ def loop():
                 onlyGuess = False
                 state = "randomSong2"
         elif state == "openSong":
-            webbrowser.open(str(songLink))
+            if(musicPlayer.is_playing()):
+                musicPlayer.quit_playing()
+            musicPlayer.play("song.mp3")
             state = "randomSong"
         elif state == "openSong2":
-            webbrowser.open(str(songLink))
+            if(musicPlayer.is_playing()):
+                musicPlayer.quit_playing()
+            musicPlayer.play("song.mp3")
             state = "randomSong2"
         elif state == "textToSpeech":
             if(textToSpeechEnabled == False):
@@ -347,6 +362,8 @@ def render():
     gameDisplay.fill((4,107,153))
 
 def end():
+    if(musicPlayer.is_playing()):
+        musicPlayer.quit_playing()
     pygame.quit()
     
 
