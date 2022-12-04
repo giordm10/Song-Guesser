@@ -9,12 +9,20 @@ leaderboard.csv - where leaderboard values are stored
 
 PIP packages needed:
 pygame 2.1.2
+
 pygame_textinput 1.0.1
+
 spotipy 2.21.0
+
 requests 2.28.1
+
 python-dotenv 0.21.0
 
+
 Tested on python version 3.10.8 but may work on others
+
 The program needs internet access to work
+
 To run the program, type in a terminal
+
 $ python game.py
