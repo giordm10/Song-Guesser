@@ -11,6 +11,21 @@ import os
 import musicplayer
 import album_cover_mappings
 import time
+import requests
+
+headers = {
+    'Host': 'p.scdn.co',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.5',
+    'DNT': '1',
+    'Upgrade-Insecure-Requests': '1',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-User': '?1',
+    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:107.0) Gecko/20100101 Firefox/107.0',
+}
+
 
 # https://stackoverflow.com/questions/21629727/how-to-delay-pygame-key-get-pressed
   
@@ -217,9 +232,9 @@ def loop():
                 songTitle = list(songDict)[randomNum]
                 songLink = list(songDict.values())[randomNum]
                 text = smallfont.render("Type the name of the song and click the \"Enter\" key.    Score: " + str(score), True , white)
-                # print(songTitle)
-                # print(songLink)
-                os.system("curl --header 'Host: p.scdn.co' --user-agent 'Mozilla/5.0 (X11; Linux x86_64; rv:107.0) Gecko/20100101 Firefox/107.0' --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' --header 'Accept-Language: en-US,en;q=0.5' --header 'DNT: 1' --header 'Upgrade-Insecure-Requests: 1' --header 'Sec-Fetch-Dest: document' --header 'Sec-Fetch-Mode: navigate' --header 'Sec-Fetch-Site: none' --header 'Sec-Fetch-User: ?1'" + " '" + str(songLink) + "' " + "--output 'song.mp3'")
+                response = requests.get(str(songLink), headers=headers)
+                with open('song.mp3', 'wb') as f:
+                    f.write(response.content)
                 if(not musicPlayer.is_playing()):
                     musicPlayer.play("song.mp3")
                 del songDict[songTitle]
@@ -260,7 +275,9 @@ def loop():
                     turnText = player1Turn
                 elif turn == 2:
                     turnText = player2Turn
-                os.system("curl --header 'Host: p.scdn.co' --user-agent 'Mozilla/5.0 (X11; Linux x86_64; rv:107.0) Gecko/20100101 Firefox/107.0' --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' --header 'Accept-Language: en-US,en;q=0.5' --header 'DNT: 1' --header 'Upgrade-Insecure-Requests: 1' --header 'Sec-Fetch-Dest: document' --header 'Sec-Fetch-Mode: navigate' --header 'Sec-Fetch-Site: none' --header 'Sec-Fetch-User: ?1'" + " '" + str(songLink) + "' " + "--output 'song.mp3'")
+                response = requests.get(str(songLink), headers=headers)
+                with open('song.mp3', 'wb') as f:
+                    f.write(response.content)
                 if(not musicPlayer.is_playing()):
                     musicPlayer.play("song.mp3")
                 del songDict[songTitle]
@@ -290,6 +307,7 @@ def loop():
                         turn = 1
             randomSong2(events, text, turnText)
         elif state == "nextSong":
+            gameDisplay.blit(smallfont.render("Downloading song...", True , white), ((0+(50/2)), (100+(50/2))))
             if(musicPlayer.is_playing()):
                 musicPlayer.quit_playing()
             textinput.value = ""
@@ -303,6 +321,7 @@ def loop():
                 onlyGuess = False
                 state = "randomSong"
         elif state == "nextSong2":
+            gameDisplay.blit(smallfont.render("Downloading song...", True , white), ((0+(50/2)), (100+(50/2))))
             if(musicPlayer.is_playing()):
                 musicPlayer.quit_playing()
             canPlay = False
