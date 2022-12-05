@@ -91,6 +91,16 @@ onePlayerMode = True
 textToSpeechEnabled = False #if text to speech is enabled
 onlyGuess = False #variable so user can only guess once
 
+#Variables utilized in controlling execution of text to speech for on-screen instructions and output
+onePlayerInstructionsSpoke = False
+twoPlayerInstructionsSpoke = False
+guessInstructionsSpoke = False
+correctGuessSpoke = False
+incorrectGuessSpoke = False
+turnSpoke = False
+gameOverSpoke = False
+winnerSpoke = False
+
 #initalize player to play songs as well as for text to speech
 speechPlayer = musicplayer.MusicPlayer()
 musicPlayer = musicplayer.MusicPlayer()
@@ -162,6 +172,9 @@ def loop():
     global textToSpeechEnabled
     global onlyGuess
     global songLink
+    global correctGuessSpoke
+    global incorrectGuessSpoke
+    global turnSpoke
     scoreFlag = False
     running = True
     result = ""
@@ -235,10 +248,28 @@ def loop():
                         score += 1
                         scoreFlag = True
                     text = smallfont.render("Correct Guess!    Score: " + str(score) , True , white)
+                    correctGuessHasPlayed = False #the correct guess mp3 has played so the score mp3 can play
+                    if(textToSpeechEnabled == True):
+                        while(correctGuessSpoke == False):
+                            if(correctGuessHasPlayed == False and not speechPlayer.is_playing()):
+                                speechPlayer.play(os.path.join('speechFiles', 'correctguess.mp3'))
+                                correctGuessHasPlayed = True
+                            if(correctGuessHasPlayed == True and not speechPlayer.is_playing()):
+                                speechPlayer.play(os.path.join('speechFiles', 'playeronescore'+ str(score) + '.mp3'))
+                                correctGuessSpoke = True
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     onlyGuess = True
                     text = smallfont.render("Incorrect Guess!   Score: " + str(score) , True , white)
                     correctAnswer = smallfont.render("The correct guess was: " + songTitle, True , white)
+                    incorrectGuessHasPlayed = False #the incorrect guess mp3 has played so the score mp3 can play
+                    if(textToSpeechEnabled == True):
+                        while(incorrectGuessSpoke == False):
+                            if(incorrectGuessHasPlayed == False and not speechPlayer.is_playing()):
+                                speechPlayer.play(os.path.join('speechFiles', 'incorrectguess.mp3'))
+                                incorrectGuessHasPlayed = True
+                            if(incorrectGuessHasPlayed == True and not speechPlayer.is_playing()):
+                                speechPlayer.play(os.path.join('speechFiles', 'playeronescore'+ str(score) + '.mp3'))
+                                incorrectGuessSpoke = True
             if correctAnswer is not None:
                  randomSong(events, text, correctAnswer)
             else:
@@ -263,8 +294,10 @@ def loop():
                 player2Turn = smallfont.render("Player 2's turn", True, white)
                 if turn == 1:
                     turnText = player1Turn
+                    turnTalk = "playeroneturn.mp3"
                 elif turn == 2:
                     turnText = player2Turn
+                    turnTalk = "playertwoturn.mp3"
                 response = requests.get(str(songLink), headers=headers)
                 with open('song.mp3', 'wb') as f:
                     f.write(response.content)
@@ -288,18 +321,44 @@ def loop():
                             scoreFlag = True
                             scorePlayer2 +=1
                     text = smallfont.render("Correct Guess!    Player 1 Score: " + str(score) + ", Player 2 Score: " + str(scorePlayer2), True , white)
+                    correctGuessHasPlayed = False #the correct guess mp3 has played so the score mp3s can play
+                    playerOneScorePlayed = False #player one's score mp3 has played so player two's score mp3 can play
+                    if(textToSpeechEnabled == True):
+                        while(correctGuessSpoke == False):
+                            if(correctGuessHasPlayed == False and not speechPlayer.is_playing()):
+                                speechPlayer.play(os.path.join('speechFiles', 'correctguess.mp3'))
+                                correctGuessHasPlayed = True
+                            if(correctGuessHasPlayed == True and not speechPlayer.is_playing() and playerOneScorePlayed == False):
+                                speechPlayer.play(os.path.join('speechFiles', 'playeronescore'+ str(score) + '.mp3'))
+                                playerOneScorePlayed = True
+                            if(playerOneScorePlayed == True and not speechPlayer.is_playing()):
+                                speechPlayer.play(os.path.join('speechFiles', 'playertwoscore'+ str(scorePlayer2) + '.mp3'))
+                                correctGuessSpoke = True
                 elif textinput.value.lower() != songTitle.lower() and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     onlyGuess = True
                     text = smallfont.render("Incorrect Guess!   Player 1 Score: " + str(score) + ", Player 2 Score: " + str(scorePlayer2), True , white)
                     correctAnswer = smallfont.render("The correct guess was: " + songTitle, True , white)
+                    incorrectGuessHasPlayed = False #the incorrect guess mp3 has played so the score mp3s can play
+                    playerOneScorePlayed = False #player one's score mp3 has played so player two's score mp3 can play
+                    if(textToSpeechEnabled == True):
+                        while(incorrectGuessSpoke == False):
+                            if(incorrectGuessHasPlayed == False and not speechPlayer.is_playing()):
+                                speechPlayer.play(os.path.join('speechFiles', 'incorrectguess.mp3'))
+                                incorrectGuessHasPlayed = True
+                            if(incorrectGuessHasPlayed == True and not speechPlayer.is_playing() and playerOneScorePlayed == False):
+                                speechPlayer.play(os.path.join('speechFiles', 'playeronescore'+ str(score) + '.mp3'))
+                                playerOneScorePlayed = True
+                            if(playerOneScorePlayed == True and not speechPlayer.is_playing()):
+                                speechPlayer.play(os.path.join('speechFiles', 'playertwoscore'+ str(scorePlayer2) + '.mp3'))
+                                incorrectGuessSpoke = True
                     if turn == 1:
                         turn = 2
                     elif turn == 2:
                         turn = 1
             if correctAnswer is not None:
-                 randomSong2(events, text, turnText, correctAnswer)
+                 randomSong2(events, text, turnText, turnTalk, correctAnswer)
             else:
-                 randomSong2(events, text, turnText)
+                 randomSong2(events, text, turnText, turnTalk)
         elif state == "nextSong": #next song button in 1 player mode
             correctAnswer = None
             gameDisplay.blit(smallfont.render("Downloading song...", True , white), ((0+(50/2)), (100+(50/2))))
@@ -314,6 +373,8 @@ def loop():
                 state = "gameOver"
             else:
                 onlyGuess = False
+                correctGuessSpoke = False
+                incorrectGuessSpoke = False
                 state = "randomSong"
         elif state == "nextSong2": #next song buttton in 2 player mode
             correctAnswer = None
@@ -334,6 +395,9 @@ def loop():
                 state = "gameOver"
             else:
                 onlyGuess = False
+                correctGuessSpoke = False
+                incorrectGuessSpoke = False
+                turnSpoke = False
                 state = "randomSong2"
         elif state == "openSong": #play current song in 1 player mode
             if(musicPlayer.is_playing()):
@@ -385,9 +449,13 @@ def end():
     
 #random song screen - 1 player
 def randomSong(events, text, correct = None):
+    global guessInstructionsSpoke
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     if(correct is not None):
          gameDisplay.blit(correct, ((0+(50/2)), (50+(50/2))))
+    if(textToSpeechEnabled == True and not speechPlayer.is_playing() and guessInstructionsSpoke == False):
+        speechPlayer.play(os.path.join('speechFiles', 'enterguessinstructions.mp3'))
+        guessInstructionsSpoke = True
     button("Play current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong", mp3="opencurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong", mp3="nextsong.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
@@ -395,13 +463,24 @@ def randomSong(events, text, correct = None):
         textinput.update(events)
         #Blit its surface onto the screen
         gameDisplay.blit(textinput.surface, (300, 300))
+   
     
 #random song screen - 2 player
-def randomSong2(events, text, turnText, correct = None):
+def randomSong2(events, text, turnText, turnTalk, correct = None):
+    global guessInstructionsSpoke
+    global turnSpoke
     gameDisplay.blit(text, ((0+(50/2)), (100+(50/2))))
     if(correct is not None):
          gameDisplay.blit(correct, ((0+(50/2)), (50+(50/2))))
     gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
+    if(textToSpeechEnabled == True):
+        while(turnSpoke == False): 
+            if(not speechPlayer.is_playing() and guessInstructionsSpoke == False):
+                speechPlayer.play(os.path.join('speechFiles', 'enterguessinstructions.mp3'))
+                guessInstructionsSpoke = True
+            if(not speechPlayer.is_playing() and guessInstructionsSpoke == True):
+                speechPlayer.play(os.path.join('speechFiles', turnTalk))
+                turnSpoke = True
     button("Play current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2", mp3="opencurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong2", mp3="nextsong.mp3")
     button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
@@ -413,8 +492,14 @@ def randomSong2(events, text, turnText, correct = None):
 #one player select artist screen
 def onePlayer(events):
     global curr_artist
+    global textToSpeechEnabled
+    global onePlayerInstructionsSpoke
     textOnePlay = smallfont.render("Select an artist for 1 player. Capitalization and punctuation are NOT needed.", True , white)
     gameDisplay.blit(textOnePlay, ((0+(50/2)), (100+(50/2))))
+    if(textToSpeechEnabled == True and not speechPlayer.is_playing() and onePlayerInstructionsSpoke == False):
+        speechPlayer.play(os.path.join('speechFiles', 'oneplayerinstructions.mp3'))
+        onePlayerInstructionsSpoke = True
+
     #textinput.update(events)
     #gameDisplay.blit(textinput.surface, (300, 300))
     button("Nothing But Thieves", 150, 220, 230, 50, color_dark, color_light, events, "Nothing But Thieves", "randomSong", mp3="nothingbutthieves.mp3")
@@ -441,10 +526,12 @@ def onePlayer(events):
     button("Start", 450, 570, 130, 50, color_dark, color_light, events, action="randomSong",mp3="start.mp3")
     button("Back", 585, 570, 130, 50, color_dark, color_light, events, action="mainMenu",mp3="back.mp3")
     button("Quit", 720, 570, 130, 50, color_dark, color_light, events, action=end,mp3="quit.mp3")
-
+   
 #two player select artist screen
 def twoPlayer(events):
    global curr_artist
+   global twoPlayerInstructionsSpoke
+   global turnSpoke
    textTwoPlay = smallfont.render("Select an artist for 2 players. Capitalization and punctuation are NOT needed.", True , white)
    startTurn = smallfont.render("Player 1's turn", True, white)
    gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
@@ -452,6 +539,9 @@ def twoPlayer(events):
 #    textinput.update(events)
    gameDisplay.blit(textinput.surface, (300, 300))
 #    curr_artist = textinput.value
+   if(textToSpeechEnabled == True and not speechPlayer.is_playing() and twoPlayerInstructionsSpoke == False):
+        speechPlayer.play(os.path.join('speechFiles', 'twoplayerinstructions.mp3'))
+        twoPlayerInstructionsSpoke = True
    button("Nothing But Thieves", 150, 220, 230, 50, color_dark, color_light, events, "Nothing But Thieves", "randomSong2", mp3="nothingbutthieves.mp3")
    button("Men I trust", 150, 280, 230, 50, color_dark, color_light, events, "Men I trust", "randomSong2", mp3="menitrust.mp3")
    button("Arctic Monkeys", 150, 340, 230, 50, color_dark, color_light, events, "Arctic Monkeys", "randomSong2", mp3="arcticmonkeys.mp3")
@@ -477,6 +567,8 @@ def twoPlayer(events):
    button("Back", 585, 570, 130, 50, color_dark, color_light, events, action="mainMenu",mp3="back.mp3")
    button("Quit", 720, 570, 130, 50, color_dark, color_light, events, action=end,mp3="quit.mp3")
 
+
+
 #display title of game
 def title():
     titleText = largefont.render("Guess That Song!" , True , white)
@@ -499,9 +591,13 @@ def gameOver(events):
     global leaderboardInformation
     global leaderboardNameEntered
     global onePlayerMode
+    global gameOverSpoke
+    global winnerSpoke
     gameOverText = smallfont.render("GAME OVER", True, white)
     gameDisplay.blit(gameOverText, ((500+(50/2)), (100+(50/2))))
-    
+    if(textToSpeechEnabled == True and not speechPlayer.is_playing() and gameOverSpoke == False):
+        speechPlayer.play(os.path.join('speechFiles', 'gameover.mp3'))
+        gameOverSpoke = True
     if(onePlayerMode):
         scorerText = smallfont.render("Score: " + str(score), True, white)
         gameDisplay.blit(scorerText, ((520+(50/2)), (150+(50/2))))
@@ -518,7 +614,17 @@ def gameOver(events):
             gameDisplay.blit(nameEntered, (300, 350))
     else:
         scorerText = smallfont.render("Player 1    -    Score: " + str(score) + "              Player 2    -    Score: " + str(scorePlayer2), True, white)
+        if(score >= scorePlayer2):
+            winnerText = smallfont.render("Player 1 Wins!", True, white)
+            winnerTalk = "playeronewins.mp3"
+        elif(score < scorePlayer2):
+            winnerText = smallfont.render("Player 2 Wins!", True, white)
+            winnerTalk = "playertwowins.mp3"
         gameDisplay.blit(scorerText, ((255+(50/2)), (150+(50/2))))
+        gameDisplay.blit(winnerText, ((255+(50/2)), (250+(50/2))))
+        if(textToSpeechEnabled == True and not speechPlayer.is_playing() and winnerSpoke == False):
+            speechPlayer.play(os.path.join('speechFiles', winnerTalk))
+            winnerSpoke = True
         
 
     button("Main Menu", 270, 470, 200, 50, color_dark, color_light, events, action="mainMenu", mp3="mainmenu.mp3")
