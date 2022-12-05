@@ -628,12 +628,15 @@ def gameOver(events):
             gameDisplay.blit(nameEntered, (300, 350))
     else:
         scorerText = smallfont.render("Player 1    -    Score: " + str(score) + "              Player 2    -    Score: " + str(scorePlayer2), True, white)
-        if(score >= scorePlayer2):
+        if(score > scorePlayer2):
             winnerText = smallfont.render("Player 1 Wins!", True, white)
             winnerTalk = "playeronewins.mp3"
         elif(score < scorePlayer2):
             winnerText = smallfont.render("Player 2 Wins!", True, white)
             winnerTalk = "playertwowins.mp3"
+        else:
+            winnerText = smallfont.render("Tie Game!", True, white)
+            winnerTalk = "tiegame.mp3"
         gameDisplay.blit(scorerText, ((255+(50/2)), (150+(50/2))))
         gameDisplay.blit(winnerText, ((255+(50/2)), (250+(50/2))))
         if(textToSpeechEnabled == True and not speechPlayer.is_playing() and winnerSpoke == False):
