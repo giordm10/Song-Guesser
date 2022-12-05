@@ -92,8 +92,7 @@ class MusicPlayer():
 
     def quit_playing(self):
         if self._process_running:
-            self._p.stdin.write(b'q')
-            self._p.stdin.flush()
+            self._p.terminate()
 
             # Wait for process to end
             while self._process_running:
