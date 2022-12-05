@@ -43,8 +43,9 @@ Tested on python version 3.10.8 but may work on others
 
 The program needs internet access to work
 
-To run the program, type in a terminal
 
 ## How to Run
+
+Navigate to the directory in a terminal where all files are located, and type
 
 $ python game.py
