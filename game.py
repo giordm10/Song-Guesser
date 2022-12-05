@@ -119,15 +119,16 @@ parameters:
 #mp3 - specified mp3 file to play when the user hovers on the button if text to speech is enabled
 """
 def button(msg,x,y,w,h,ic,ac,events, artist=None, action=None, mp3=None):
-    clicked = False
     global curr_artist
     global textToSpeech
+    global state
+    clicked = False
+    
     for event in events:
         if event.type == pygame.MOUSEBUTTONDOWN:
             clicked = True
-    global state
-    played = False
     mouse = pygame.mouse.get_pos()
+    
     if x+w > mouse[0] > x and y+h > mouse[1] > y: #if mouse hovered over
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
         if(textToSpeechEnabled == True and action != "textToSpeech" and not speechPlayer.is_playing()):
@@ -141,7 +142,7 @@ def button(msg,x,y,w,h,ic,ac,events, artist=None, action=None, mp3=None):
                 action() #call method if the action is a method
     else: #else mouse not hovered over
         pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
-    if artist == None:
+    if artist == None: #bigger font for non artist button
         text = smallfont.render(msg , True , white)
     else:
         text = smallerfont.render(msg , True , white)
@@ -157,7 +158,7 @@ main game loop
 calls associated state depedent on current state
 """
 def loop():
-    #use game variabls and global variables
+    #use game variables and global variables
     global state 
     global running
     global song_open
@@ -181,13 +182,15 @@ def loop():
     songDict = ""
     text = ""
     correctAnswer = None
+    
+    #main game loop
     while running:
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
                 loop = False
                 end()
-        render()
+        render() #render every frame
         
         #check state and call associated method
         #each method passes in even
@@ -210,21 +213,23 @@ def loop():
             onePlayerMode = False
             twoPlayer(events)
         elif state == "gameOver": #game over state
+            correctAnswer = None
+            onlyGuess = False
+            song_open = False
             gameOver(events)
             firstGuess = True
             for event in events:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and leaderboardNameEntered == False:
                     updateLeaderboard()
                     leaderboardNameEntered = True
-        elif state == "endGame": #end game state when clicked
+        elif state == "endGame": #end game state when button clicked
             list_generated = False
             textinput.value = ""
             curr_artist = ""
             songLink = ""
             onlyGuess = False
             song_open = False
-            correctAnswer = None
-            state = "gameOver"
+            state = "gameOver" #transition to gameOverState
             
         elif state == "randomSong": #when state is in 1 player game
             if(firstGuess):
