@@ -483,4 +483,28 @@ def CoversByArtist(artist_name, songTitle):
         else:
             album_cover = "lnx1.jfif"
 
+    elif(artist_name == "Pink Floyd"):
+            if(songTitle == "Wish You Were Here"):
+                album_cover = "pf1.jfif"
+            elif(songTitle == "Another Brick in the Wall, Pt. 2"):
+                album_cover = "pf2.jfif"
+            elif(songTitle == "Comfortably Numb"):
+                album_cover = "pf2.jfif"
+            elif(songTitle == "Money"):
+                album_cover = "pf3.jfif"
+            elif(songTitle == "Breathe (In the Air)"):
+                album_cover = "pf3.jfif"
+            elif(songTitle == "Time"):
+                album_cover = "pf3.jfif"
+            elif(songTitle == "The Great Gig in the Sky"):
+                album_cover = "pf3.jfif"
+            elif(songTitle == "Hey You"):
+                album_cover = "pf2.jfif"
+            elif(songTitle == "Wish You Were Here"):
+                album_cover = "pf4.jfif"
+            elif(songTitle == "Brain Damage"):
+                album_cover = "pf3.jfif"
+            else:
+                album_cover = "pf3.jfif"
+
     return album_cover
