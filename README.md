@@ -1,4 +1,5 @@
 # Guess That Song!
+## This package contains
 game.py - runs main pygame loop
 
 album_cover_mappings.py - maps song name to associated album cover, used in game.py
@@ -13,6 +14,7 @@ images/ - where the album cover images are stored
 
 leaderboard.csv - where leaderboard values are stored
 
+## Packages needed
 
 PIP packages needed:
 
@@ -26,11 +28,12 @@ requests 2.28.1
 
 python-dotenv 0.21.0
 
-
+## Additional Information
 Tested on python version 3.10.8 but may work on others
 
 The program needs internet access to work
 
 To run the program, type in a terminal
 
+## How to Run
 $ python game.py
