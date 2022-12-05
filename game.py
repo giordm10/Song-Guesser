@@ -243,11 +243,11 @@ def loop():
                 response = requests.get(str(songLink), headers=headers)
                 with open('song.mp3', 'wb') as f:
                     f.write(response.content)
-                if(not musicPlayer.is_playing()):
+                if(not musicPlayer.is_playing() and not speechPlayer.is_playing()):
                     musicPlayer.play("song.mp3")
-                del songDict[songTitle]
+                    del songDict[songTitle]
+                    song_open = True
                 scoreFlag = False
-                song_open = True
             if onlyGuess == True:
                 getAlbumnCover(songTitle)
             
@@ -311,11 +311,11 @@ def loop():
                 response = requests.get(str(songLink), headers=headers)
                 with open('song.mp3', 'wb') as f:
                     f.write(response.content)
-                if(not musicPlayer.is_playing()):
+                if(not musicPlayer.is_playing() and not speechPlayer.is_playing()):
                     musicPlayer.play("song.mp3")
-                del songDict[songTitle]
+                    del songDict[songTitle]
+                    song_open = True
                 scoreFlag = False
-                song_open = True
             if onlyGuess == True:
                 getAlbumnCover(songTitle)
 
@@ -466,10 +466,10 @@ def randomSong(events, text, correct = None):
     if(textToSpeechEnabled == True and not speechPlayer.is_playing() and guessInstructionsSpoke == False):
         speechPlayer.play(os.path.join('speechFiles', 'enterguessinstructions.mp3'))
         guessInstructionsSpoke = True
-    button("Play current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong", mp3="opencurrentsong.mp3")
+    button("Play current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong", mp3="playcurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong", mp3="nextsong.mp3")
     button("Quit", 900, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
-    button("End Game", 670, 470, 200, 50, color_dark, color_light, events, action="endGame", mp3="mainMenu.mp3")
+    button("End Game", 670, 470, 200, 50, color_dark, color_light, events, action="endGame", mp3="endgame.mp3")
     if(onlyGuess == False):
         textinput.update(events)
         #Blit its surface onto the screen
@@ -492,10 +492,10 @@ def randomSong2(events, text, turnText, turnTalk, correct = None):
             if(not speechPlayer.is_playing() and guessInstructionsSpoke == True):
                 speechPlayer.play(os.path.join('speechFiles', turnTalk))
                 turnSpoke = True
-    button("Play current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2", mp3="opencurrentsong.mp3")
+    button("Play current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2", mp3="playcurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong2", mp3="nextsong.mp3")
     button("Quit", 900, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
-    button("End Game", 670, 470, 200, 50, color_dark, color_light, events, action="endGame", mp3="mainMenu.mp3")
+    button("End Game", 670, 470, 200, 50, color_dark, color_light, events, action="endGame", mp3="endgame.mp3")
     if(onlyGuess == False):
         textinput.update(events)
        #Blit its surface onto the screen
@@ -548,9 +548,8 @@ def twoPlayer(events):
    startTurn = smallfont.render("Player 1's turn", True, white)
    gameDisplay.blit(textTwoPlay, ((0+(50/2)), (100+(50/2))))
    gameDisplay.blit(startTurn, ((0+(50/2)), (150+(50/2))))
-#    textinput.update(events)
    gameDisplay.blit(textinput.surface, (300, 300))
-#    curr_artist = textinput.value
+   
    if(textToSpeechEnabled == True and not speechPlayer.is_playing() and twoPlayerInstructionsSpoke == False):
         speechPlayer.play(os.path.join('speechFiles', 'twoplayerinstructions.mp3'))
         twoPlayerInstructionsSpoke = True
