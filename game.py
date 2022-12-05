@@ -216,6 +216,16 @@ def loop():
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and leaderboardNameEntered == False:
                     updateLeaderboard()
                     leaderboardNameEntered = True
+        elif state == "endGame": #end game state when clicked
+            list_generated = False
+            textinput.value = ""
+            curr_artist = ""
+            songLink = ""
+            onlyGuess = False
+            song_open = False
+            correctAnswer = None
+            state = "gameOver"
+            
         elif state == "randomSong": #when state is in 1 player game
             if(firstGuess):
                 firstGuess = False
@@ -458,7 +468,8 @@ def randomSong(events, text, correct = None):
         guessInstructionsSpoke = True
     button("Play current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong", mp3="opencurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong", mp3="nextsong.mp3")
-    button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
+    button("Quit", 900, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
+    button("End Game", 670, 470, 200, 50, color_dark, color_light, events, action="endGame", mp3="mainMenu.mp3")
     if(onlyGuess == False):
         textinput.update(events)
         #Blit its surface onto the screen
@@ -483,7 +494,8 @@ def randomSong2(events, text, turnText, turnTalk, correct = None):
                 turnSpoke = True
     button("Play current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2", mp3="opencurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong2", mp3="nextsong.mp3")
-    button("Quit", 670, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
+    button("Quit", 900, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
+    button("End Game", 670, 470, 200, 50, color_dark, color_light, events, action="endGame", mp3="mainMenu.mp3")
     if(onlyGuess == False):
         textinput.update(events)
        #Blit its surface onto the screen
@@ -588,6 +600,8 @@ def setting(events):
 
 #game over screen
 def gameOver(events):
+    if(musicPlayer.is_playing()):
+        musicPlayer.quit_playing()
     global leaderboardInformation
     global leaderboardNameEntered
     global onePlayerMode
