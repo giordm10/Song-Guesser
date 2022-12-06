@@ -609,7 +609,7 @@ def title():
 #settings menu screen
 def setting(events):
     global textToSpeechEnabled
-    settingText = smallfont.render("Setting Menu", True, white)
+    settingText = smallfont.render("Settings Menu", True, white)
     gameDisplay.blit(settingText, ((970+(50/2)), (100+(50/2))))
     button("Main Menu", 670, 470, 200, 50, color_dark, color_light, events, action="mainMenu",mp3="mainmenu.mp3")
     if(textToSpeechEnabled == False):
