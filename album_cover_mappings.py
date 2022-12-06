@@ -1,3 +1,10 @@
+#This file serves as a makeshift database for our project
+#This file contains a list of different conditional statements that put album covers on the screen
+#First this list sorts by artist, then by song title
+#If the specific song is found, that album cover will be put on the screen
+#If the artist is found but the song is not, then a default album cover is shown for that artist
+#If the artist is not found, then a default spotify logo is shown on screen
+
 def CoversByArtist(artist_name, songTitle):
     #default image if for some reason a song does not have an albumn cover
     album_cover = "spotifyImage.png"
@@ -482,5 +489,29 @@ def CoversByArtist(artist_name, songTitle):
             album_cover = "lnx2.jfif"
         else:
             album_cover = "lnx1.jfif"
+
+    elif(artist_name == "Pink Floyd"):
+            if(songTitle == "Wish You Were Here"):
+                album_cover = "pf1.jfif"
+            elif(songTitle == "Another Brick in the Wall, Pt. 2"):
+                album_cover = "pf2.jfif"
+            elif(songTitle == "Comfortably Numb"):
+                album_cover = "pf2.jfif"
+            elif(songTitle == "Money"):
+                album_cover = "pf3.jfif"
+            elif(songTitle == "Breathe (In the Air)"):
+                album_cover = "pf3.jfif"
+            elif(songTitle == "Time"):
+                album_cover = "pf3.jfif"
+            elif(songTitle == "The Great Gig in the Sky"):
+                album_cover = "pf3.jfif"
+            elif(songTitle == "Hey You"):
+                album_cover = "pf2.jfif"
+            elif(songTitle == "Wish You Were Here"):
+                album_cover = "pf4.jfif"
+            elif(songTitle == "Brain Damage"):
+                album_cover = "pf3.jfif"
+            else:
+                album_cover = "pf3.jfif"
 
     return album_cover
