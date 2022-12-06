@@ -1,3 +1,10 @@
+#This file serves as a makeshift database for our project
+#This file contains a list of different conditional statements that put album covers on the screen
+#First this list sorts by artist, then by song title
+#If the specific song is found, that album cover will be put on the screen
+#If the artist is found but the song is not, then a default album cover is shown for that artist
+#If the artist is not found, then a default spotify logo is shown on screen
+
 def CoversByArtist(artist_name, songTitle):
     #default image if for some reason a song does not have an albumn cover
     album_cover = "spotifyImage.png"

@@ -464,7 +464,9 @@ def mainMenu(events):
     button("Start 1 player", 400, 360, 230, 50, color_dark, color_light, events, action="onePlayer", mp3="startplayer1.mp3")
     button("Leaderboard", 400, 470, 230, 50, color_dark, color_light, events, action="leaderboard",mp3="leaderboard.mp3")
     button("Settings", 670, 470, 230, 50, color_dark, color_light, events, action="settingsMenu",mp3="settings.mp3")
-    button("Quit", 0, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")   
+    button("Quit", 0, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
+    text = smallfont.render("Warning: Some songs may contain explicit language", True , white)
+    gameDisplay.blit(text, ((300+(50/2)), (550+(50/2))))
     
 #render method, fills the screen with a color    
 def render():
