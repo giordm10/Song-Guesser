@@ -506,13 +506,10 @@ def randomSong2(events, text, turnText, turnTalk, correct = None):
          gameDisplay.blit(correct, ((0+(50/2)), (50+(50/2))))
     gameDisplay.blit(turnText, ((0+(50/2)), (200+(50/2))) )
     if(textToSpeechEnabled == True):
-        while(turnSpoke == False): 
-            if(not speechPlayer.is_playing() and guessInstructionsSpoke == False):
-                speechPlayer.play(os.path.join('speechFiles', 'enterguessinstructions.mp3'))
-                guessInstructionsSpoke = True
-            if(not speechPlayer.is_playing() and guessInstructionsSpoke == True):
-                speechPlayer.play(os.path.join('speechFiles', turnTalk))
-                turnSpoke = True
+        #while(turnSpoke == False): 
+        if(not speechPlayer.is_playing() and guessInstructionsSpoke == False):
+            speechPlayer.play(os.path.join('speechFiles', 'enterguessinstructions.mp3'))
+            guessInstructionsSpoke = True
     button("Play current song", 340, 470, 290, 50, color_dark, color_light, events, action="openSong2", mp3="playcurrentsong.mp3")
     button("Next song", 40, 470, 200, 50, color_dark, color_light, events, action="nextSong2", mp3="nextsong.mp3")
     button("Quit", 900, 470, 130, 50, color_dark, color_light, events, action=end, mp3="quit.mp3")
@@ -521,6 +518,9 @@ def randomSong2(events, text, turnText, turnTalk, correct = None):
         textinput.update(events)
        #Blit its surface onto the screen
         gameDisplay.blit(textinput.surface, (300, 300))
+    if(not speechPlayer.is_playing() and guessInstructionsSpoke == True and turnSpoke == False):
+                speechPlayer.play(os.path.join('speechFiles', turnTalk))
+                turnSpoke = True
 
 #one player select artist screen
 def onePlayer(events):
