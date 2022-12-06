@@ -177,6 +177,7 @@ def loop():
     global incorrectGuessSpoke
     global turnSpoke
     running = True
+    scoreFlag = False
     result = ""
     songDict = ""
     text = ""
@@ -254,13 +255,16 @@ def loop():
                     musicPlayer.play("song.mp3")
                     del songDict[songTitle]
                     song_open = True
+                scoreFlag = False
             if onlyGuess == True: #if guess is complete, display the album art
                 getAlbumnCover(songTitle)
             
             for event in events: #check textbox input
                 if re.sub('[^A-Za-z0-9]+', '', textinput.value.lower()) == re.sub('[^A-Za-z0-9]+', '', songTitle.lower()) and event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN: #if the user entered a correct guess
                     onlyGuess = True #one guess per turn 
-                    score += 1 # add score for correct guess
+                    if (not scoreFlag):
+                        scoreFlag = True
+                        score += 1 # add score for correct guess
                     text = smallfont.render("Correct Guess!    Score: " + str(score) , True , white)
                     
                     #textToSpeech for guessing correct
@@ -329,6 +333,7 @@ def loop():
                     musicPlayer.play("song.mp3")
                     del songDict[songTitle]
                     song_open = True
+                scoreFlag = False
                     
             if onlyGuess == True: #if guess is complete, display the album art
                 getAlbumnCover(songTitle)
@@ -338,9 +343,13 @@ def loop():
                     onlyGuess = True
                     #add score dependent on player's turn
                     if turn == 1:
-                        score += 1
+                        if(not scoreFlag):
+                            scoreFlag = True
+                            score += 1
                     elif turn == 2:
-                        scorePlayer2 +=1
+                        if(not scoreFlag):
+                            scoreFlag = True
+                            scorePlayer2 += 1
                     text = smallfont.render("Correct Guess!    Player 1 Score: " + str(score) + ", Player 2 Score: " + str(scorePlayer2), True , white)
                     correctGuessHasPlayed = False #the correct guess mp3 has played so the score mp3s can play
                     playerOneScorePlayed = False #player one's score mp3 has played so player two's score mp3 can play
