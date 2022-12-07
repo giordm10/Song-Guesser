@@ -1,5 +1,0 @@
-1. text to speech/speech to text
-2. switch from user entering artist to buttons
-3. album covers?
-4. text box reset
-5. leaderboard system
