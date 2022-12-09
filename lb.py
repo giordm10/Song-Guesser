@@ -6,7 +6,6 @@ def read_text():
         infoDict = dict()
         for row in infoReader:
             row = str(row[0]).split(",")
-            print(row)
             # print(row[0])
             # print(row[1])
             infoDict[row[0]] = int(row[1])
