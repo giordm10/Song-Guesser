@@ -13,11 +13,15 @@ spotipy_artist.py - gets song preview URLs from an artist on spotify, uses spoti
 
 musicplayer.py - used to play songs in the program as well as text to voice. used in game.py
 
+lb.py - read and writing from leaderboard
+
 speechFiles/ - where all the speech files used in text to speech are located
 
 images/ - where the album cover images are stored
 
 leaderboard.csv - where leaderboard values are stored
+
+song.mp3 - last played song
 
 ## Packages needed
 
